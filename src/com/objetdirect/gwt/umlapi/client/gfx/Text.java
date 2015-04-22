@@ -14,6 +14,8 @@
  */
 package com.objetdirect.gwt.umlapi.client.gfx;
 
+import com.google.gwt.user.client.Window;
+
 
 
 class Text extends IncubatorGfxObject {
@@ -58,9 +60,11 @@ class Text extends IncubatorGfxObject {
 		}
 
 		//TODO 長さはこれ？じゃない
-		return (int)length;
+		//return (int)length;
 		//return this.text.getBytes("UTF-8").length;
 		//return this.text.length();
+		Window.alert("length");
+		return 1;
 	}
 
 	@Override

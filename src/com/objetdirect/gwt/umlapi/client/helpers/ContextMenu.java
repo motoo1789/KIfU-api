@@ -98,6 +98,7 @@ public class ContextMenu {
 															ContextMenu.this.canvas.paste();
 														}
 													};
+
 	/**
 	 * Constructor of ContextMenu without a specific context menu part
 	 *
@@ -178,16 +179,17 @@ public class ContextMenu {
 		this.contextMenu.addItem(ADD_RELATION.getMessage(), linkSubMenu);
 		this.contextMenu.addSeparator();
 
-		this.contextMenu.addItem(CUT.getMessage(),  this.cut);
-		this.contextMenu.addItem(COPY.getMessage(),  this.copy);
-		this.contextMenu.addItem(PASTE.getMessage(), this.paste);
+//		this.contextMenu.addItem(CUT.getMessage(),  this.cut);
+//		this.contextMenu.addItem(COPY.getMessage(),  this.copy);
+//		this.contextMenu.addItem(PASTE.getMessage(), this.paste);
 
 		this.contextMenu.addSeparator();
 		if (this.canvas.getUMLDiagram().getType().isClassOrObjectType()) {
 			this.contextMenu.addItem(SWITCH_LINK_STYLE.getMessage(), this.changeLinkStyle);
 		}
 
-		this.contextMenu.addItem(CLEAR_DIAGRAM.getMessage(), this.clearDiagram);
+		//this.contextMenu.addItem(CLEAR_DIAGRAM.getMessage(), this.clearDiagram);
+		this.contextMenu.addItem(REMOVE.getMessage(), this.remove);
 		this.contextMenu.addItem(HOTKEYS.getMessage(), this.bringHelp);
 	}
 }

@@ -17,6 +17,7 @@ public enum TextResource {
 	COPY("Copy", "コピー"),
 	PASTE("Paste", "貼り付け"),
 	SWITCH_LINK_STYLE("Switch link style", "関連線の繋ぎ方を変更"),
+	REMOVE("Remove", "選択対象を削除"),
 	CLEAR_DIAGRAM("Clear diagram", "全削除"),
 	HOTKEYS("Hotkeys...","ショートカット一覧..."),
 	CLASS("Class","クラス"),

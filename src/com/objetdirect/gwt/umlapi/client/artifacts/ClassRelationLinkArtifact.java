@@ -327,6 +327,10 @@ public class ClassRelationLinkArtifact extends RelationLinkArtifact {
 		this.relation.setName(name);
 	}
 
+	public String getName() {
+		return this.relation.getName();
+	}
+
 	/**
 	 * Setter for the relation {@link LinkKind}
 	 *

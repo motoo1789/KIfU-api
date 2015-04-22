@@ -273,10 +273,33 @@ public class TatamiGfxPlatfrom implements GfxPlatform {
 	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#getWidthFor(com.objetdirect.gwt.umlapi.client.gfx.GfxObject)
 	 */
-	//TODO Box Width
+	//TODO Box Width ここうまく調整すればいける
 	public int getTextWidthFor(final GfxObject gfxO) {
 		if (gfxO != null) {
-			return (int) ((((Text) this.getTatamiGraphicalObjectFrom(gfxO)).getWidth() * 8.) / 5.);// Converting point to pixel
+			int width = (int) ((((Text) this.getTatamiGraphicalObjectFrom(gfxO)).getWidth() * 8.));
+			//return (int) ((((Text) this.getTatamiGraphicalObjectFrom(gfxO)).getWidth() * 8.) / 5.);// Converting point to pixel
+			//gfxOからテキストを取り出す
+			String text = ((Text) this.getTatamiGraphicalObjectFrom(gfxO)).getText();
+
+			//全角、半角文字の数を数える
+			int count = 0;
+			for( char ch : text.toCharArray())
+			{
+
+				if ( ch < '!' || ch > '~' || ch == ' ')//半角文字＋記号の範囲
+				{
+					//ASCII文字以外だからノーカン
+				}
+				else{
+					//ASCII文字＝半角文字＋半角記号だからカウント
+					count++;
+				}
+
+			}
+
+			// 幅*(半角の数/総文字数)*1/2を引く
+			width = (int)( (double)(width) - ( (double)(width)*(double)(count) / (double) (text.length() ) )*(1.0/2.0) );
+			return (int) (width/ 5.);// Converting point to pixel
 		}
 		return 0;
 	}

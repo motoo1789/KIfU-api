@@ -615,28 +615,28 @@ public class UMLCanvas extends AbsolutePanel {
 	public void remove(final UMLArtifact umlArtifact) {
 		if (this.fireDeleteArtifactEvent(umlArtifact)) {
 
-				if (umlArtifact.isALink()) {
-					UMLArtifact right = ((LinkArtifact) umlArtifact).getRightUMLArtifact();
-					UMLArtifact left = ((LinkArtifact) umlArtifact).getLeftUMLArtifact();
-					MyLoggerExecute.registEditEvent(-1,umlArtifact.toString(), "Remove",
-							umlArtifact.getClass().getName(), umlArtifact.getId(), null, right.getId(), left.getId(),
-							null, null, null, this.toUrl());
-	//				int preEventId, String editEvent, String eventType,
-	//				String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
-	//				String targetPart, String beforeEdit, String afterEdit, String canvasUrl
-				}else {
-					MyLoggerExecute.registEditEvent(-1,umlArtifact.toString(), "Remove",
-							umlArtifact.getClass().getName(), umlArtifact.getId(), null, -1, -1,
-							null, null, null, this.toUrl());
-	//				int preEventId, String editEvent, String eventType,
-	//				String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
-	//				String targetPart, String beforeEdit, String afterEdit, String canvasUrl
-				}
-
-
 			this.removeRecursive(umlArtifact);
 			if (umlArtifact.isALink()) {
 				((LinkArtifact) umlArtifact).removeCreatedDependency();
+			}
+
+
+			if (umlArtifact.isALink()) {
+				UMLArtifact right = ((LinkArtifact) umlArtifact).getRightUMLArtifact();
+				UMLArtifact left = ((LinkArtifact) umlArtifact).getLeftUMLArtifact();
+				MyLoggerExecute.registEditEvent(-1,umlArtifact.toString(), "Remove",
+						umlArtifact.getClass().getName(), umlArtifact.getId(), null, right.getId(), left.getId(),
+						null, null, null, this.toUrl());
+//				int preEventId, String editEvent, String eventType,
+//				String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
+//				String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+			}else {
+				MyLoggerExecute.registEditEvent(-1,umlArtifact.toString(), "Remove",
+						umlArtifact.getClass().getName(), umlArtifact.getId(), null, -1, -1,
+						null, null, null, this.toUrl());
+//				int preEventId, String editEvent, String eventType,
+//				String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
+//				String targetPart, String beforeEdit, String afterEdit, String canvasUrl
 			}
 		}
 		//TODO takafumi
