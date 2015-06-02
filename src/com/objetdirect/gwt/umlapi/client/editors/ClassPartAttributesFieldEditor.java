@@ -19,6 +19,7 @@ import com.objetdirect.gwt.umlapi.client.artifacts.ClassArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassPartAttributesArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.NodePartArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.ObjectPartAttributesArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.UMLArtifact;
 import com.objetdirect.gwt.umlapi.client.helpers.UMLCanvas;
 import com.objetdirect.gwt.umlapi.client.mylogger.MyLoggerExecute;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLClassAttribute;
@@ -86,7 +87,7 @@ public class ClassPartAttributesFieldEditor extends FieldEditor {
 
 		MyLoggerExecute.registEditEvent(-1, "Attribute", "Edit",
 				newAttribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
-				null, oldContent, newContent, this.canvas.toUrl());
+				null, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
 
 //		int preEventId, String editEvent, String eventType,
 //		String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,

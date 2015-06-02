@@ -25,7 +25,7 @@ public abstract class UMLLink {
 		/**
 		 * Simple relation
 		 */
-		SIMPLE_RELATION("SimpleRelation", RELATIONSHIP.getMessage(), LinkAdornment.NONE, LinkAdornment.NONE, "1", "0..*", LinkStyle.SOLID, Type.HYBRID),
+		SIMPLE_RELATION("SimpleRelation", RELATIONSHIP.getMessage(), LinkAdornment.NONE, LinkAdornment.NONE, "undefined", "undefined", LinkStyle.SOLID, Type.HYBRID),
 		/**
 		 * Aggregation relation
 		 */

@@ -16,36 +16,6 @@ public class Dao extends DriverAccessor{
 	public Dao(){
 	}
 
-//	public boolean registEditEvent(String studentId, int exercisesId, String logData, int defaultDifficulty, String canvasUrl, String step) {
-//		System.out.println("DAO:"+step);
-//		 this.connection= this.createConnection();
-//		try{
-//
-//			String sql = "insert into edit_event ( student_id, exercises_id, edit_event, difficulty, canvas_url, step ,edit_datetime )values(?, ?, ?, ?, ?, ?, now())";
-//
-//			PreparedStatement stmt = this.connection.prepareStatement(sql);
-//
-//			stmt.setString(1, studentId);
-//			stmt.setInt(2, exercisesId);
-//			stmt.setString(3,  logData);
-//			stmt.setInt(4, defaultDifficulty);
-//			stmt.setString(5, canvasUrl);
-//			stmt.setString(6, step);
-//
-//
-//			stmt.executeUpdate();
-//
-//		}catch(SQLException e){
-//			this.closeConnection(connection);
-//			e.printStackTrace();
-//			return false;
-//
-//		} finally {
-//		}
-//		this.closeConnection(connection);
-//		return true;
-//	}
-
 //	student_id varchar(32),
 //	exercise_id int,
 //	pre_event_id int,
@@ -67,12 +37,12 @@ public class Dao extends DriverAccessor{
 	public boolean registEditEvent(String studentId, int exercisesId, int preEventId, String editEvent, String eventType,
 												  String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
 												  String targetPart, String beforeEdit, String afterEdit, int canvasId, String canvasUrl,
-												  int defaultDifficulty) {
+												  int defaultDifficulty, int umlArtifactId) {
 		System.err.println("registEditEvent");
 		 this.connection= this.createConnection();
 		try{
 
-			String sql = "insert into edit_event ( student_id ,exercises_id, pre_event_id, edit_event, event_type, target_type, target_id, linkkind, right_object_id, left_object_id, target_part, before_edit, after_edit, canvas_id, canvas_url, difficulty, edit_datetime )values(?, ?, ?, ?, ?,  ?, ?, ?, ?, ?,   ?, ?, ?, ?, ?,  ?, now())";
+			String sql = "insert into edit_event ( student_id ,exercises_id, pre_event_id, edit_event, event_type, target_type, target_id, linkkind, right_object_id, left_object_id, target_part, before_edit, after_edit, canvas_id, canvas_url, difficulty, edit_datetime, umlartifact_id )values(?, ?, ?, ?, ?,  ?, ?, ?, ?, ?,   ?, ?, ?, ?, ?,  ?, now(), ?)";
 //			student_id ,exercises_id, pre_event_id, edit_event, event_type, target_type, target_id, linkkind, right_object_id, left_object_id, target_part, before_edit, after_edit, canvas_id, canvas_url, difficulty, edit_datetime datetime);
 
 			PreparedStatement stmt = this.connection.prepareStatement(sql);
@@ -96,6 +66,7 @@ public class Dao extends DriverAccessor{
 			stmt.setString(15, canvasUrl);
 
 			stmt.setInt(16, defaultDifficulty);
+			stmt.setInt(17, umlArtifactId);
 
 			stmt.executeUpdate();
 

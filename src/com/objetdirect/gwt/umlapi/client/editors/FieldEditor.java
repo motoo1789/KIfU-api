@@ -1,15 +1,15 @@
 /*
  * This file is part of the GWTUML project and was written by Mounier Florian <mounier-dot-florian.at.gmail'dot'com> for Objet Direct
  * <http://wwww.objetdirect.com>
- * 
+ *
  * Copyright © 2009 Objet Direct Contact: gwtuml@googlegroups.com
- * 
+ *
  * GWTUML is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later version.
- * 
+ *
  * GWTUML is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License along with GWTUML. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.objetdirect.gwt.umlapi.client.editors;
@@ -38,13 +38,13 @@ import com.objetdirect.gwt.umlapi.client.helpers.UMLCanvas;
  * It displays a {@link TextBox} and update the artifact if the user hit Enter or the TextBox lose the focus <br>
  * or cancel if the user hit Escape <br>
  * It also supports multiple lines edition with {@link TextArea}
- * 
+ *
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
  */
 public abstract class FieldEditor {
 	/**
 	 * Getter for the editField
-	 * 
+	 *
 	 * @return the editField
 	 */
 	public static TextBoxBase getEditField() {
@@ -61,7 +61,7 @@ public abstract class FieldEditor {
 
 	/**
 	 * Constructor of the FieldEditor
-	 * 
+	 *
 	 * @param canvas
 	 *            The canvas on which is the artifact
 	 * @param artifact
@@ -76,7 +76,7 @@ public abstract class FieldEditor {
 
 	/**
 	 * Setter for the {@link TextArea} height in case of multiple lines edition
-	 * 
+	 *
 	 * @param height
 	 *            The height of the {@link TextArea} to set
 	 */
@@ -86,7 +86,7 @@ public abstract class FieldEditor {
 
 	/**
 	 * This function begin the edition from the parameters
-	 * 
+	 *
 	 * @param text
 	 *            The previous text, it is used as default {@link TextBox} text
 	 * @param x
@@ -105,17 +105,17 @@ public abstract class FieldEditor {
 		if (this.isMultiLine && (this.height == 0)) {
 			Log.error("Must set height for multiline editors");
 		}
-		
+
 		this.content = text;
-		if(y + 20  > this.canvas.getOffsetHeight()) { //FIXME put a real height
-			return;
-		}
-		
+//		if(y + 20  > this.canvas.getHeight()) { //FIXME put a real height
+//			return;
+//		}
+
 		FieldEditor.editField = this.isMultiLine ? new TextArea() : new TextBox();
-		
-		
-		
-		
+
+
+
+
 		FieldEditor.editField.setText(text);
 		FieldEditor.editField.setStylePrimaryName("editor" + (isSmallFont ? "-small" : "") + "-field" + (this.isMultiLine ? "-multiline" : ""));
 		FieldEditor.editField.setWidth(Math.max(w, this.minBoxWidth) + "px");

@@ -36,7 +36,7 @@ public class MyLoggerExecute {
 
 	public static void registEditEvent(int preEventId, String editEvent, String eventType,
 			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
-			String targetPart, String beforeEdit, String afterEdit, String canvasUrl ){
+			String targetPart, String beforeEdit, String afterEdit, String canvasUrl, int umlArtifactId ){
 
 		if( ( Session.getMode() ).equals("drawer")){
 			MyLoggerServiceAsync async = (MyLoggerServiceAsync)GWT.create(MyLoggerService.class);
@@ -56,7 +56,7 @@ public class MyLoggerExecute {
 
 			async.registEditEvent( preEventId, editEvent, eventType, targetType, targetId,
 					linkKind,  rightObjectId, leftObjectId, targetPart,  beforeEdit,
-					afterEdit, canvasUrl, callback);
+					afterEdit, canvasUrl, umlArtifactId, callback);
 		}
 		else{
 

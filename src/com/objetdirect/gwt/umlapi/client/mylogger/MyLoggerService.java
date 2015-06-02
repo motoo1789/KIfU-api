@@ -9,6 +9,6 @@ public interface MyLoggerService extends RemoteService{
 //	public void registEditEvent(String logData,String canvasUrl, String step);
 	public boolean registEditEvent(int preEventId, String editEvent, String eventType,
 			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
-			String targetPart, String beforeEdit, String afterEdit, String canvasUrl) ;
+			String targetPart, String beforeEdit, String afterEdit, String canvasUrl, int umlArtifactId) ;
 
 }

@@ -171,11 +171,14 @@ public class ContextMenu {
 		}
 		this.contextMenu.addItem(ADD_NEW_NOTE.getMessage(), this.addNewNote);
 		final MenuBar linkSubMenu = new MenuBar(true);
+		//関連の種類
 		for (final LinkKind relationKind : LinkKind.values()) {
 			if (relationKind.isForDiagram(Session.getActiveCanvas().getUMLDiagram().getType())) {
 				linkSubMenu.addItem(relationKind.getNameInMenu(), this.addRelation(relationKind));
 			}
 		}
+
+
 		this.contextMenu.addItem(ADD_RELATION.getMessage(), linkSubMenu);
 		this.contextMenu.addSeparator();
 

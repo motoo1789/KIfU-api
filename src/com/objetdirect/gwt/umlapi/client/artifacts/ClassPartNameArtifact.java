@@ -153,6 +153,7 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 		} else {
 			edited = this.uMLclass.getName();
 		}
+
 		editor.startEdition(edited, (this.nodeArtifact.getLocation().getX() + OptionsManager.get("TextLeftPadding") + OptionsManager
 				.get("RectangleLeftPadding")), this.nodeArtifact.getLocation().getY() + GfxManager.getPlatform().getLocationFor(editedGfxObject).getY() /*
 																																						 * +

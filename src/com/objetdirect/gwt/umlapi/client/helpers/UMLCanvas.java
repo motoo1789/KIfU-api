@@ -25,7 +25,6 @@ import java.util.Set;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -86,6 +85,9 @@ public class UMLCanvas extends AbsolutePanel {
 	private DragAndDropState								dragAndDropState				= DragAndDropState.NONE;
 	private boolean 										wasACopy;
 	private Point											currentMousePosition			= new Point(-200, -200);						// In case of the
+
+	private int												height									=GfxPlatform.DEFAULT_CANVAS_HEIGHT;
+	private int												width									=GfxPlatform.DEFAULT_CANVAS_WIDTH;
 	// mouse hasn't been
 	// moved before
 	// adding an
@@ -192,6 +194,8 @@ public class UMLCanvas extends AbsolutePanel {
 		Log.trace("Making Canvas");
 		this.drawingCanvas = GfxManager.getPlatform().makeCanvas();
 		this.setPixelSize(GfxPlatform.DEFAULT_CANVAS_WIDTH, GfxPlatform.DEFAULT_CANVAS_HEIGHT);
+		this.height = GfxPlatform.DEFAULT_CANVAS_HEIGHT;
+		this.width  = GfxPlatform.DEFAULT_CANVAS_WIDTH;
 		this.initCanvas();
 		this.uMLDiagram = uMLDiagram;
 	}
@@ -216,19 +220,22 @@ public class UMLCanvas extends AbsolutePanel {
 		this.addUMLEventListener(new GWTUMLEventListenerForLog());
 
 		this.setPixelSize(width, height);
+		this.height = height;
+		this.width = width;
 		this.initCanvas();
 		this.uMLDiagram = uMLDiagram;
 
-		Window.addWindowClosingHandler(new Window.ClosingHandler() {
-		    public void onWindowClosing(Window.ClosingEvent closingEvent) {
-		    	MyLoggerExecute.registEditEvent(-1,null, "CanvasCloseOrRefresh",
-						null, -1, null, -1, -1,
-						null, null, null, null);
-//				int preEventId, String editEvent, String eventType,
-//				String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
-//				String targetPart, String beforeEdit, String afterEdit, String canvasUrl
-		    }
-		});
+		//TODO 20150531コメントアウト
+//		Window.addWindowClosingHandler(new Window.ClosingHandler() {
+//		    public void onWindowClosing(Window.ClosingEvent closingEvent) {
+//		    	MyLoggerExecute.registEditEvent(-1,null, "CanvasClose",
+//						null, -1, null, -1, -1,
+//						null, null, null, null, UMLArtifact.getIdCount());
+////				int preEventId, String editEvent, String eventType,
+////				String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
+////				String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+//		    }
+//		});
 	}
 
 	/**
@@ -612,38 +619,49 @@ public class UMLCanvas extends AbsolutePanel {
 	 *
 	 * @param umlArtifact
 	 */
-	public void remove(final UMLArtifact umlArtifact) {
-		if (this.fireDeleteArtifactEvent(umlArtifact)) {
-
-			this.removeRecursive(umlArtifact);
-			if (umlArtifact.isALink()) {
-				((LinkArtifact) umlArtifact).removeCreatedDependency();
-			}
-
-
-			if (umlArtifact.isALink()) {
-				UMLArtifact right = ((LinkArtifact) umlArtifact).getRightUMLArtifact();
-				UMLArtifact left = ((LinkArtifact) umlArtifact).getLeftUMLArtifact();
-				MyLoggerExecute.registEditEvent(-1,umlArtifact.toString(), "Remove",
-						umlArtifact.getClass().getName(), umlArtifact.getId(), null, right.getId(), left.getId(),
-						null, null, null, this.toUrl());
-//				int preEventId, String editEvent, String eventType,
-//				String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
-//				String targetPart, String beforeEdit, String afterEdit, String canvasUrl
-			}else {
-				MyLoggerExecute.registEditEvent(-1,umlArtifact.toString(), "Remove",
-						umlArtifact.getClass().getName(), umlArtifact.getId(), null, -1, -1,
-						null, null, null, this.toUrl());
-//				int preEventId, String editEvent, String eventType,
-//				String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
-//				String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+	//Removeが発生すると最初に呼ばれる。このメソッドの最後でRemoveArtifactsのログを取る
+	//removeRecursiveから呼ばれる。
+		public void remove(final UMLArtifact umlArtifact) {
+			if (this.fireDeleteArtifactEvent(umlArtifact)) {
+				this.removeRecursive(umlArtifact);
+				if (umlArtifact.isALink()) {
+					((LinkArtifact) umlArtifact).removeCreatedDependency();
+				}
 			}
 		}
-		//TODO takafumi
-		//System.out.println("RemoveArtifact"+":"+umlArtifact.toURL());
-		//MyLoggerExecute.registEditEvent("RemoveArtifact:"+umlArtifact.getId()+umlArtifact.toURL(), this.toUrl());
+	private void removeRecursive(final UMLArtifact element) {
+		GfxManager.getPlatform().removeFromVirtualGroup(this.allObjects, element.getGfxObject(), false);
+		this.objects.remove(element.getGfxObject());
+		UMLArtifact.removeArtifactById(element.getId());
+		element.setCanvas(null);
+		this.selectedArtifacts.remove(element);
 
 
+		if (element.isALink()) {
+			UMLArtifact right = ((LinkArtifact) element).getRightUMLArtifact();
+			UMLArtifact left = ((LinkArtifact) element).getLeftUMLArtifact();
+			MyLoggerExecute.registEditEvent(-1,element.toString(), "Remove",
+					element.getClass().getName(), element.getId(), null, right.getId(), left.getId(),
+					null, null, null, null, UMLArtifact.getIdCount());
+//			int preEventId, String editEvent, String eventType,
+//			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
+//			String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+		}else {
+			MyLoggerExecute.registEditEvent(-1,element.toString(), "Remove",
+					element.getClass().getName(), element.getId(), null, -1, -1,
+					null, null, null, null, UMLArtifact.getIdCount());
+//			int preEventId, String editEvent, String eventType,
+//			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
+//			String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+		}
+
+		for (final Entry<LinkArtifact, UMLArtifact> entry : element.getDependentUMLArtifacts().entrySet()) {
+			if (entry.getValue().isALink() && (entry.getKey().getClass() != LinkNoteArtifact.class)) {
+				this.remove(entry.getValue());
+			}
+			entry.getValue().removeDependency(entry.getKey());
+			this.removeRecursive(entry.getKey());
+		}
 
 	}
 
@@ -747,7 +765,7 @@ public class UMLCanvas extends AbsolutePanel {
 			//addNewClass
 			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
 					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
-					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
+					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null, UMLArtifact.getIdCount());
 
 //			int preEventId, String editEvent, String eventType,
 //			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
@@ -803,7 +821,7 @@ public class UMLCanvas extends AbsolutePanel {
 			System.out.println("addNewLink:"+newLink.toURL());
 			MyLoggerExecute.registEditEvent(-1, newLink.toString(), "Create",
 					newLink.getClass().getName(), newLink.getId(), null, selectedArtifact.getId(), newSelected.getId(),
-					null, null, newLink.getLocation().getX()+","+newLink.getLocation().getY(), this.toUrl());
+					null, null, newLink.getLocation().getX()+","+newLink.getLocation().getY(), this.toUrl(), UMLArtifact.getIdCount());
 
 //			int preEventId, String editEvent, String eventType,
 //			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
@@ -843,7 +861,7 @@ public class UMLCanvas extends AbsolutePanel {
 
 			MyLoggerExecute.registEditEvent(-1, newNote.toString(), "Create",
 					newNote.getClass().getName(), newNote.getId(), null, -1, -1,
-					null, null, newNote.getLocation().getX()+","+newNote.getLocation().getY(), null);
+					null, null, newNote.getLocation().getX()+","+newNote.getLocation().getY(), null, UMLArtifact.getIdCount());
 
 //			int preEventId, String editEvent, String eventType,
 //			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
@@ -932,7 +950,7 @@ public class UMLCanvas extends AbsolutePanel {
 		System.out.println("Copy");
 		MyLoggerExecute.registEditEvent(-1, artifacts.toString(), "Copy",
 				artifacts.toString(), -1, null, -1, -1,
-				null, null, null, null);
+				null, null, null, null, UMLArtifact.getIdCount());
 
 //		int preEventId, String editEvent, String eventType,
 //		String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
@@ -961,7 +979,7 @@ public class UMLCanvas extends AbsolutePanel {
 
 			MyLoggerExecute.registEditEvent(-1, this.copyBuffer, "Paste",
 					this.copyBuffer, -1, null, -1, -1,
-					null, null, null, null);
+					null, null, null, null, UMLArtifact.getIdCount());
 
 //			int preEventId, String editEvent, String eventType,
 //			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
@@ -1157,6 +1175,15 @@ public class UMLCanvas extends AbsolutePanel {
 			for (final UMLArtifact selectedArtifact : selectedBeforeRemovalArtifacts.keySet()) {
 				this.remove(selectedArtifact);
 			}
+			//TODO takafumi
+			//RemoveArtifactsのログをとる。
+			MyLoggerExecute.registEditEvent(-1,"RemoveArtifacts", "RemoveArtifacts",
+					null, -1, null, -1, -1,
+					null, null, null, this.toUrl(), UMLArtifact.getIdCount());
+//			int preEventId, String editEvent, String eventType,
+//			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
+//			String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+
 		}
 	}
 
@@ -1201,7 +1228,7 @@ public class UMLCanvas extends AbsolutePanel {
 		this.makeArrows();
 		MyLoggerExecute.registEditEvent(-1, null, "CanvasLoad",
 				null, -1, null, -1, -1,
-				null, null, null, null);
+				null, null, null, null, UMLArtifact.getIdCount());
 
 //		int preEventId, String editEvent, String eventType,
 //		String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
@@ -1348,7 +1375,7 @@ public class UMLCanvas extends AbsolutePanel {
 				System.out.println("DropArtifact"+":"+selectedArtifact.toString());
 				MyLoggerExecute.registEditEvent(-1, selectedArtifact.toString(), "Place",
 						selectedArtifact.getClass().getName(), selectedArtifact.getId(), null, -1, -1,
-						null, oldPoint.getX()+","+oldPoint.getY(), selectedArtifact.getLocation().getX()+","+selectedArtifact.getLocation().getY(), null);
+						null, oldPoint.getX()+","+oldPoint.getY(), selectedArtifact.getLocation().getX()+","+selectedArtifact.getLocation().getY(), null, UMLArtifact.getIdCount());
 
 //				int preEventId, String editEvent, String eventType,
 //				String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
@@ -1363,7 +1390,7 @@ public class UMLCanvas extends AbsolutePanel {
 		if(placeFlag){
 			MyLoggerExecute.registEditEvent(-1, "PlaceArtifacts", "Place",
 					null, -1, null, -1, -1,
-					null, null, null, this.toUrl());
+					null, null, null, this.toUrl(), UMLArtifact.getIdCount());
 		}
 		//TODO takafumi
 		System.out.println(this.toString());
@@ -1448,22 +1475,7 @@ public class UMLCanvas extends AbsolutePanel {
 		this.helpText.setText("");
 	}
 
-	private void removeRecursive(final UMLArtifact element) {
-		GfxManager.getPlatform().removeFromVirtualGroup(this.allObjects, element.getGfxObject(), false);
-		this.objects.remove(element.getGfxObject());
-		UMLArtifact.removeArtifactById(element.getId());
-		element.setCanvas(null);
-		this.selectedArtifacts.remove(element);
 
-		for (final Entry<LinkArtifact, UMLArtifact> entry : element.getDependentUMLArtifacts().entrySet()) {
-			if (entry.getValue().isALink() && (entry.getKey().getClass() != LinkNoteArtifact.class)) {
-				this.remove(entry.getValue());
-			}
-			entry.getValue().removeDependency(entry.getKey());
-			this.removeRecursive(entry.getKey());
-		}
-
-	}
 
 	private void take() {
 		GfxManager.getPlatform().translate(this.outlines, Point.substract(this.canvasOffset, GfxManager.getPlatform().getLocationFor(this.outlines)));
@@ -1527,4 +1539,36 @@ public class UMLCanvas extends AbsolutePanel {
 		}
 	}
 
+	/**
+	 * @return height
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * @param height セットする height
+	 */
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	/**
+	 * @return width
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * @param width セットする width
+	 */
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public void setSize(int height, int width){
+		this.height = height;
+		this.width = width;
+	}
 }

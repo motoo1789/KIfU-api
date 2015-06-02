@@ -34,7 +34,7 @@ public class MyLoggerServiceImpl extends RemoteServiceServlet implements MyLogge
 
 	public boolean registEditEvent(int preEventId, String editEvent, String eventType,
 												String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
-												String targetPart, String beforeEdit, String afterEdit, String canvasUrl) {
+												String targetPart, String beforeEdit, String afterEdit, String canvasUrl, int umlArtifactId) {
 		Dao dao = new Dao();
 		HttpServletRequest request = getThreadLocalRequest();
 		HttpSession session = request.getSession(false);
@@ -51,7 +51,7 @@ public class MyLoggerServiceImpl extends RemoteServiceServlet implements MyLogge
 		if( dao.registEditEvent( studentId,  exercisesId, preEventId, editEvent, eventType,
 											  targetType, targetId,  linkKind,  rightObjectId, leftObjectId,
 											  targetPart,  beforeEdit, afterEdit, canvasId, canvasUrl,
-											  defaultDifficulty) ){
+											  defaultDifficulty, umlArtifactId) ){
 			System.out.println("DB is OK");
 			return true;
 		}else {

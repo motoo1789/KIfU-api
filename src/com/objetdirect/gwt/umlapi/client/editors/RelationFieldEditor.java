@@ -17,6 +17,7 @@ package com.objetdirect.gwt.umlapi.client.editors;
 
 import com.objetdirect.gwt.umlapi.client.artifacts.RelationLinkArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.RelationLinkArtifact.RelationLinkArtifactPart;
+import com.objetdirect.gwt.umlapi.client.artifacts.UMLArtifact;
 import com.objetdirect.gwt.umlapi.client.helpers.UMLCanvas;
 import com.objetdirect.gwt.umlapi.client.mylogger.MyLoggerExecute;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLRelation;
@@ -75,7 +76,7 @@ public class RelationFieldEditor extends FieldEditor {
 
 		MyLoggerExecute.registEditEvent(-1, "Relation", "Edit",
 				rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
-				part, oldContent, newContent, this.canvas.toUrl());
+				part, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
 
 //		int preEventId, String editEvent, String eventType,
 //		String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
