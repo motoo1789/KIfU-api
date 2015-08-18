@@ -1,27 +1,30 @@
 /*
  * This file is part of the GWTUML project and was written by Mounier Florian <mounier-dot-florian.at.gmail'dot'com> for Objet Direct
  * <http://wwww.objetdirect.com>
- * 
+ *
  * Copyright © 2009 Objet Direct Contact: gwtuml@googlegroups.com
- * 
+ *
  * GWTUML is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later version.
- * 
+ *
  * GWTUML is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License along with GWTUML. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.objetdirect.gwt.umlapi.client.gfx;
 
+
+
 import com.google.gwt.user.client.ui.Widget;
 import com.objetdirect.gwt.umlapi.client.engine.Point;
+import com.objetdirect.tatami.client.gfx.Color;
 
 /**
  * This interface normalize all the methods used on and by a graphical object for any gfx implementation
- * 
+ *
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
- * 
+ *
  */
 public interface GfxPlatform {
 	/**
@@ -31,12 +34,12 @@ public interface GfxPlatform {
 	/**
 	 * Default canvas width
 	 */
-	final static int	DEFAULT_CANVAS_WIDTH	= 800;
+	final static int	DEFAULT_CANVAS_WIDTH	= 500;
 
 	/**
 	 * Adds a {@link GfxObjectListener} to the canvas.
-	 * 
-	 * 
+	 *
+	 *
 	 * @param canvas
 	 *            The canvas to add a listener to
 	 * @param gfxObjectListener
@@ -46,7 +49,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Adds a {@link GfxObject} to the canvas at the specified position.
-	 * 
+	 *
 	 * @param canvas
 	 *            The canvas on which the {@link GfxObject} will be added
 	 * @param gfxObject
@@ -58,7 +61,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Add a {@link GfxObject} to a virtual group
-	 * 
+	 *
 	 * @param gfxObjectGroup
 	 *            The group that will contain the {@link GfxObject}
 	 * @param gfxObject
@@ -68,27 +71,27 @@ public interface GfxPlatform {
 
 	/**
 	 * Build a circle with the specified radius
-	 * 
+	 *
 	 * @param radius
 	 *            The circle radius
-	 * 
+	 *
 	 * @return The new circle in a {@link GfxObject}
 	 */
 	GfxObject buildCircle(int radius);
 
 	/**
 	 * Build an Image from his URL
-	 * 
+	 *
 	 * @param url
 	 *            The image URL
-	 * 
+	 *
 	 * @return The new image in a {@link GfxObject}
 	 */
 	GfxObject buildImage(String url);
 
 	/**
 	 * Build a line from {@link Point} p1 to {@link Point} p2
-	 * 
+	 *
 	 * @param p1
 	 *            The line first end {@link Point}
 	 * @param p2
@@ -99,9 +102,9 @@ public interface GfxPlatform {
 
 	/**
 	 * Start the building of a path.
-	 * 
+	 *
 	 * @return The initialized path in a {@link GfxObject}
-	 * 
+	 *
 	 * @see GfxPlatform#moveTo(GfxObject, Point)
 	 * @see GfxPlatform#lineTo(GfxObject, Point)
 	 */
@@ -109,36 +112,39 @@ public interface GfxPlatform {
 
 	/**
 	 * Build a rectangle with the size : width x height
-	 * 
+	 *
 	 * @param width
 	 *            The rectangle width
 	 * @param height
 	 *            The rectangle height
-	 * 
+	 *
 	 * @return The new rectangle in a {@link GfxObject}
 	 */
 	GfxObject buildRect(int width, int height);
 
+
+	GfxObject buildEllipse(int radiusX, int radiusY);
+
 	/**
 	 * Build a Text containing text and make some platform specific adjustment
-	 * 
+	 *
 	 * @param text
 	 *            The text String used to make the Text {@link GfxObject}
 	 * @param location
 	 *            Initial position of the Text
-	 * 
+	 *
 	 * @return The new text in a {@link GfxObject}
 	 */
 	GfxObject buildText(String text, Point location);
 
 	/**
 	 * Build a Text containing text
-	 * 
+	 *
 	 * @param text
 	 *            The text String used to make the Text {@link GfxObject}
 	 * @param decoration
 	 *            The text decoration
-	 * 
+	 *
 	 * @return The new text in a {@link GfxObject}
 	 */
 	/*
@@ -146,14 +152,14 @@ public interface GfxPlatform {
 	 */
 	/**
 	 * Build a virtual group
-	 * 
+	 *
 	 * @return The new virtual group in a {@link GfxObject}
 	 */
 	GfxObject buildVirtualGroup();
 
 	/**
 	 * Erase all members in a virtual group
-	 * 
+	 *
 	 * @param gfxObjectGroup
 	 *            The {@link GfxObject} containing the virtual group
 	 */
@@ -162,7 +168,7 @@ public interface GfxPlatform {
 	/**
 	 * Line a path from the current location to the {@link Point} location making a quadratic Bezier curve <br />
 	 * controlled by the {@link Point} control
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} containing the path
 	 * @param location
@@ -175,7 +181,7 @@ public interface GfxPlatform {
 	/**
 	 * Line a path from the current location to the {@link Point} location making a Bezier curve <br />
 	 * controlled by the {@link Point} controls
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} containing the path
 	 * @param location
@@ -189,7 +195,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Getter for the {@link GfxObject} virtual group if any
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject}to get the virtual group from
 	 * @return The virtual group of this {@link GfxObject} if any, null otherwise
@@ -198,7 +204,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Getter for the {@link GfxObject} location in the canvas
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} to retrieve the location
 	 * @return The location {@link Point} of the gfxObject
@@ -207,7 +213,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Getter for the height of a Text
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} containing a Text to measure the height
 	 * @return The height of the Text
@@ -216,7 +222,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Getter for the width of a Text
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} containing a Text to measure the width
 	 * @return The width of the Text
@@ -225,7 +231,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Line a path from the current location to the {@link Point} location
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} containing the path
 	 * @param location
@@ -235,14 +241,14 @@ public interface GfxPlatform {
 
 	/**
 	 * Make a graphic canvas with default size and return the widget
-	 * 
+	 *
 	 * @return The created graphic canvas widget
 	 */
 	Widget makeCanvas();
 
 	/**
 	 * Make a graphic canvas with default size and return the widget
-	 * 
+	 *
 	 * @param width
 	 *            The canvas width
 	 * @param height
@@ -255,7 +261,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Move a path from the current location to the {@link Point} location without lining
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} containing the path
 	 * @param location
@@ -265,7 +271,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Move the {@link GfxObject} to the background
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} to move to the background
 	 */
@@ -273,7 +279,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Move the {@link GfxObject} to the foreground
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} to move to the foreground
 	 */
@@ -281,7 +287,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Remove the {@link GfxObject} from the canvas
-	 * 
+	 *
 	 * @param canvas
 	 *            The graphic canvas widget the {@link GfxObject} is on
 	 * @param gfxObject
@@ -291,7 +297,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Removes a {@link GfxObject} from its virtual group
-	 * 
+	 *
 	 * @param gfxObjectGroup
 	 *            the virtual group containing the gfxObject
 	 * @param gfxObject
@@ -303,7 +309,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Rotate a graphical object with the given angle in radians and center
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} to be rotated
 	 * @param angle
@@ -315,7 +321,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Setter for the filling color of a graphical object
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} to set the filling color
 	 * @param color
@@ -325,7 +331,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Setter for the font of a graphical object text
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} containing the Text to set the font
 	 * @param gfxFont
@@ -335,20 +341,20 @@ public interface GfxPlatform {
 
 	/**
 	 * Setter for the opacity of a graphical object
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} containing the Text to set the font
 	 * @param opacity
 	 *            The new opacity of the graphical object
 	 * @param isForBack
 	 *            If set to true set the background opacity, otherwise it is the stroke opacity
-	 * 
+	 *
 	 */
 	void setOpacity(GfxObject gfxObject, int opacity, boolean isForBack);
 
 	/**
 	 * Setter for the size of the canvas
-	 * 
+	 *
 	 * @param canvas
 	 *            The canvas to set the size
 	 * @param width
@@ -360,7 +366,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Setter of the stroke color and width for a graphical object
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} to set the stroke color and width
 	 * @param color
@@ -372,7 +378,7 @@ public interface GfxPlatform {
 
 	/**
 	 * Setter of the stroke style for a graphical object
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} to set the stroke style
 	 * @param style
@@ -382,11 +388,13 @@ public interface GfxPlatform {
 
 	/**
 	 * Translate a graphical object to a new destination by an offset
-	 * 
+	 *
 	 * @param gfxObject
 	 *            The {@link GfxObject} to be translated
 	 * @param offset
 	 *            The {@link Point} containing the two offset dimensions
 	 */
 	void translate(GfxObject gfxObject, Point offset);
+
+	void setColor(GfxObject gfxObject , Color color);
 }

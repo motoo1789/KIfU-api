@@ -71,6 +71,48 @@ public class ContextMenu {
 														}
 													};
 
+	//For MisuseCase
+	private final Command			addNewUseCase		= new Command() {
+		public void execute() {
+			ContextMenu.this.canvas.addNewUseCase(ContextMenu.this.location);
+		}
+	};
+	private final Command			addNewMisUseCase		= new Command() {
+		public void execute() {
+			ContextMenu.this.canvas.addNewMisUseCase(ContextMenu.this.location);
+		}
+	};
+	private final Command			addNewSecurityUseCase		= new Command() {
+		public void execute() {
+			ContextMenu.this.canvas.addNewSecurityUseCase(ContextMenu.this.location);
+		}
+	};
+	private final Command			addNewAsset		= new Command() {
+		public void execute() {
+			ContextMenu.this.canvas.addNewAsset(ContextMenu.this.location);
+		}
+	};
+	private final Command			addNewActor		= new Command() {
+		public void execute() {
+			ContextMenu.this.canvas.addNewActor(ContextMenu.this.location);
+		}
+	};
+	private final Command			addNewMisActor		= new Command() {
+		public void execute() {
+			ContextMenu.this.canvas.addNewMisActor(ContextMenu.this.location);
+		}
+	};
+	private final Command			addNewMisPrincipal		= new Command() {
+		public void execute() {
+			ContextMenu.this.canvas.addNewMisPrincipal(ContextMenu.this.location);
+		}
+	};
+	private final Command			addNewMisExPrincipal		= new Command() {
+		public void execute() {
+			ContextMenu.this.canvas.addNewMisExPrincipal(ContextMenu.this.location);
+		}
+	};
+
 	private final UMLCanvas			canvas;
 	private PopupMenu				contextMenu;
 
@@ -169,11 +211,43 @@ public class ContextMenu {
 		if (this.canvas.getUMLDiagram().getType() == Type.SEQUENCE) {
 			this.contextMenu.addItem(ADD_NEW_LIFELINE.getMessage(), this.addNewLifeLine);
 		}
+
+		//ForMisuseCase  // TODO FIXME MisuseCaseType
+		if (this.canvas.getUMLDiagram().getType().isMisuseCaseType()) {
+			this.contextMenu.addItem(ADD_NEW_USECASE.getMessage(), this.addNewUseCase);
+		}
+		if (this.canvas.getUMLDiagram().getType().isMisuseCaseType()) {
+			this.contextMenu.addItem(ADD_NEW_MISUSECASE.getMessage(), this.addNewMisUseCase);
+		}
+		if (this.canvas.getUMLDiagram().getType().isMisuseCaseType()) {
+			this.contextMenu.addItem(ADD_NEW_SECURITYUSECASE.getMessage(), this.addNewSecurityUseCase);
+		}
+		if (this.canvas.getUMLDiagram().getType().isMisuseCaseType()) {
+			this.contextMenu.addItem(ADD_NEW_ASSET.getMessage(), this.addNewAsset);
+		}
+		if (this.canvas.getUMLDiagram().getType().isMisuseCaseType()) {
+			this.contextMenu.addItem(ADD_NEW_ACTOR.getMessage(), this.addNewActor);
+		}
+		if (this.canvas.getUMLDiagram().getType().isMisuseCaseType()) { // TODO FIXME MisuseCaseType
+			final MenuBar misActorSubMenu = new MenuBar();
+			misActorSubMenu.addItem(ADD_NEW_MISTHIRDPARTY.getMessage(), this.addNewMisActor);
+			misActorSubMenu.addItem(ADD_NEW_MISPRINCIPAL.getMessage(), this.addNewMisPrincipal);
+			misActorSubMenu.addItem(ADD_NEW_MISEXPRINCIPAL.getMessage(), this.addNewMisExPrincipal);
+			this.contextMenu.addItem(ADD_NEW_MISACTOR.getMessage(), misActorSubMenu);
+		}
+
 		this.contextMenu.addItem(ADD_NEW_NOTE.getMessage(), this.addNewNote);
 		final MenuBar linkSubMenu = new MenuBar(true);
 		//関連の種類
 		for (final LinkKind relationKind : LinkKind.values()) {
+			if(Session.getActiveCanvas().getUMLDiagram().getType().isMisuseCaseType()){
+				if(relationKind.getName().equals("SimpleRelation")){
+					linkSubMenu.addItem(relationKind.getNameInMenu(), this.addRelation(relationKind));
+				}
+			}
 			if (relationKind.isForDiagram(Session.getActiveCanvas().getUMLDiagram().getType())) {
+
+				//linkSubMenu.addItem(relationKind.getNameInMenu(), this.addRelation(relationKind));
 				linkSubMenu.addItem(relationKind.getNameInMenu(), this.addRelation(relationKind));
 			}
 		}
@@ -187,12 +261,12 @@ public class ContextMenu {
 //		this.contextMenu.addItem(PASTE.getMessage(), this.paste);
 
 		this.contextMenu.addSeparator();
-		if (this.canvas.getUMLDiagram().getType().isClassOrObjectType()) {
-			this.contextMenu.addItem(SWITCH_LINK_STYLE.getMessage(), this.changeLinkStyle);
-		}
+//		if (this.canvas.getUMLDiagram().getType().isClassOrObjectType()) {
+//			this.contextMenu.addItem(SWITCH_LINK_STYLE.getMessage(), this.changeLinkStyle);
+//		}
 
 		//this.contextMenu.addItem(CLEAR_DIAGRAM.getMessage(), this.clearDiagram);
 		this.contextMenu.addItem(REMOVE.getMessage(), this.remove);
-		this.contextMenu.addItem(HOTKEYS.getMessage(), this.bringHelp);
+//		this.contextMenu.addItem(HOTKEYS.getMessage(), this.bringHelp);
 	}
 }

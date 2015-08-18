@@ -29,6 +29,8 @@ import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.objetdirect.gwt.umlapi.client.artifacts.ActorArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.AssetArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassRelationLinkArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.InstantiationRelationLinkArtifact;
@@ -39,10 +41,14 @@ import com.objetdirect.gwt.umlapi.client.artifacts.LinkArtifact.LinkStyle;
 import com.objetdirect.gwt.umlapi.client.artifacts.LinkClassRelationArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.LinkNoteArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.MessageLinkArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.MisActorArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.MisUseCaseArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.NoteArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.ObjectArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.ObjectRelationLinkArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.SecurityUseCaseArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.UMLArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.UseCaseArtifact;
 import com.objetdirect.gwt.umlapi.client.editors.FieldEditor;
 import com.objetdirect.gwt.umlapi.client.engine.Direction;
 import com.objetdirect.gwt.umlapi.client.engine.Point;
@@ -901,6 +907,328 @@ public class UMLCanvas extends AbsolutePanel {
 		}
 		//System.out.println("addNewObject");
 	}
+
+	//For MisuseCase
+	void addNewUseCase(final Point location) {
+		if (this.dragAndDropState != DragAndDropState.NONE) {
+			return;
+		}
+		final UseCaseArtifact newUseCase = new UseCaseArtifact("UseCase" + ++UMLCanvas.classCount);
+		if (this.fireNewArtifactEvent(newUseCase)) {
+			this.helpText.setText("Adding a new usecase");
+			this.add(newUseCase);
+			newUseCase.moveTo(Point.substract(location, this.canvasOffset));
+			for (final UMLArtifact selectedArtifact : this.selectedArtifacts.keySet()) {
+				selectedArtifact.unselect();
+			}
+			this.selectedArtifacts.clear();
+			this.doSelection(newUseCase.getGfxObject(), false, false);
+			this.selectedArtifacts.put(newUseCase, new ArrayList<Point>());
+			this.dragOffset = location;
+			CursorIconManager.setCursorIcon(PointerStyle.MOVE);
+			this.dragAndDropState = DragAndDropState.TAKING;
+			this.mouseIsPressed = true;
+
+			this.setWidgetPosition(this.helpText, location.getX() + 15, location.getY() - this.helpText.getOffsetHeight() - 5);
+			//TODO
+			//addNewUseCase
+//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
+//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
+//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
+
+//			int preEventId, String editEvent, String eventType,
+//			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
+//			String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+		}
+	}
+	/**
+	 * Add a new misusecase with default values to this canvas at the specified location
+	 *
+	 * @param location
+	 *            The initial class location
+	 *
+	 */
+	void addNewMisUseCase(final Point location) {
+		if (this.dragAndDropState != DragAndDropState.NONE) {
+			return;
+		}
+		final MisUseCaseArtifact newMisUseCase = new MisUseCaseArtifact("MisUseCase" + ++UMLCanvas.classCount);
+		if (this.fireNewArtifactEvent(newMisUseCase)) {
+			this.helpText.setText("Adding a new misusecase");
+			this.add(newMisUseCase);
+			newMisUseCase.moveTo(Point.substract(location, this.canvasOffset));
+			for (final UMLArtifact selectedArtifact : this.selectedArtifacts.keySet()) {
+				selectedArtifact.unselect();
+			}
+			this.selectedArtifacts.clear();
+			this.doSelection(newMisUseCase.getGfxObject(), false, false);
+			this.selectedArtifacts.put(newMisUseCase, new ArrayList<Point>());
+			this.dragOffset = location;
+			CursorIconManager.setCursorIcon(PointerStyle.MOVE);
+			this.dragAndDropState = DragAndDropState.TAKING;
+			this.mouseIsPressed = true;
+
+			this.setWidgetPosition(this.helpText, location.getX() + 15, location.getY() - this.helpText.getOffsetHeight() - 5);
+			//TODO
+			//addNewUseCase
+//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
+//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
+//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
+
+//			int preEventId, String editEvent, String eventType,
+//			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
+//			String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+		}
+	}
+	/**
+	 * Add a new asset with default values to this canvas at the specified location
+	 *
+	 * @param location
+	 *            The initial class location
+	 *
+	 */
+	void addNewSecurityUseCase(final Point location) {
+		if (this.dragAndDropState != DragAndDropState.NONE) {
+			return;
+		}
+		final SecurityUseCaseArtifact newSecurityUseCase = new SecurityUseCaseArtifact("SecurityUseCase" + ++UMLCanvas.classCount);
+		if (this.fireNewArtifactEvent(newSecurityUseCase)) {
+			this.helpText.setText("Adding a new securityusecase");
+			this.add(newSecurityUseCase);
+			newSecurityUseCase.moveTo(Point.substract(location, this.canvasOffset));
+			for (final UMLArtifact selectedArtifact : this.selectedArtifacts.keySet()) {
+				selectedArtifact.unselect();
+			}
+			this.selectedArtifacts.clear();
+			this.doSelection(newSecurityUseCase.getGfxObject(), false, false);
+			this.selectedArtifacts.put(newSecurityUseCase, new ArrayList<Point>());
+			this.dragOffset = location;
+			CursorIconManager.setCursorIcon(PointerStyle.MOVE);
+			this.dragAndDropState = DragAndDropState.TAKING;
+			this.mouseIsPressed = true;
+
+			this.setWidgetPosition(this.helpText, location.getX() + 15, location.getY() - this.helpText.getOffsetHeight() - 5);
+			//TODO
+			//addNewUseCase
+//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
+//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
+//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
+
+//			int preEventId, String editEvent, String eventType,
+//			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
+//			String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+		}
+	}
+	/**
+	 * Add a new asset with default values to this canvas at the specified location
+	 *
+	 * @param location
+	 *            The initial class location
+	 *
+	 */
+	void addNewAsset(final Point location) {
+		if (this.dragAndDropState != DragAndDropState.NONE) {
+			return;
+		}
+		final AssetArtifact newAsset = new AssetArtifact("Asset" + ++UMLCanvas.classCount);
+		if (this.fireNewArtifactEvent(newAsset)) {
+			this.helpText.setText("Adding a new asset");
+			this.add(newAsset);
+			newAsset.moveTo(Point.substract(location, this.canvasOffset));
+			for (final UMLArtifact selectedArtifact : this.selectedArtifacts.keySet()) {
+				selectedArtifact.unselect();
+			}
+			this.selectedArtifacts.clear();
+			this.doSelection(newAsset.getGfxObject(), false, false);
+			this.selectedArtifacts.put(newAsset, new ArrayList<Point>());
+			this.dragOffset = location;
+			CursorIconManager.setCursorIcon(PointerStyle.MOVE);
+			this.dragAndDropState = DragAndDropState.TAKING;
+			this.mouseIsPressed = true;
+
+			this.setWidgetPosition(this.helpText, location.getX() + 5, location.getY() - this.helpText.getOffsetHeight() - 5);
+			//TODO
+			//addNewClass
+//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
+//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
+//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
+
+//			int preEventId, String editEvent, String eventType,
+//			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
+//			String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+		}
+
+	}
+
+	/**
+	 * Add a new actor with default values to this canvas at the specified location
+	 *
+	 * @param location
+	 *            The initial class location
+	 *
+	 */
+	void addNewActor(final Point location) {
+		if (this.dragAndDropState != DragAndDropState.NONE) {
+			return;
+		}
+		final ActorArtifact newActor = new ActorArtifact("Actor" + ++UMLCanvas.classCount);
+		if (this.fireNewArtifactEvent(newActor)) {
+			this.helpText.setText("Adding a new actor");
+			this.add(newActor);
+			newActor.moveTo(Point.substract(location, this.canvasOffset));
+			for (final UMLArtifact selectedArtifact : this.selectedArtifacts.keySet()) {
+				selectedArtifact.unselect();
+			}
+			this.selectedArtifacts.clear();
+			this.doSelection(newActor.getGfxObject(), false, false);
+			this.selectedArtifacts.put(newActor, new ArrayList<Point>());
+			this.dragOffset = location;
+			CursorIconManager.setCursorIcon(PointerStyle.MOVE);
+			this.dragAndDropState = DragAndDropState.TAKING;
+			this.mouseIsPressed = true;
+
+			this.setWidgetPosition(this.helpText, location.getX() + 5, location.getY() - this.helpText.getOffsetHeight() - 5);
+			//TODO
+			//addNewClass
+//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
+//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
+//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
+
+//			int preEventId, String editEvent, String eventType,
+//			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
+//			String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+		}
+
+	}
+
+	/**
+	 * Add a new misactor with default values to this canvas at the specified location
+	 *
+	 * @param location
+	 *            The initial class location
+	 *
+	 */
+	void addNewMisActor(final Point location) {
+		if (this.dragAndDropState != DragAndDropState.NONE) {
+			return;
+		}
+		final MisActorArtifact newMisActor = new MisActorArtifact("MisActor" + ++UMLCanvas.classCount,1);
+		if (this.fireNewArtifactEvent(newMisActor)) {
+			this.helpText.setText("Adding a new misactor");
+			this.add(newMisActor);
+			newMisActor.moveTo(Point.substract(location, this.canvasOffset));
+			for (final UMLArtifact selectedArtifact : this.selectedArtifacts.keySet()) {
+				selectedArtifact.unselect();
+			}
+			this.selectedArtifacts.clear();
+			this.doSelection(newMisActor.getGfxObject(), false, false);
+			this.selectedArtifacts.put(newMisActor, new ArrayList<Point>());
+			this.dragOffset = location;
+			CursorIconManager.setCursorIcon(PointerStyle.MOVE);
+			this.dragAndDropState = DragAndDropState.TAKING;
+			this.mouseIsPressed = true;
+
+			this.setWidgetPosition(this.helpText, location.getX() + 5, location.getY() - this.helpText.getOffsetHeight() - 5);
+			//TODO
+			//addNewClass
+//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
+//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
+//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
+
+//			int preEventId, String editEvent, String eventType,
+//			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
+//			String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+		}
+
+	}
+
+	/**
+	 * Add a new misExPrincipal with default values to this canvas at the specified location
+	 *
+	 * @param location
+	 *            The initial class location
+	 *
+	 */
+	void addNewMisExPrincipal(final Point location) {
+		if (this.dragAndDropState != DragAndDropState.NONE) {
+			return;
+		}
+		final MisActorArtifact newMisExPrincipal = new MisActorArtifact("MisExPrincipal" + ++UMLCanvas.classCount,2);
+		if (this.fireNewArtifactEvent(newMisExPrincipal)) {
+			this.helpText.setText("Adding a new misExPrincipal");
+			this.add(newMisExPrincipal);
+			newMisExPrincipal.moveTo(Point.substract(location, this.canvasOffset));
+			for (final UMLArtifact selectedArtifact : this.selectedArtifacts.keySet()) {
+				selectedArtifact.unselect();
+			}
+			this.selectedArtifacts.clear();
+			this.doSelection(newMisExPrincipal.getGfxObject(), false, false);
+			this.selectedArtifacts.put(newMisExPrincipal, new ArrayList<Point>());
+			this.dragOffset = location;
+			CursorIconManager.setCursorIcon(PointerStyle.MOVE);
+			this.dragAndDropState = DragAndDropState.TAKING;
+			this.mouseIsPressed = true;
+
+			this.setWidgetPosition(this.helpText, location.getX() + 5, location.getY() - this.helpText.getOffsetHeight() - 5);
+			//TODO
+			//addNewClass
+//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
+//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
+//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
+
+//			int preEventId, String editEvent, String eventType,
+//			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
+//			String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+		}
+
+	}
+	/**
+	 * Add a new misPrincipal with default values to this canvas at the specified location
+	 *
+	 * @param location
+	 *            The initial class location
+	 *
+	 */
+	void addNewMisPrincipal(final Point location) {
+		if (this.dragAndDropState != DragAndDropState.NONE) {
+			return;
+		}
+		final MisActorArtifact newMisPrincipal = new MisActorArtifact("MisPrincipal" + ++UMLCanvas.classCount,3);
+		if (this.fireNewArtifactEvent(newMisPrincipal)) {
+			this.helpText.setText("Adding a new misPrincipal");
+			this.add(newMisPrincipal);
+			newMisPrincipal.moveTo(Point.substract(location, this.canvasOffset));
+			for (final UMLArtifact selectedArtifact : this.selectedArtifacts.keySet()) {
+				selectedArtifact.unselect();
+			}
+			this.selectedArtifacts.clear();
+			this.doSelection(newMisPrincipal.getGfxObject(), false, false);
+			this.selectedArtifacts.put(newMisPrincipal, new ArrayList<Point>());
+			this.dragOffset = location;
+			CursorIconManager.setCursorIcon(PointerStyle.MOVE);
+			this.dragAndDropState = DragAndDropState.TAKING;
+			this.mouseIsPressed = true;
+
+			this.setWidgetPosition(this.helpText, location.getX() + 5, location.getY() - this.helpText.getOffsetHeight() - 5);
+			//TODO
+			//addNewClass
+//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
+//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
+//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
+
+//			int preEventId, String editEvent, String eventType,
+//			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
+//			String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+		}
+
+	}
+
+
+
+
+
+
+
 	void cut() {
 		this.copy();
 		this.wasACopy = false;

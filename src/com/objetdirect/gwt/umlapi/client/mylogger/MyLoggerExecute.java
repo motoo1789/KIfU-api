@@ -38,7 +38,10 @@ public class MyLoggerExecute {
 			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
 			String targetPart, String beforeEdit, String afterEdit, String canvasUrl, int umlArtifactId ){
 
-		if( ( Session.getMode() ).equals("drawer")){
+		String studentId = Session.studentId;
+		int exerciseId = Session.exerciseId;
+
+		if( ( Session.getMode() ).equals("drawer") || ( Session.getMode() ).equals("login")){
 			MyLoggerServiceAsync async = (MyLoggerServiceAsync)GWT.create(MyLoggerService.class);
 			ServiceDefTarget entryPoint = (ServiceDefTarget) async;
 			String entryURL = GWT.getModuleBaseURL() + "registEditEvent";
@@ -54,7 +57,7 @@ public class MyLoggerExecute {
 				}
 			};
 
-			async.registEditEvent( preEventId, editEvent, eventType, targetType, targetId,
+			async.registEditEvent( studentId, exerciseId, preEventId, editEvent, eventType, targetType, targetId,
 					linkKind,  rightObjectId, leftObjectId, targetPart,  beforeEdit,
 					afterEdit, canvasUrl, umlArtifactId, callback);
 		}

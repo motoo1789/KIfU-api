@@ -122,7 +122,7 @@ public class OptionsManager {
 		OptionsManager.optionsList.put("RectangleLeftPadding", 2);
 		OptionsManager.optionsList.put("RectangleRightPadding", 2);
 
-		OptionsManager.optionsList.put("TextTopPadding", 1);
+		OptionsManager.optionsList.put("TextTopPadding", 2);
 		OptionsManager.optionsList.put("TextBottomPadding", 1);
 		OptionsManager.optionsList.put("TextLeftPadding", 1);
 		OptionsManager.optionsList.put("TextRightPadding", 1);
@@ -137,8 +137,8 @@ public class OptionsManager {
 
 		OptionsManager.optionsList.put("QualityLevel", 1);
 
-		OptionsManager.optionsList.put("FontSize", 10);
-		OptionsManager.optionsList.put("SmallFontSize", 9);
+		OptionsManager.optionsList.put("FontSize", 12);//TODO set appropriate size
+		OptionsManager.optionsList.put("SmallFontSize", 11);
 
 		OptionsManager.optionsList.put("DiagramType", 2);
 		OptionsManager.optionsList.put("GraphicEngine", 0);

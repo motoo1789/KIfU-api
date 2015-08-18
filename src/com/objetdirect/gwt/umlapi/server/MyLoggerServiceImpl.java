@@ -1,8 +1,5 @@
 package com.objetdirect.gwt.umlapi.server;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.objetdirect.gwt.umlapi.client.mylogger.MyLoggerService;
 import com.objetdirect.gwt.umlapi.server.dao.Dao;
@@ -32,14 +29,11 @@ public class MyLoggerServiceImpl extends RemoteServiceServlet implements MyLogge
 //		}
 //	}
 
-	public boolean registEditEvent(int preEventId, String editEvent, String eventType,
+	public boolean registEditEvent(String studentId, int exercisesId, int preEventId, String editEvent, String eventType,
 												String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
 												String targetPart, String beforeEdit, String afterEdit, String canvasUrl, int umlArtifactId) {
 		Dao dao = new Dao();
-		HttpServletRequest request = getThreadLocalRequest();
-		HttpSession session = request.getSession(false);
-		String studentId = (String)session.getAttribute("studentId");
-		int exercisesId = (Integer) session.getAttribute("exercisesId");
+
 		int defaultDifficulty = 1;
 		int canvasId=1;
 

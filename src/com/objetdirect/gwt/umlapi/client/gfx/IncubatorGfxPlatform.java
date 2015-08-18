@@ -1,15 +1,15 @@
 /*
  * This file is part of the GWTUML project and was written by Mounier Florian <mounier-dot-florian.at.gmail'dot'com> for Objet Direct
  * <http://wwww.objetdirect.com>
- * 
+ *
  * Copyright © 2009 Objet Direct Contact: gwtuml@googlegroups.com
- * 
+ *
  * GWTUML is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later version.
- * 
+ *
  * GWTUML is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License along with GWTUML. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.objetdirect.gwt.umlapi.client.gfx;
@@ -29,7 +29,7 @@ import com.objetdirect.gwt.umlapi.client.engine.Point;
 
 /**
  * This class implements the graphic platform using the <a href="http://code.google.com/p/google-web-toolkit-incubator/">GWT Incubator</a> canvas library
- * 
+ *
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
  */
 public class IncubatorGfxPlatform implements GfxPlatform {
@@ -43,13 +43,13 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#addObjectListenerToCanvas(com.google.gwt.user.client.ui.Widget,
 	 * com.objetdirect.gwt.umlapi.client.gfx.GfxObjectListener)
 	 */
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#addObjectListenerToCanvas(com.google.gwt.user.client.ui.Widget,
 	 * com.objetdirect.gwt.umlapi.client.gfx.GfxObjectListener)
 	 */
@@ -59,7 +59,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 		final MouseListener mouseListener = new MouseListener() {
 			/*
 			 * (non-Javadoc)
-			 * 
+			 *
 			 * @see com.google.gwt.user.client.ui.MouseListener#onMouseDown(com.google.gwt.user.client.ui.Widget, int, int)
 			 */
 			public void onMouseDown(final Widget sender, final int x, final int y) {
@@ -72,7 +72,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 			/*
 			 * (non-Javadoc)
-			 * 
+			 *
 			 * @see com.google.gwt.user.client.ui.MouseListener#onMouseEnter(com.google.gwt.user.client.ui.Widget)
 			 */
 			public void onMouseEnter(final Widget sender) {
@@ -81,7 +81,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 			/*
 			 * (non-Javadoc)
-			 * 
+			 *
 			 * @see com.google.gwt.user.client.ui.MouseListener#onMouseLeave(com.google.gwt.user.client.ui.Widget)
 			 */
 			public void onMouseLeave(final Widget sender) {
@@ -90,7 +90,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 			/*
 			 * (non-Javadoc)
-			 * 
+			 *
 			 * @see com.google.gwt.user.client.ui.MouseListener#onMouseMove(com.google.gwt.user.client.ui.Widget, int, int)
 			 */
 			public void onMouseMove(final Widget sender, final int x, final int y) {
@@ -99,7 +99,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 			/*
 			 * (non-Javadoc)
-			 * 
+			 *
 			 * @see com.google.gwt.user.client.ui.MouseListener#onMouseUp(com.google.gwt.user.client.ui.Widget, int, int)
 			 */
 			public void onMouseUp(final Widget sender, final int x, final int y) {
@@ -114,7 +114,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 		final ClickListener clickListener = new ClickListener() {
 			/*
 			 * (non-Javadoc)
-			 * 
+			 *
 			 * @see com.google.gwt.user.client.ui.ClickListener#onClick(com.google.gwt.user.client.ui.Widget)
 			 */
 			public void onClick(final Widget sender) {
@@ -129,7 +129,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#addToCanvas(com.google.gwt.user.client.ui.Widget, com.objetdirect.gwt.umlapi.client.gfx.GfxObject,
 	 * com.objetdirect.gwt.umlapi.client.engine.Point)
 	 */
@@ -145,7 +145,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#addToVirtualGroup(com.objetdirect.gwt.umlapi.client.gfx.GfxObject,
 	 * com.objetdirect.gwt.umlapi.client.gfx.GfxObject)
 	 */
@@ -155,7 +155,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#buildCircle(int)
 	 */
 	@Override
@@ -166,7 +166,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#buildImage(java.lang.String)
 	 */
 	@Override
@@ -177,7 +177,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#buildLine(com.objetdirect.gwt.umlapi.client.engine.Point,
 	 * com.objetdirect.gwt.umlapi.client.engine.Point)
 	 */
@@ -187,7 +187,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#buildPath()
 	 */
 	public GfxObject buildPath() {
@@ -196,16 +196,20 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#buildRect(int, int)
 	 */
 	public GfxObject buildRect(final int width, final int height) {
 		return new IncubatorGfxObjectContainer(new Rect(width, height));
 	}
 
+	public GfxObject buildEllipse(final int radiusX, final int radiusY){
+		return new IncubatorGfxObjectContainer(new Ellipse(radiusX , radiusY));
+	}
+
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#buildText(java.lang.String)
 	 */
 	public GfxObject buildText(final String text, final Point location) {
@@ -215,7 +219,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#buildVirtualGroup()
 	 */
 	public GfxObject buildVirtualGroup() {
@@ -224,7 +228,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#clearVirtualGroup(com.objetdirect.gwt.umlapi.client.gfx.GfxObject)
 	 */
 	public void clearVirtualGroup(final GfxObject gfxOGroup) {
@@ -234,7 +238,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#curveTo(com.objetdirect.gwt.umlapi.client.gfx.GfxObject,
 	 * com.objetdirect.gwt.umlapi.client.engine.Point, com.objetdirect.gwt.umlapi.client.engine.Point)
 	 */
@@ -244,7 +248,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#curveTo(com.objetdirect.gwt.umlapi.client.gfx.GfxObject,
 	 * com.objetdirect.gwt.umlapi.client.engine.Point, com.objetdirect.gwt.umlapi.client.engine.Point, com.objetdirect.gwt.umlapi.client.engine.Point)
 	 */
@@ -256,7 +260,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#getGroup(com.objetdirect.gwt.umlapi.client.gfx.GfxObject)
 	 */
 	public GfxObject getGroup(final GfxObject gfxO) {
@@ -265,7 +269,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#getLocationFor(com.objetdirect.gwt.umlapi.client.gfx.GfxObject)
 	 */
 	public Point getLocationFor(final GfxObject gfxO) {
@@ -277,7 +281,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#getHeightFor(com.objetdirect.gwt.umlapi.client.gfx.GfxObject)
 	 */
 	public int getTextHeightFor(final GfxObject gfxO) {
@@ -289,7 +293,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#getWidthFor(com.objetdirect.gwt.umlapi.client.gfx.GfxObject)
 	 */
 	public int getTextWidthFor(final GfxObject gfxO) {
@@ -301,7 +305,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#lineTo(com.objetdirect.gwt.umlapi.client.gfx.GfxObject,
 	 * com.objetdirect.gwt.umlapi.client.engine.Point)
 	 */
@@ -311,7 +315,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#makeCanvas()
 	 */
 	public Widget makeCanvas() {
@@ -320,7 +324,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#makeCanvas(int, int, com.objetdirect.gwt.umlapi.client.gfx.GfxColor)
 	 */
 	public Widget makeCanvas(final int width, final int height, final GfxColor backgroundColor) {
@@ -340,7 +344,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#moveTo(com.objetdirect.gwt.umlapi.client.gfx.GfxObject,
 	 * com.objetdirect.gwt.umlapi.client.engine.Point)
 	 */
@@ -350,7 +354,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#moveToBack(com.objetdirect.gwt.umlapi.client.gfx.GfxObject)
 	 */
 	public void moveToBack(final GfxObject gfxO) {
@@ -360,7 +364,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#moveToFront(com.objetdirect.gwt.umlapi.client.gfx.GfxObject)
 	 */
 	public void moveToFront(final GfxObject gfxO) {
@@ -370,7 +374,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#removeFromCanvas(com.google.gwt.user.client.ui.Widget,
 	 * com.objetdirect.gwt.umlapi.client.gfx.GfxObject)
 	 */
@@ -382,7 +386,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#removeFromVirtualGroup(com.objetdirect.gwt.umlapi.client.gfx.GfxObject,
 	 * com.objetdirect.gwt.umlapi.client.gfx.GfxObject, boolean)
 	 */
@@ -393,7 +397,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#rotate(com.objetdirect.gwt.umlapi.client.gfx.GfxObject, float,
 	 * com.objetdirect.gwt.umlapi.client.engine.Point)
 	 */
@@ -405,7 +409,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#setFillColor(com.objetdirect.gwt.umlapi.client.gfx.GfxObject,
 	 * com.objetdirect.gwt.umlapi.client.gfx.GfxColor)
 	 */
@@ -416,7 +420,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#setFont(com.objetdirect.gwt.umlapi.client.gfx.GfxObject,
 	 * com.objetdirect.gwt.umlapi.client.gfx.GfxFont)
 	 */
@@ -426,7 +430,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#setOpacity(com.objetdirect.gwt.umlapi.client.gfx.GfxObject, int, boolean)
 	 */
 	public void setOpacity(final GfxObject gfxO, final int opacity, final boolean isForBack) {
@@ -436,7 +440,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#setSize(com.google.gwt.user.client.ui.Widget, int, int)
 	 */
 	public void setSize(final Widget canvas, final int width, final int height) {
@@ -445,7 +449,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#setStroke(com.objetdirect.gwt.umlapi.client.gfx.GfxObject,
 	 * com.objetdirect.gwt.umlapi.client.gfx.GfxColor, int)
 	 */
@@ -458,7 +462,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#setStrokeStyle(com.objetdirect.gwt.umlapi.client.gfx.GfxObject,
 	 * com.objetdirect.gwt.umlapi.client.gfx.GfxStyle)
 	 */
@@ -470,7 +474,7 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform#translate(com.objetdirect.gwt.umlapi.client.gfx.GfxObject,
 	 * com.objetdirect.gwt.umlapi.client.engine.Point)
 	 */
@@ -505,6 +509,12 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 
 	private IncubatorGfxObject getIncubatorGraphicalObjectFrom(final GfxObject gfxO) {
 		return ((IncubatorGfxObjectContainer) gfxO).getGraphicObject();
+	}
+
+	@Override
+	public void setColor(GfxObject gfxObject, com.objetdirect.tatami.client.gfx.Color color) {
+		// TODO 自動生成されたメソッド・スタブ
+
 	}
 
 }

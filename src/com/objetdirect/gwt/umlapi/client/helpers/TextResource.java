@@ -8,6 +8,20 @@ package com.objetdirect.gwt.umlapi.client.helpers;
  *
  */
 public enum TextResource {
+	SUPER_HYBRID_TR("Super hybrid", "スーパーハイブリッド"),
+	CLASS_AND_MISUSECASE_TR("Class and MisuseCase", "クラス図とミスユースケース図"),
+	MISUSECASE_DIAGRAM("MisuseCase Diagram", "ミスユースケース図"),
+	CLASS_DIAGRAM("Class Diagram", "クラス図"),
+	ASSET_LINK("Asset link", "アセットリンク"),
+	ADD_NEW_USECASE("Add new usecase", "新しいユースケース"),
+	ADD_NEW_MISUSECASE("Add new misusecase", "新しいミスユースケース"),
+	ADD_NEW_SECURITYUSECASE("Add new securityusecase", "新しいセキュリティユースケース"),
+	ADD_NEW_ASSET("Add new asset", "新しい資産"),
+	ADD_NEW_ACTOR("Add new actor", "新しいアクター"),
+	ADD_NEW_MISACTOR("Add new actor", "新しいミスアクター"),
+	ADD_NEW_MISTHIRDPARTY("Add new misthirdparty","第三者"),
+	ADD_NEW_MISPRINCIPAL("Add new misprincipal","本人"),
+	ADD_NEW_MISEXPRINCIPAL("Add new misexprincipal","本人以外"),
 	ADD_NEW_CLASS("Add new class", "新しいクラス"),
 	ADD_NEW_OBJECT("Add new object", "Add new object"),
 	ADD_NEW_LIFELINE("Add new life line", "Add new life line"),
@@ -66,6 +80,7 @@ public enum TextResource {
 	HYBLID_TR("class and object","クラス＆オブジェクト"),
 	SEQUENCE_TR("sequence","シーケンス"),
 	RELATIONSHIP("Relationship","関連"),
+	MISUSECASE_TR("MisuseCase", "ミスユースケース"),
 
 	;
 

@@ -25,10 +25,14 @@ public abstract class UMLLink {
 		/**
 		 * Simple relation
 		 */
-		SIMPLE_RELATION("SimpleRelation", RELATIONSHIP.getMessage(), LinkAdornment.NONE, LinkAdornment.NONE, "undefined", "undefined", LinkStyle.SOLID, Type.HYBRID),
+		//Type.ANY とかMISSUSECASEとかを追加
+		SIMPLE_RELATION("SimpleRelation", RELATIONSHIP.getMessage(), LinkAdornment.NONE, LinkAdornment.NONE, "undefined", "undefined", LinkStyle.SOLID, Type.SUPER_HYBRID),
+
+		ASSOCIATION_HYBRID("Association", ASSOSIATION.getMessage(), LinkAdornment.WIRE_ARROW, LinkAdornment.NONE, "", "", LinkStyle.SOLID, Type.SUPER_HYBRID),
 		/**
 		 * Aggregation relation
 		 */
+		//Type.ANY とかMISSUSECASEとかを追加
 		AGGREGATION_RELATION("Aggregation", AGGREGATION.getMessage(), LinkAdornment.SOLID_DIAMOND, LinkAdornment.NONE, "1", "0..*", LinkStyle.SOLID, Type.HYBRID),
 		/**
 		 * Association relation
@@ -209,11 +213,15 @@ public abstract class UMLLink {
 		 * @return True if this {@link LinkKind} can be put on this diagramType
 		 */
 		public boolean isForDiagram(final Type diagramType) {
+			//TODO ミスユースケース
 			if (this == INSTANTIATION) {
 				return diagramType.isHybridType();
 			}
 			if (this.requiredType.isHybridType()) {
 				return diagramType.isClassOrObjectType();
+			}
+			if (this.requiredType.isSuperHybridType()) {
+				return diagramType.isClassOrObjectType() || diagramType.isMisuseCaseType();
 			}
 			return diagramType.equals(this.requiredType);
 		}

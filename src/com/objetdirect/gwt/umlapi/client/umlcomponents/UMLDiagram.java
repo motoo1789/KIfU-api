@@ -32,19 +32,31 @@ public class UMLDiagram {
 		/**
 		 * For a class diagram
 		 */
-		CLASS("class",CLASS_TR.getMessage(), true, false, false, 0),
+		CLASS("class",CLASS_TR.getMessage(), true, false, false, false, 0),
 		/**
 		 * For an object diagram
 		 */
-		OBJECT("object",OBJEXT_TR.getMessage(), false, true, false, 1),
+		OBJECT("object",OBJEXT_TR.getMessage(), false, true, false, false, 1),
 		/**
 		 * For a class and object diagram
 		 */
-		HYBRID("class and object",HYBLID_TR.getMessage(), true, true, false, 2),
+		HYBRID("class and objecct",HYBLID_TR.getMessage(), true, true, false,false, 2),
 		/**
 		 * For a sequence diagram
 		 */
-		SEQUENCE("sequence",SEQUENCE_TR.getMessage(), false, false, true, 3);
+		SEQUENCE("sequence",SEQUENCE_TR.getMessage(), false, false, true, false, 3),
+
+		/**
+		 * For a misuse case diagram
+		 */
+		MISUSECASE("misusecase",MISUSECASE_TR.getMessage(), false, false, false, true, 4),
+
+		CLASS_AND_MISUSECASE("class and misusecase",CLASS_AND_MISUSECASE_TR.getMessage(), true, false, false, true, 5),
+
+		SUPER_HYBRID("super hybrid",SUPER_HYBRID_TR.getMessage(), true, true, false, true, 6);
+
+		//TODO add MissUsecase
+
 
 		/**
 		 * Return a the UMLDiagram type that corresponds to the index
@@ -59,31 +71,34 @@ public class UMLDiagram {
 					return type;
 				}
 			}
-			return UMLDiagram.Type.HYBRID;
+			return UMLDiagram.Type.SUPER_HYBRID;
 		}
 
 		private boolean	isClassType;
 		private boolean	isObjectType;
 		private boolean	isSequenceType;
+		private boolean	isMisuseCaseType;
 		private String	name;
 		private String nameInMenu;
 
 		private Integer	index;
 
 
-		private Type(final String name, final boolean isClassType, final boolean isObjectType, final boolean isSequenceType, final Integer index) {
+		private Type(final String name, final boolean isClassType, final boolean isObjectType, final boolean isSequenceType, final boolean isMisuseCaseType, final Integer index) {
 			this.name = name;
 			this.isClassType = isClassType;
 			this.isObjectType = isObjectType;
 			this.isSequenceType = isSequenceType;
+			this.isMisuseCaseType = isMisuseCaseType;
 			this.index = index;
 		}
-		private Type(final String name, final String nameInMenu, final boolean isClassType, final boolean isObjectType, final boolean isSequenceType, final Integer index) {
+		private Type(final String name, final String nameInMenu, final boolean isClassType, final boolean isObjectType, final boolean isSequenceType, final boolean isMisuseCaseType, final Integer index) {
 			this.name = name;
 			this.nameInMenu=nameInMenu;
 			this.isClassType = isClassType;
 			this.isObjectType = isObjectType;
 			this.isSequenceType = isSequenceType;
+			this.isMisuseCaseType = isMisuseCaseType;
 			this.index = index;
 		}
 
@@ -136,6 +151,10 @@ public class UMLDiagram {
 			return this.isClassType && this.isObjectType;
 		}
 
+		public boolean isSuperHybridType() {
+			return this.isClassType && this.isObjectType && this.isMisuseCaseType;
+		}
+
 		/**
 		 * This method allows to know if a diagram can draw object diagram type objects
 		 *
@@ -152,6 +171,9 @@ public class UMLDiagram {
 		 */
 		public boolean isSequenceType() {
 			return this.isSequenceType;
+		}
+		public boolean isMisuseCaseType() {
+			return this.isMisuseCaseType;
 		}
 	}
 

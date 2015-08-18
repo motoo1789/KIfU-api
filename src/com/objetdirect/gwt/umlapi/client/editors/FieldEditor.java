@@ -112,13 +112,9 @@ public abstract class FieldEditor {
 //		}
 
 		FieldEditor.editField = this.isMultiLine ? new TextArea() : new TextBox();
-
-
-
-
 		FieldEditor.editField.setText(text);
 		FieldEditor.editField.setStylePrimaryName("editor" + (isSmallFont ? "-small" : "") + "-field" + (this.isMultiLine ? "-multiline" : ""));
-		FieldEditor.editField.setWidth(Math.max(w, this.minBoxWidth) + "px");
+		FieldEditor.editField.setWidth(( Math.max(w, this.minBoxWidth) )*2.0 + "px");
 		if (this.isMultiLine) {
 			FieldEditor.editField.setHeight(this.height + "px");
 		}

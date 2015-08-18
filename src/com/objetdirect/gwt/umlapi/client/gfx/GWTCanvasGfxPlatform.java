@@ -199,6 +199,10 @@ public class GWTCanvasGfxPlatform implements GfxPlatform {
 		return new IncubatorGfxObjectContainer(new Rect(width, height));
 	}
 
+	public GfxObject buildEllipse(final int radiusX, final int radiusY){
+		return new IncubatorGfxObjectContainer(new Ellipse(radiusX, radiusY));
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -501,5 +505,11 @@ public class GWTCanvasGfxPlatform implements GfxPlatform {
 
 	private IncubatorGfxObject getIncubatorGraphicalObjectFrom(final GfxObject gfxO) {
 		return ((IncubatorGfxObjectContainer) gfxO).getGraphicObject();
+	}
+
+	@Override
+	public void setColor(GfxObject gfxObject,  com.objetdirect.tatami.client.gfx.Color color) {
+		// TODO 自動生成されたメソッド・スタブ
+
 	}
 }

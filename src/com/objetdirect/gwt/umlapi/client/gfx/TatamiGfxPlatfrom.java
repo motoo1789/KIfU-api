@@ -172,6 +172,9 @@ public class TatamiGfxPlatfrom implements GfxPlatform {
 		return new TatamiGfxObjectContainer(new Rect(width, height));
 	}
 
+	public GfxObject buildEllipse(final int radiusX , final int radiusY){
+		return new TatamiGfxObjectContainer(new Ellip(radiusX , radiusY));
+	}
 	/*
 	 * (non-Javadoc)
 	 *
@@ -299,7 +302,7 @@ public class TatamiGfxPlatfrom implements GfxPlatform {
 			}
 
 			// 幅*(半角の数/総文字数)*2/3を引く
-			width = (int)( (double)(width) -  (double)(width)*( (double)(count) / (double) (text.length()) )*(0.58) ); //1/2< x < 2/3
+			width = (int)( (double)(width) -  (double)(width)*( (double)(count) / (double) (text.length()) )*(0.53) ); //1/2< x < 2/3
 			return (int) (width/ 5.);// Converting point to pixel
 		}
 		return 0;
@@ -489,6 +492,12 @@ public class TatamiGfxPlatfrom implements GfxPlatform {
 
 	private com.objetdirect.tatami.client.gfx.Point pointConverter(final Point p) {
 		return new com.objetdirect.tatami.client.gfx.Point(p.getX(), p.getY());
+	}
+
+	@Override
+	public void setColor(GfxObject gfxObject, Color color) {
+		// TODO 自動生成されたメソッド・スタブ
+
 	}
 
 }

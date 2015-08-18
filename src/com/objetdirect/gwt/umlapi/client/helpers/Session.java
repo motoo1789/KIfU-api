@@ -13,6 +13,7 @@
  * You should have received a copy of the GNU Lesser General Public License along with GWTUML. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.objetdirect.gwt.umlapi.client.helpers;
+import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLDiagram;
 
 
 /**
@@ -20,10 +21,13 @@ package com.objetdirect.gwt.umlapi.client.helpers;
  *
  */
 public class Session {
-	public static UMLCanvas	activeCanvas;
-	public static String	mode;
-	public static String step;
+	public static UMLCanvas	activeCanvas =null;
+	public static String	mode = "none";
+	public static String step = null;
 	public static int preEditEventID;
+	public static UMLDiagram.Type   diagramType = null;
+	public static int exerciseId = -1;
+	public static String studentId = "";
 
 	/**
 	 * Getter for the active canvas

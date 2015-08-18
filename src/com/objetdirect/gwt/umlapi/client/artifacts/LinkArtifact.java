@@ -353,7 +353,50 @@ public abstract class LinkArtifact extends UMLArtifact {
 		} else if ((uMLArtifact.getClass() == ClassArtifact.class) && (uMLArtifactNew.getClass() == ClassArtifact.class)) {
 			return new ClassRelationLinkArtifact((ClassArtifact) uMLArtifactNew, (ClassArtifact) uMLArtifact, linkKind);
 
-		} else if ((linkKind != LinkKind.GENERALIZATION_RELATION) && (linkKind != LinkKind.REALIZATION_RELATION)
+		}//relation  from  usecase to usecase
+		 else if((uMLArtifact.getClass() ==UseCaseArtifact.class) && (uMLArtifactNew.getClass() == UseCaseArtifact.class)){
+			return new UseCaseRelationLinkArtifact((UseCaseArtifact) uMLArtifactNew, (UseCaseArtifact) uMLArtifact, linkKind);
+		}//relation from misusecase to misusecase
+		 else if((uMLArtifact.getClass() ==MisUseCaseArtifact.class) && (uMLArtifactNew.getClass() == MisUseCaseArtifact.class)){
+				return new MisUseCaseRelationLinkArtifact((MisUseCaseArtifact) uMLArtifactNew, (MisUseCaseArtifact) uMLArtifact, linkKind);
+		}//relation from misusecase to usecase
+		 else if((uMLArtifact.getClass() ==MisUseCaseArtifact.class) && (uMLArtifactNew.getClass() == UseCaseArtifact.class)){
+				return new UseAndMisUseRelationLinkArtifact((UseCaseArtifact) uMLArtifactNew, (MisUseCaseArtifact) uMLArtifact, linkKind);
+		 }//relation from usecase to misusecase
+		 else if((uMLArtifact.getClass() ==UseCaseArtifact.class) && (uMLArtifactNew.getClass() == MisUseCaseArtifact.class)){
+				return new UseAndMisUseRelationLinkArtifact((UseCaseArtifact) uMLArtifact, (MisUseCaseArtifact) uMLArtifactNew, linkKind);
+		 }//relation from actor to usecase
+		 else if((uMLArtifact.getClass() ==ActorArtifact.class) && (uMLArtifactNew.getClass() == UseCaseArtifact.class)){
+				return new UseAndActorRelationLinkArtifact((UseCaseArtifact) uMLArtifactNew, (ActorArtifact) uMLArtifact, linkKind);
+		 }//relation from usecase to actor
+		 else if((uMLArtifact.getClass() ==UseCaseArtifact.class) && (uMLArtifactNew.getClass() == ActorArtifact.class)){
+				return new UseAndActorRelationLinkArtifact((UseCaseArtifact) uMLArtifact, (ActorArtifact) uMLArtifactNew, linkKind);
+		 }//relation from misusecase to securityusecase
+		 else if((uMLArtifact.getClass() ==SecurityUseCaseArtifact.class) && (uMLArtifactNew.getClass() == MisUseCaseArtifact.class)){
+				return new MisAndSecurityUseRelationLinkArtifact((MisUseCaseArtifact) uMLArtifactNew, (SecurityUseCaseArtifact) uMLArtifact, linkKind);
+		 }//relation from securityusecase to misusecase
+		 else if((uMLArtifact.getClass() ==MisUseCaseArtifact.class) && (uMLArtifactNew.getClass() == SecurityUseCaseArtifact.class)){
+				return new MisAndSecurityUseRelationLinkArtifact((MisUseCaseArtifact) uMLArtifact, (SecurityUseCaseArtifact) uMLArtifactNew, linkKind);
+		 }//relation from misusecase to misactor
+		 else if((uMLArtifact.getClass() ==MisActorArtifact.class) && (uMLArtifactNew.getClass() == MisUseCaseArtifact.class)){
+				return new MisAndMisActorRelationLinkArtifact((MisUseCaseArtifact) uMLArtifactNew, (MisActorArtifact) uMLArtifact, linkKind);
+		 }//relation from misactor to misusecase
+		 else if((uMLArtifact.getClass() ==MisUseCaseArtifact.class) && (uMLArtifactNew.getClass() == MisActorArtifact.class)){
+				return new MisAndMisActorRelationLinkArtifact((MisUseCaseArtifact) uMLArtifact, (MisActorArtifact) uMLArtifactNew, linkKind);
+		 }//relation from securityusecase to usecase
+		 else if((uMLArtifact.getClass() ==SecurityUseCaseArtifact.class) && (uMLArtifactNew.getClass() == UseCaseArtifact.class)){
+				return new UseAndSecurityUseRelationLinkArtifact((UseCaseArtifact) uMLArtifactNew, (SecurityUseCaseArtifact) uMLArtifact, linkKind);
+		 }//relation from usecase to securityusecase
+		 else if((uMLArtifact.getClass() ==UseCaseArtifact.class) && (uMLArtifactNew.getClass() == SecurityUseCaseArtifact.class)){
+				return new UseAndSecurityUseRelationLinkArtifact((UseCaseArtifact) uMLArtifact, (SecurityUseCaseArtifact) uMLArtifactNew, linkKind);
+		 }//relation from misusecase to asset
+		 else if((uMLArtifact.getClass() ==MisUseCaseArtifact.class) && (uMLArtifactNew.getClass() == AssetArtifact.class)){
+				return new AssetAndMisUseRelationLinkArtifact((AssetArtifact) uMLArtifactNew, (MisUseCaseArtifact) uMLArtifact, linkKind);
+		 }//relation from asset to misusecase
+		 else if((uMLArtifact.getClass() ==AssetArtifact.class) && (uMLArtifactNew.getClass() == MisUseCaseArtifact.class)){
+				return new AssetAndMisUseRelationLinkArtifact((AssetArtifact) uMLArtifact, (MisUseCaseArtifact) uMLArtifactNew, linkKind);
+		 }
+		else if ((linkKind != LinkKind.GENERALIZATION_RELATION) && (linkKind != LinkKind.REALIZATION_RELATION)
 				&& (uMLArtifact.getClass() == ObjectArtifact.class) && (uMLArtifactNew.getClass() == ObjectArtifact.class)) {
 			return new ObjectRelationLinkArtifact((ObjectArtifact) uMLArtifactNew, (ObjectArtifact) uMLArtifact, linkKind);
 		} else if ((linkKind == LinkKind.INSTANTIATION)
