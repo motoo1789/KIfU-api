@@ -1,9 +1,9 @@
 package com.objetdirect.gwt.umlapi.client.artifacts;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.allen_sauer.gwt.log.client.Log;
+import com.google.gwt.user.client.Command;
 import com.objetdirect.gwt.umlapi.client.editors.RelationFieldEditor;
 import com.objetdirect.gwt.umlapi.client.engine.GeometryManager;
 import com.objetdirect.gwt.umlapi.client.engine.Point;
@@ -23,10 +23,11 @@ public class UseCaseRelationLinkArtifact extends RelationLinkArtifact {
 	}
 
 	protected GfxObject											arrowVirtualGroup;
-	protected UseCaseArtifact									usecaseArtifact1;
+	protected UseCaseArtifact									leftUseCaseArtifact;
 	protected GfxObject											line;
-	protected UseCaseArtifact								    usecaseArtifact2;
+	protected UseCaseArtifact								    rightUseCaseArtifact;
 	protected GfxObject											textVirtualGroup;
+	private int													current_delta;
 	private final HashMap<RelationLinkArtifactPart, GfxObject>	gfxObjectPart	= new HashMap<RelationLinkArtifactPart, GfxObject>();
 
 	/**
@@ -45,9 +46,9 @@ public class UseCaseRelationLinkArtifact extends RelationLinkArtifact {
 			Log.error("Making a instantiation relation artifact for : " + relationKind.getName());
 		}
 		this.relation = new UMLRelation(relationKind);
-		this.usecaseArtifact1 = left;
+		this.leftUseCaseArtifact = left;
 		left.addDependency(this, right);
-		this.usecaseArtifact2 = right;
+		this.rightUseCaseArtifact = right;
 		right.addDependency(this, left);
 	}
 
@@ -70,7 +71,7 @@ public class UseCaseRelationLinkArtifact extends RelationLinkArtifact {
 			case NAME:
 				final String name = part.getText(this.relation);
 				if ((name == null) || name.equals("")) {
-					defaultText = this.usecaseArtifact1.getName() + "-" + this.usecaseArtifact2.getName();
+					defaultText = this.leftUseCaseArtifact.getName() + "-" + this.rightUseCaseArtifact.getName();
 				} else {
 					defaultText = name;
 				}
@@ -101,8 +102,8 @@ public class UseCaseRelationLinkArtifact extends RelationLinkArtifact {
 	 *
 	 * @return the left {@link ClassArtifact} of this relation
 	 */
-	public UseCaseArtifact getUseCaseArtifact1() {
-		return this.usecaseArtifact1;
+	public UseCaseArtifact getLeftUseCaseArtifact() {
+		return this.leftUseCaseArtifact;
 	}
 
 	/**
@@ -110,8 +111,8 @@ public class UseCaseRelationLinkArtifact extends RelationLinkArtifact {
 	 *
 	 * @return the right {@link ObjectArtifact} of this relation
 	 */
-	public UseCaseArtifact getUseCaseArtifact2() {
-		return this.usecaseArtifact2;
+	public UseCaseArtifact getRightUseCaseArtifact() {
+		return this.rightUseCaseArtifact;
 	}
 
 	/*
@@ -122,9 +123,9 @@ public class UseCaseRelationLinkArtifact extends RelationLinkArtifact {
 	@Override
 	public MenuBarAndTitle getRightMenu() {
 		final MenuBarAndTitle rightMenu = new MenuBarAndTitle();
-		rightMenu.setName(this.relation.getLinkKind().getNameInMenu() + " " + this.usecaseArtifact1.getName() + " "
+		rightMenu.setName(this.relation.getLinkKind().getNameInMenu() + " " + this.leftUseCaseArtifact.getName() + " "
 				+ this.relation.getLeftAdornment().getShape().getIdiom() + "-" + this.relation.getRightAdornment().getShape().getIdiom(true) + " "
-				+ this.usecaseArtifact2.getName());
+				+ this.rightUseCaseArtifact.getName());
 		return rightMenu;
 	}
 
@@ -133,11 +134,7 @@ public class UseCaseRelationLinkArtifact extends RelationLinkArtifact {
 	 *
 	 * @see com.objetdirect.gwt.umlapi.client.artifacts.LinkArtifact#removeCreatedDependency()
 	 */
-	@Override
-	public void removeCreatedDependency() {
-		this.usecaseArtifact1.removeDependency(this);
-		this.usecaseArtifact2.removeDependency(this);
-	}
+
 
 	/*
 	 * (non-Javadoc)
@@ -146,93 +143,325 @@ public class UseCaseRelationLinkArtifact extends RelationLinkArtifact {
 	 */
 	@Override
 	public String toURL() {
-		return "UseCaseRelationLink$<" + this.usecaseArtifact1.getId() + ">!<" + this.usecaseArtifact2.getId() + ">";
+		return "UseCaseRelationLink$<" + this.leftUseCaseArtifact.getId() + ">!<" + this.rightUseCaseArtifact.getId() + ">!" + this.relation.getLinkKind().getName()
+				+ "!" + this.relation.getName() + "!" + this.relation.getLinkStyle().getName() + "!" + this.relation.getLeftAdornment().getName() + "!"
+				+ this.relation.getLeftCardinality() + "!" + this.relation.getLeftConstraint() + "!" + this.relation.getLeftRole() + "!"
+				+ this.relation.getRightAdornment().getName() + "!" + this.relation.getRightCardinality() + "!" + this.relation.getRightConstraint() + "!"
+				+ this.relation.getRightRole();
 	}
+
+
 
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see com.objetdirect.gwt.umlapi.client.artifacts.UMLArtifact#unselect()
+	 * @see com.objetdirect.gwt.umlapi.client.artifacts.LinkArtifact#removeCreatedDependency()
 	 */
+	@Override
+	public void removeCreatedDependency() {
+		this.leftUseCaseArtifact.removeDependency(this);
+		this.rightUseCaseArtifact.removeDependency(this);
+	}
+
+	/**
+	 * Reset the navigability of the left side to unknown <br />
+	 * The left side must not be a generalization, realization, aggregation or composition otherwise this method do nothing
+	 */
+	public void resetLeftNavigability() {
+		if (this.relation.getLeftAdornment().isNavigabilityAdornment()) {
+			this.relation.setLeftAdornment(LinkAdornment.NONE);
+		}
+	}
+
+	/**
+	 * Reset the navigability of the right side to unknown <br />
+	 * The right side must not be a generalization, realization, aggregation or composition otherwise this method do nothing
+	 */
+	public void resetRightNavigability() {
+		if (this.relation.getRightAdornment().isNavigabilityAdornment()) {
+			this.relation.setRightAdornment(LinkAdornment.NONE);
+		}
+	}
+
+	/**
+	 * Setter for the left and right cardinalities in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param leftCardinality
+	 *            The left cardinality text to be set
+	 * @param rightCardinality
+	 *            The right cardinality text to be set
+	 */
+	public void setCardinalities(final String leftCardinality, final String rightCardinality) {
+		this.relation.setLeftCardinality(leftCardinality);
+		this.relation.setRightCardinality(rightCardinality);
+	}
+
+	/**
+	 * Setter for the relation left {@link LinkArtifact.LinkAdornment}
+	 *
+	 * @param leftAdornment
+	 *            The left {@link LinkArtifact.LinkAdornment} to be set
+	 */
+	public void setLeftAdornment(final LinkAdornment leftAdornment) {
+		this.relation.setLeftAdornment(leftAdornment);
+	}
+
+	/**
+	 * Setter for the leftCardinality in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param leftCardinality
+	 *            The leftCardinality text to be set
+	 */
+	public void setLeftCardinality(final String leftCardinality) {
+		this.relation.setLeftCardinality(leftCardinality);
+	}
+
+	/**
+	 * Setter for the leftConstraint in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param leftConstraint
+	 *            The leftConstraint text to be set
+	 */
+	public void setLeftConstraint(final String leftConstraint) {
+		this.relation.setLeftConstraint(leftConstraint);
+	}
+
+	/**
+	 * Set the state of left navigability <br />
+	 * The left side must not be a generalization, realization, aggregation or composition otherwise this method do nothing <br />
+	 * To set the unknown state see {@link ClassRelationLinkArtifact#resetLeftNavigability()}
+	 *
+	 * @param isNavigable
+	 *            If true set the link's side to navigable otherwise set it to NOT navigable
+	 *
+	 */
+	public void setLeftNavigability(final boolean isNavigable) {
+		if (this.relation.getLeftAdornment().isNavigabilityAdornment()) {
+			this.relation.setLeftAdornment(isNavigable ? LinkAdornment.WIRE_ARROW : LinkAdornment.WIRE_CROSS);
+		}
+
+	}
+
+	/**
+	 * Setter for the leftRole in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param leftRole
+	 *            The leftRole text to be set
+	 */
+	public void setLeftRole(final String leftRole) {
+		this.relation.setLeftRole(leftRole);
+	}
+
+	/**
+	 * Setter for the relation {@link LinkArtifact.LinkStyle}
+	 *
+	 * @param linkStyle
+	 *            The {@link LinkArtifact.LinkStyle} to be set
+	 */
+	public void setLinkStyle(final LinkStyle linkStyle) {
+		this.relation.setLinkStyle(linkStyle);
+	}
+
+	/**
+	 * Setter for the name in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param name
+	 *            The name text to be set
+	 */
+	public void setName(final String name) {
+		this.relation.setName(name);
+	}
+
+	public String getName() {
+		return this.relation.getName();
+	}
+
+	/**
+	 * Setter for the relation {@link LinkKind}
+	 *
+	 * @param relationKind
+	 *            The {@link LinkKind} to be set
+	 */
+	public void setRelationKind(final LinkKind relationKind) {
+		this.relation.setLinkKind(relationKind);
+	}
+
+	/**
+	 * Setter for the relation right {@link LinkArtifact.LinkAdornment}
+	 *
+	 * @param rightAdornment
+	 *            The right{@link LinkArtifact.LinkAdornment} to be set
+	 */
+	public void setRightAdornment(final LinkAdornment rightAdornment) {
+		this.relation.setRightAdornment(rightAdornment);
+	}
+
+	/**
+	 * Setter for the rightCardinality in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param rightCardinality
+	 *            The rightCardinality text to be set
+	 */
+	public void setRightCardinality(final String rightCardinality) {
+		this.relation.setRightCardinality(rightCardinality);
+	}
+
+	/**
+	 * Setter for the rightConstraint in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param rightConstraint
+	 *            The rightConstraint text to be set
+	 */
+	public void setRightConstraint(final String rightConstraint) {
+		this.relation.setRightConstraint(rightConstraint);
+	}
+
+	/**
+	 * Set the state of right navigability <br />
+	 * The right side must not be a generalization, realization, aggregation or composition otherwise this method do nothing <br />
+	 * To set the unknown state see {@link ClassRelationLinkArtifact#resetRightNavigability()}
+	 *
+	 * @param isNavigable
+	 *            If true set the link's side to navigable otherwise set it to NOT navigable
+	 *
+	 */
+	public void setRightNavigability(final boolean isNavigable) {
+		if (this.relation.getRightAdornment().isNavigabilityAdornment()) {
+			this.relation.setRightAdornment(isNavigable ? LinkAdornment.WIRE_ARROW : LinkAdornment.WIRE_CROSS);
+		}
+	}
+
+	/**
+	 * Setter for the rightRole in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param rightRole
+	 *            The rightRole text to be set
+	 */
+	public void setRightRole(final String rightRole) {
+		this.relation.setRightRole(rightRole);
+	}
 	@Override
 	public void unselect() {
 		super.unselect();
-		GfxManager.getPlatform().setStroke(this.line, ThemeManager.getTheme().getInstantiationForegroundColor(), 1);
-		GfxManager.getPlatform().setStroke(this.arrowVirtualGroup, ThemeManager.getTheme().getInstantiationForegroundColor(), 1);
+		GfxManager.getPlatform().setStroke(this.line, ThemeManager.getTheme().getClassRelationForegroundColor(), 1);
+		GfxManager.getPlatform().setStroke(this.arrowVirtualGroup, ThemeManager.getTheme().getClassRelationForegroundColor(), 1);
+	}
+
+	int getTextX(final GfxObject text, final boolean isLeft) {
+		Point relative_point1 = this.leftPoint;
+		Point relative_point2 = this.rightPoint;
+		final int textWidth = GfxManager.getPlatform().getTextWidthFor(text);
+		if (!isLeft) {
+			relative_point1 = this.rightPoint;
+			relative_point2 = this.leftPoint;
+		}
+		switch (isLeft ? this.leftDirection : this.rightDirection) {
+			case LEFT:
+				return relative_point1.getX() - textWidth - OptionsManager.get("RectangleLeftPadding");
+			case RIGHT:
+				return relative_point1.getX() + OptionsManager.get("RectangleRightPadding");
+			case UP:
+			case DOWN:
+			case UNKNOWN:
+				if (relative_point1.getX() < relative_point2.getX()) {
+					return relative_point1.getX() - textWidth - OptionsManager.get("RectangleLeftPadding");
+				}
+				return relative_point1.getX() + OptionsManager.get("RectangleRightPadding");
+		}
+		return 0;
+	}
+
+	int getTextY(final GfxObject text, final boolean isLeft) {
+		Point relative_point1 = this.leftPoint;
+		Point relative_point2 = this.rightPoint;
+		if (!isLeft) {
+			relative_point1 = this.rightPoint;
+			relative_point2 = this.leftPoint;
+		}
+		final int textHeight = GfxManager.getPlatform().getTextHeightFor(text);
+		final int delta = this.current_delta;
+		this.current_delta += 8; // TODO : Fix Height
+		switch (isLeft ? this.leftDirection : this.rightDirection) {
+			case LEFT:
+			case RIGHT:
+				if (relative_point1.getY() > relative_point2.getY()) {
+					return relative_point1.getY() + OptionsManager.get("RectangleBottomPadding") + delta;
+				}
+				return relative_point1.getY() - textHeight - OptionsManager.get("RectangleTopPadding") - delta;
+			case UP:
+				return relative_point1.getY() - textHeight - OptionsManager.get("RectangleTopPadding") - delta;
+			case DOWN:
+			case UNKNOWN:
+				return relative_point1.getY() + OptionsManager.get("RectangleBottomPadding") + delta;
+		}
+		return 0;
 	}
 
 	@Override
 	protected void buildGfxObject() {
-		Point curveControl = Point.getOrigin();
-
+		if (this.isTheOneRebuilding) {
+			return;
+		}
 		this.gfxObjectPart.clear();
-		ArrayList<Point> linePoints = new ArrayList<Point>();
-		final boolean isComputationNeededOnLeft = this.relation.getLeftAdornment() != LinkAdornment.NONE;
-		final boolean isComputationNeededOnRight = this.relation.getRightAdornment() != LinkAdornment.NONE;
 
-		if (isComputationNeededOnLeft && isComputationNeededOnRight) {
-			linePoints = GeometryManager.getPlatform().getLineBetween(this.usecaseArtifact1, this.usecaseArtifact2);
-			this.leftPoint = linePoints.get(0);
-			this.rightPoint = linePoints.get(1);
-		} else if (isComputationNeededOnLeft) {
-			this.rightPoint = this.usecaseArtifact2.getCenter();
-			this.leftPoint = GeometryManager.getPlatform().getPointForLine(this.usecaseArtifact1, this.rightPoint);
-		} else if (isComputationNeededOnRight) {
-			this.leftPoint = this.usecaseArtifact1.getCenter();
-			this.rightPoint = GeometryManager.getPlatform().getPointForLine(this.usecaseArtifact1, this.leftPoint);
-		} else {
-			this.leftPoint = this.usecaseArtifact1.getCenter();
-			this.rightPoint = this.usecaseArtifact2.getCenter();
-		}
-		if (this.order == 0) {
-			this.line = GfxManager.getPlatform().buildLine(this.leftPoint, this.rightPoint);
-		} else {
-			int factor = 50 * ((this.order + 1) / 2);
-			factor *= (this.order % 2) == 0 ? -1 : 1;
-			curveControl = GeometryManager.getPlatform().getShiftedCenter(this.leftPoint, this.rightPoint, factor);
-			this.line = GfxManager.getPlatform().buildPath();
-			GfxManager.getPlatform().moveTo(this.line, this.leftPoint);
-			GfxManager.getPlatform().curveTo(this.line, this.rightPoint, curveControl);
-			GfxManager.getPlatform().setOpacity(this.line, 0, true);
-		}
+		this.line = this.getLine();
 
-		GfxManager.getPlatform().setStroke(this.line, ThemeManager.getTheme().getInstantiationForegroundColor(), 1);
+		GfxManager.getPlatform().setStroke(this.line, ThemeManager.getTheme().getClassRelationForegroundColor(), 1);
 		GfxManager.getPlatform().setStrokeStyle(this.line, this.relation.getLinkStyle().getGfxStyle());
 		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.line);
 
 		// Making arrows group :
 		this.arrowVirtualGroup = GfxManager.getPlatform().buildVirtualGroup();
 		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.arrowVirtualGroup);
-		if (isComputationNeededOnLeft) {
-			GfxManager.getPlatform().addToVirtualGroup(
-					this.arrowVirtualGroup,
-					this.order == 0 ? GeometryManager.getPlatform().buildAdornment(this.leftPoint, this.rightPoint, this.relation.getLeftAdornment())
-							: GeometryManager.getPlatform().buildAdornment(this.leftPoint, curveControl, this.relation.getLeftAdornment()));
-		}
-		if (isComputationNeededOnRight) {
-			GfxManager.getPlatform().addToVirtualGroup(
-					this.arrowVirtualGroup,
-					this.order == 0 ? GeometryManager.getPlatform().buildAdornment(this.rightPoint, this.leftPoint, this.relation.getRightAdornment())
-							: GeometryManager.getPlatform().buildAdornment(this.rightPoint, curveControl, this.relation.getRightAdornment()));
-		}
+		final GfxObject leftArrow = GeometryManager.getPlatform().buildAdornment(this.leftPoint, this.leftDirectionPoint, this.relation.getLeftAdornment());
+		final GfxObject rightArrow = GeometryManager.getPlatform().buildAdornment(this.rightPoint, this.rightDirectionPoint, this.relation.getRightAdornment());
 
+		if (leftArrow != null) {
+			GfxManager.getPlatform().addToVirtualGroup(this.arrowVirtualGroup, leftArrow);
+		}
+		if (rightArrow != null) {
+			GfxManager.getPlatform().addToVirtualGroup(this.arrowVirtualGroup, rightArrow);
+		}
 		// Making the text group :
 		this.textVirtualGroup = GfxManager.getPlatform().buildVirtualGroup();
 		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.textVirtualGroup);
-		Log.trace("Creating name");
-		Point linkMiddle = Point.getMiddleOf(this.leftPoint, this.rightPoint);
-		if (this.order != 0) {
-			linkMiddle = Point.getMiddleOf(curveControl, linkMiddle);
+		if (!this.relation.getName().equals("")) {
+			Log.trace("Creating name");
+			final GfxObject nameGfxObject = GfxManager.getPlatform().buildText(this.relation.getName(), this.nameAnchorPoint);
+			GfxManager.getPlatform().setFont(nameGfxObject, OptionsManager.getSmallFont());
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, nameGfxObject);
+			GfxManager.getPlatform().setStroke(nameGfxObject, ThemeManager.getTheme().getClassRelationBackgroundColor(), 0);
+			GfxManager.getPlatform().setFillColor(nameGfxObject, ThemeManager.getTheme().getClassRelationForegroundColor());
+			GfxManager.getPlatform().translate(nameGfxObject, new Point(-GfxManager.getPlatform().getTextWidthFor(nameGfxObject) / 2, 0));
+			RelationLinkArtifactPart.setGfxObjectTextForPart(nameGfxObject, RelationLinkArtifactPart.NAME);
+			this.gfxObjectPart.put(RelationLinkArtifactPart.NAME, nameGfxObject);
 		}
-		final GfxObject nameGfxObject = GfxManager.getPlatform().buildText(this.relation.getName(), linkMiddle);
-		//final GfxObject nameGfxObject = GfxManager.getPlatform().buildText("«InstanceOf»", linkMiddle);
-		GfxManager.getPlatform().setFont(nameGfxObject, OptionsManager.getSmallFont());
-		GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, nameGfxObject);
-		GfxManager.getPlatform().setStroke(nameGfxObject, ThemeManager.getTheme().getInstantiationBackgroundColor(), 0);
-		GfxManager.getPlatform().setFillColor(nameGfxObject, ThemeManager.getTheme().getInstantiationForegroundColor());
-		GfxManager.getPlatform().translate(nameGfxObject, new Point(-GfxManager.getPlatform().getTextWidthFor(nameGfxObject) / 2, 0));
-		RelationLinkArtifactPart.setGfxObjectTextForPart(nameGfxObject, RelationLinkArtifactPart.NAME);
-		this.gfxObjectPart.put(RelationLinkArtifactPart.NAME, nameGfxObject);
+
+		this.current_delta = 0;
+		if (!this.relation.getLeftCardinality().equals("")) {
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup,
+					this.createText(this.relation.getLeftCardinality(), RelationLinkArtifactPart.LEFT_CARDINALITY));
+		}
+		if (!this.relation.getLeftConstraint().equals("")) {
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup,
+					this.createText(this.relation.getLeftConstraint(), RelationLinkArtifactPart.LEFT_CONSTRAINT));
+		}
+		if (!this.relation.getLeftRole().equals("")) {
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, this.createText(this.relation.getLeftRole(), RelationLinkArtifactPart.LEFT_ROLE));
+		}
+		this.current_delta = 0;
+		if (!this.relation.getRightCardinality().equals("")) {
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup,
+					this.createText(this.relation.getRightCardinality(), RelationLinkArtifactPart.RIGHT_CARDINALITY));
+		}
+		if (!this.relation.getRightConstraint().equals("")) {
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup,
+					this.createText(this.relation.getRightConstraint(), RelationLinkArtifactPart.RIGHT_CONSTRAINT));
+		}
+		if (!this.relation.getRightRole().equals("")) {
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup,
+					this.createText(this.relation.getRightRole(), RelationLinkArtifactPart.RIGHT_ROLE));
+		}
 
 		GfxManager.getPlatform().moveToBack(this.gfxObject);
 	}
@@ -245,8 +474,111 @@ public class UseCaseRelationLinkArtifact extends RelationLinkArtifact {
 	@Override
 	protected void select() {
 		super.select();
-		GfxManager.getPlatform().setStroke(this.line, ThemeManager.getTheme().getInstantiationHighlightedForegroundColor(), 2);
-		GfxManager.getPlatform().setStroke(this.arrowVirtualGroup, ThemeManager.getTheme().getInstantiationHighlightedForegroundColor(), 2);
+
+		GfxManager.getPlatform().setStroke(this.line, ThemeManager.getTheme().getClassRelationHighlightedForegroundColor(), 2);
+		GfxManager.getPlatform().setStroke(this.arrowVirtualGroup, ThemeManager.getTheme().getClassRelationHighlightedForegroundColor(), 2);
 	}
 
+	private Command changeToCommand(final UMLRelation linkRelation, final LinkKind relationKind) {
+		return new Command() {
+			public void execute() {
+				linkRelation.setLinkKind(relationKind);
+				linkRelation.setLinkStyle(relationKind.getDefaultLinkStyle());
+				linkRelation.setLeftAdornment(relationKind.getDefaultLeftAdornment());
+				linkRelation.setRightAdornment(relationKind.getDefaultRightAdornment());
+				UseCaseRelationLinkArtifact.this.rebuildGfxObject();
+			}
+		};
+	}
+
+	private Command createCommand(final RelationLinkArtifactPart relationArtifactPart) {
+		return new Command() {
+			public void execute() {
+				UseCaseRelationLinkArtifact.this.edit(relationArtifactPart);
+			}
+		};
+	}
+
+	private GfxObject createText(final String text, final RelationLinkArtifactPart part) {
+		final GfxObject textGfxObject = GfxManager.getPlatform().buildText(text, Point.getOrigin());
+		GfxManager.getPlatform().setFont(textGfxObject, OptionsManager.getSmallFont());
+		GfxManager.getPlatform().setStroke(textGfxObject, ThemeManager.getTheme().getClassRelationBackgroundColor(), 0);
+		GfxManager.getPlatform().setFillColor(textGfxObject, ThemeManager.getTheme().getClassRelationForegroundColor());
+		if (this.leftUseCaseArtifact != this.rightUseCaseArtifact) {
+			Log.trace("Creating text : " + text + " at " + this.getTextX(textGfxObject, part.isLeft()) + " : " + this.getTextY(textGfxObject, part.isLeft()));
+			GfxManager.getPlatform().translate(textGfxObject,
+					new Point(this.getTextX(textGfxObject, part.isLeft()), this.getTextY(textGfxObject, part.isLeft())));
+		} else {
+			if (part.isLeft()) {
+				GfxManager.getPlatform().translate(
+						textGfxObject,
+						Point.add(this.leftUseCaseArtifact.getCenter(), new Point(OptionsManager.get("ArrowWidth") / 2 + OptionsManager.get("TextLeftPadding"),
+								-(this.leftUseCaseArtifact.getHeight() + OptionsManager.get("ReflexivePathYGap")) / 2 + this.current_delta)));
+			} else {
+				GfxManager.getPlatform().translate(
+						textGfxObject,
+						Point.add(this.leftUseCaseArtifact.getLocation(), new Point(this.leftUseCaseArtifact.getWidth() + OptionsManager.get("ReflexivePathXGap")
+								+ OptionsManager.get("TextLeftPadding"), this.current_delta)));
+			}
+			this.current_delta += 8;
+		}
+
+		RelationLinkArtifactPart.setGfxObjectTextForPart(textGfxObject, part);
+		this.gfxObjectPart.put(part, textGfxObject);
+		return textGfxObject;
+	}
+
+	private Command deleteCommand(final RelationLinkArtifactPart relationArtifactPart) {
+		return new Command() {
+			public void execute() {
+				relationArtifactPart.setText(UseCaseRelationLinkArtifact.this.relation, "");
+				UseCaseRelationLinkArtifact.this.rebuildGfxObject();
+			}
+		};
+	}
+
+	private Command editCommand(final RelationLinkArtifactPart relationArtifactPart) {
+		return new Command() {
+			public void execute() {
+				UseCaseRelationLinkArtifact.this.edit(UseCaseRelationLinkArtifact.this.gfxObjectPart.get(relationArtifactPart));
+			}
+		};
+	}
+
+	private Command reverseCommand(final UMLRelation linkRelation) {
+		return new Command() {
+			public void execute() {
+				linkRelation.reverse();
+				UseCaseRelationLinkArtifact.this.rebuildGfxObject();
+			}
+
+		};
+	}
+
+	private Command setNavigabilityCommand(final UMLRelation relation, final boolean isLeft) {
+		return new Command() {
+			public void execute() {
+				if (isLeft) {
+					relation.setLeftAdornment(LinkAdornment.NONE);
+				} else {
+					relation.setRightAdornment(LinkAdornment.NONE);
+				}
+				UseCaseRelationLinkArtifact.this.rebuildGfxObject();
+			}
+		};
+	}
+
+	private Command setNavigabilityCommand(final UMLRelation relation, final boolean isLeft, final boolean isNavigable) {
+		return new Command() {
+			public void execute() {
+				final LinkAdornment adornment = isNavigable ? LinkAdornment.WIRE_ARROW : LinkAdornment.WIRE_CROSS;
+				if (isLeft) {
+					relation.setLeftAdornment(adornment);
+				} else {
+					relation.setRightAdornment(adornment);
+				}
+				UseCaseRelationLinkArtifact.this.rebuildGfxObject();
+			}
+		};
+	}
 }

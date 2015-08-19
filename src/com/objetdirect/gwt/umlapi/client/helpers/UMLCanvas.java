@@ -49,6 +49,7 @@ import com.objetdirect.gwt.umlapi.client.artifacts.ObjectRelationLinkArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.SecurityUseCaseArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.UMLArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.UseCaseArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.UseCaseRelationLinkArtifact;
 import com.objetdirect.gwt.umlapi.client.editors.FieldEditor;
 import com.objetdirect.gwt.umlapi.client.engine.Direction;
 import com.objetdirect.gwt.umlapi.client.engine.Point;
@@ -60,14 +61,20 @@ import com.objetdirect.gwt.umlapi.client.gfx.GfxPlatform;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxStyle;
 import com.objetdirect.gwt.umlapi.client.helpers.CursorIconManager.PointerStyle;
 import com.objetdirect.gwt.umlapi.client.mylogger.MyLoggerExecute;
+import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLActor;
+import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLAsset;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLClass;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLClassAttribute;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLClassMethod;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLDiagram;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLLifeLine;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLLink.LinkKind;
+import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLMisActor;
+import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLMisUseCase;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLObject;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLObjectAttribute;
+import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLSecurityUseCase;
+import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLUseCase;
 
 /**
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
@@ -375,6 +382,30 @@ public class UMLCanvas extends AbsolutePanel {
 									((ClassArtifact) newArtifact).addMethod(UMLClassMethod.parseMethod(method));
 								}
 							}
+//TODO MisUc
+						} else if (artifact.equals("Uc")) {
+							newArtifact = new UseCaseArtifact((isForPasting && wasACopy ? "CopyOf" : "") +UMLUseCase.parseNameOrStereotype(parameters[1]) );
+							newArtifact.setLocation(Point.add(Point.parse(parameters[0]), pasteShift));
+
+						} else if (artifact.equals("MisUc")) {
+							newArtifact = new MisUseCaseArtifact((isForPasting && wasACopy ? "CopyOf" : "") +UMLMisUseCase.parseNameOrStereotype(parameters[1]) , UMLMisUseCase.parseNameOrStereotype(parameters[2]) );
+							newArtifact.setLocation(Point.add(Point.parse(parameters[0]), pasteShift));
+
+						} else if (artifact.equals("SecurityUc")) {
+							newArtifact = new SecurityUseCaseArtifact((isForPasting && wasACopy ? "CopyOf" : "") +UMLSecurityUseCase.parseNameOrStereotype(parameters[1]) , UMLSecurityUseCase.parseNameOrStereotype(parameters[2]));
+							newArtifact.setLocation(Point.add(Point.parse(parameters[0]), pasteShift));
+
+						} else if (artifact.equals("Actor")) {
+							newArtifact = new ActorArtifact((isForPasting && wasACopy ? "CopyOf" : "") +UMLActor.parseNameOrStereotype(parameters[1]));
+							newArtifact.setLocation(Point.add(Point.parse(parameters[0]), pasteShift));
+
+						} else if (artifact.equals("MisActor")) {
+							newArtifact = new MisActorArtifact((isForPasting && wasACopy ? "CopyOf" : "") +UMLMisActor.parseNameOrStereotype(parameters[1]),  Integer.parseInt(parameters[2]) );
+							newArtifact.setLocation(Point.add(Point.parse(parameters[0]), pasteShift));
+
+						} else if (artifact.equals("Asset")) {
+							newArtifact = new AssetArtifact((isForPasting && wasACopy ? "CopyOf" : "") +UMLAsset.parseNameOrStereotype(parameters[1]) );
+							newArtifact.setLocation(Point.add(Point.parse(parameters[0]), pasteShift));
 
 						} else if (artifact.equals("Object")) {
 							newArtifact = new ObjectArtifact(UMLObject.parseName(parameters[1]).get(0), (isForPasting && wasACopy ? "CopyOf" : "") + UMLObject.parseName(parameters[1]).get(1),
@@ -439,6 +470,28 @@ public class UMLCanvas extends AbsolutePanel {
 							((ClassRelationLinkArtifact) newArtifact).setRightCardinality(parameters[10]);
 							((ClassRelationLinkArtifact) newArtifact).setRightConstraint(parameters[11]);
 							((ClassRelationLinkArtifact) newArtifact).setRightRole(parameters[12]);
+
+						} else if (artifact.equals("UseCaseRelationLink")) {
+							Integer useCaseLeftId = 0;
+							Integer useCaseRigthId = 0;
+							try {
+								useCaseLeftId = Integer.parseInt(parameters[0].replaceAll("[<>]", ""));
+								useCaseRigthId = Integer.parseInt(parameters[1].replaceAll("[<>]", ""));
+							} catch (final Exception ex) {
+								Log.error("Parsing url, id is NaN : " + artifactWithParameters + " : " + ex);
+							}
+							newArtifact = new UseCaseRelationLinkArtifact((UseCaseArtifact) UMLArtifact.getArtifactById(useCaseLeftId),
+									(UseCaseArtifact) UMLArtifact.getArtifactById(useCaseRigthId), LinkKind.getRelationKindFromName(parameters[2]));
+							((UseCaseRelationLinkArtifact) newArtifact).setName((isForPasting && wasACopy ? "CopyOf" : "") + parameters[3]);
+							((UseCaseRelationLinkArtifact) newArtifact).setLinkStyle(LinkStyle.getLinkStyleFromName(parameters[4]));
+							((UseCaseRelationLinkArtifact) newArtifact).setLeftAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[5]));
+							((UseCaseRelationLinkArtifact) newArtifact).setLeftCardinality(parameters[6]);
+							((UseCaseRelationLinkArtifact) newArtifact).setLeftConstraint(parameters[7]);
+							((UseCaseRelationLinkArtifact) newArtifact).setLeftRole(parameters[8]);
+							((UseCaseRelationLinkArtifact) newArtifact).setRightAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[9]));
+							((UseCaseRelationLinkArtifact) newArtifact).setRightCardinality(parameters[10]);
+							((UseCaseRelationLinkArtifact) newArtifact).setRightConstraint(parameters[11]);
+							((UseCaseRelationLinkArtifact) newArtifact).setRightRole(parameters[12]);
 
 						} else if (artifact.equals("ObjectRelationLink")) {
 							Integer objectLeftId = 0;
@@ -932,9 +985,9 @@ public class UMLCanvas extends AbsolutePanel {
 			this.setWidgetPosition(this.helpText, location.getX() + 15, location.getY() - this.helpText.getOffsetHeight() - 5);
 			//TODO
 			//addNewUseCase
-//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
-//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
-//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
+			MyLoggerExecute.registEditEvent(-1, newUseCase.toString(), "Create",
+					newUseCase.getClass().getName(), newUseCase.getId(), null, -1, -1,
+					null, null, newUseCase.getLocation().getX()+","+newUseCase.getLocation().getY(), null, UMLArtifact.getIdCount());
 
 //			int preEventId, String editEvent, String eventType,
 //			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
@@ -971,9 +1024,9 @@ public class UMLCanvas extends AbsolutePanel {
 			this.setWidgetPosition(this.helpText, location.getX() + 15, location.getY() - this.helpText.getOffsetHeight() - 5);
 			//TODO
 			//addNewUseCase
-//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
-//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
-//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
+			MyLoggerExecute.registEditEvent(-1, newMisUseCase.toString(), "Create",
+					newMisUseCase.getClass().getName(), newMisUseCase.getId(), null, -1, -1,
+					null, null, newMisUseCase.getLocation().getX()+","+newMisUseCase.getLocation().getY(), null, UMLArtifact.getIdCount());
 
 //			int preEventId, String editEvent, String eventType,
 //			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
@@ -1010,10 +1063,9 @@ public class UMLCanvas extends AbsolutePanel {
 			this.setWidgetPosition(this.helpText, location.getX() + 15, location.getY() - this.helpText.getOffsetHeight() - 5);
 			//TODO
 			//addNewUseCase
-//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
-//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
-//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
-
+			MyLoggerExecute.registEditEvent(-1, newSecurityUseCase.toString(), "Create",
+					newSecurityUseCase.getClass().getName(), newSecurityUseCase.getId(), null, -1, -1,
+					null, null, newSecurityUseCase.getLocation().getX()+","+newSecurityUseCase.getLocation().getY(), null, UMLArtifact.getIdCount());
 //			int preEventId, String editEvent, String eventType,
 //			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
 //			String targetPart, String beforeEdit, String afterEdit, String canvasUrl
@@ -1049,10 +1101,9 @@ public class UMLCanvas extends AbsolutePanel {
 			this.setWidgetPosition(this.helpText, location.getX() + 5, location.getY() - this.helpText.getOffsetHeight() - 5);
 			//TODO
 			//addNewClass
-//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
-//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
-//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
-
+			MyLoggerExecute.registEditEvent(-1, newAsset.toString(), "Create",
+					newAsset.getClass().getName(), newAsset.getId(), null, -1, -1,
+					null, null, newAsset.getLocation().getX()+","+newAsset.getLocation().getY(), null, UMLArtifact.getIdCount());
 //			int preEventId, String editEvent, String eventType,
 //			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
 //			String targetPart, String beforeEdit, String afterEdit, String canvasUrl
@@ -1090,10 +1141,9 @@ public class UMLCanvas extends AbsolutePanel {
 			this.setWidgetPosition(this.helpText, location.getX() + 5, location.getY() - this.helpText.getOffsetHeight() - 5);
 			//TODO
 			//addNewClass
-//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
-//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
-//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
-
+			MyLoggerExecute.registEditEvent(-1, newActor.toString(), "Create",
+					newActor.getClass().getName(), newActor.getId(), null, -1, -1,
+					null, null, newActor.getLocation().getX()+","+newActor.getLocation().getY(), null, UMLArtifact.getIdCount());
 //			int preEventId, String editEvent, String eventType,
 //			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
 //			String targetPart, String beforeEdit, String afterEdit, String canvasUrl
@@ -1131,9 +1181,9 @@ public class UMLCanvas extends AbsolutePanel {
 			this.setWidgetPosition(this.helpText, location.getX() + 5, location.getY() - this.helpText.getOffsetHeight() - 5);
 			//TODO
 			//addNewClass
-//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
-//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
-//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
+			MyLoggerExecute.registEditEvent(-1, newMisActor.toString(), "Create",
+					newMisActor.getClass().getName(), newMisActor.getId(), null, -1, -1,
+					null, null, newMisActor.getLocation().getX()+","+newMisActor.getLocation().getY(), null, UMLArtifact.getIdCount());
 
 //			int preEventId, String editEvent, String eventType,
 //			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
@@ -1172,9 +1222,9 @@ public class UMLCanvas extends AbsolutePanel {
 			this.setWidgetPosition(this.helpText, location.getX() + 5, location.getY() - this.helpText.getOffsetHeight() - 5);
 			//TODO
 			//addNewClass
-//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
-//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
-//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
+			MyLoggerExecute.registEditEvent(-1, newMisExPrincipal.toString(), "Create",
+					newMisExPrincipal.getClass().getName(), newMisExPrincipal.getId(), null, -1, -1,
+					null, null, newMisExPrincipal.getLocation().getX()+","+newMisExPrincipal.getLocation().getY(), null, UMLArtifact.getIdCount());
 
 //			int preEventId, String editEvent, String eventType,
 //			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
@@ -1212,9 +1262,9 @@ public class UMLCanvas extends AbsolutePanel {
 			this.setWidgetPosition(this.helpText, location.getX() + 5, location.getY() - this.helpText.getOffsetHeight() - 5);
 			//TODO
 			//addNewClass
-//			MyLoggerExecute.registEditEvent(-1, newClass.toString(), "Create",
-//					newClass.getClass().getName(), newClass.getId(), null, -1, -1,
-//					null, null, newClass.getLocation().getX()+","+newClass.getLocation().getY(), null);
+			MyLoggerExecute.registEditEvent(-1, newMisPrincipal.toString(), "Create",
+					newMisPrincipal.getClass().getName(), newMisPrincipal.getId(), null, -1, -1,
+					null, null, newMisPrincipal.getLocation().getX()+","+newMisPrincipal.getLocation().getY(), null, UMLArtifact.getIdCount());
 
 //			int preEventId, String editEvent, String eventType,
 //			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,

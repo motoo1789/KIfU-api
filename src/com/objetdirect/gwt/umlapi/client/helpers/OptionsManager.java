@@ -122,6 +122,11 @@ public class OptionsManager {
 		OptionsManager.optionsList.put("RectangleLeftPadding", 2);
 		OptionsManager.optionsList.put("RectangleRightPadding", 2);
 
+		//2015 08 19
+		OptionsManager.optionsList.put("EllipseTopPadding", 4);
+		OptionsManager.optionsList.put("EllipseTextLeftPadding", 1);
+
+
 		OptionsManager.optionsList.put("TextTopPadding", 2);
 		OptionsManager.optionsList.put("TextBottomPadding", 1);
 		OptionsManager.optionsList.put("TextLeftPadding", 1);

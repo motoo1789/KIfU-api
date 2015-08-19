@@ -9,6 +9,7 @@ public class MisActorArtifact extends NodeArtifact {
 	MisPrincipalPartGfxArtifact misprincipalGfx;
 	MisExPrincipalPartGfxArtifact misexprincipalGfx;
 	MisActorPartNameArtifact		misactorName;
+	int type;
 
 
 	/*default needs */
@@ -30,18 +31,21 @@ public class MisActorArtifact extends NodeArtifact {
 			this.nodeParts.add(this.misactorGfx);
 			this.misactorName.setNodeArtifact(this);
 			this.misactorGfx.setNodeArtifact(this);
+			this.type = type;
 		}else if(type==2){
 			this.misexprincipalGfx = new MisExPrincipalPartGfxArtifact();
 			this.nodeParts.add(this.misactorName);
 			this.nodeParts.add(this.misexprincipalGfx);
 			this.misactorName.setNodeArtifact(this);
 			this.misexprincipalGfx.setNodeArtifact(this);
+			this.type = type;
 		}else if(type==3){
 			this.misprincipalGfx = new MisPrincipalPartGfxArtifact();
 			this.nodeParts.add(this.misactorName);
 			this.nodeParts.add(this.misprincipalGfx);
 			this.misactorName.setNodeArtifact(this);
 			this.misprincipalGfx.setNodeArtifact(this);
+			this.type = type;
 		}
 
 	}
@@ -67,6 +71,6 @@ public class MisActorArtifact extends NodeArtifact {
 
 	@Override
 	public String toURL() {
-		return "MisActor$" + this.getLocation() + "!" + this.misactorName.toURL() + "!" + this.misactorGfx.toURL();
+		return "MisActor$" + this.getLocation() + "!" + this.misactorName.toURL()+"!"+this.type;
 	}
 }

@@ -217,12 +217,13 @@ public abstract class UMLLink {
 			if (this == INSTANTIATION) {
 				return diagramType.isHybridType();
 			}
+			if (this.requiredType.isSuperHybridType()) { //この条件が先じゃないとだめ
+				return diagramType.isClassOrObjectType() || diagramType.isMisuseCaseType();
+			}
 			if (this.requiredType.isHybridType()) {
 				return diagramType.isClassOrObjectType();
 			}
-			if (this.requiredType.isSuperHybridType()) {
-				return diagramType.isClassOrObjectType() || diagramType.isMisuseCaseType();
-			}
+
 			return diagramType.equals(this.requiredType);
 		}
 

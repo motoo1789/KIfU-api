@@ -47,7 +47,7 @@ public class ActorArtifact extends NodeArtifact {
 
 	@Override
 	public String toURL() {
-		return "Actor$" + this.getLocation() + "!" + this.actorName.toURL() + "!" + this.actorGfx.toURL();
+		return "Actor$" + this.getLocation() + "!" + this.actorName.toURL();
 
 	}
 }

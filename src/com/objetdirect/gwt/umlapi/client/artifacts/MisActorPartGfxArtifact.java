@@ -105,7 +105,7 @@ public class MisActorPartGfxArtifact extends NodePartArtifact {
 //			attributesURL.append("%");
 //		}
 //		return attributesURL.toString();
-		return null;
+		return "";
 	}
 
 	@Override

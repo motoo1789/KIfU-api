@@ -229,32 +229,25 @@ public class ContextMenu {
 			this.contextMenu.addItem(ADD_NEW_ACTOR.getMessage(), this.addNewActor);
 		}
 		if (this.canvas.getUMLDiagram().getType().isMisuseCaseType()) { // TODO FIXME MisuseCaseType
-			final MenuBar misActorSubMenu = new MenuBar();
+			final MenuBar misActorSubMenu = new MenuBar(true);
 			misActorSubMenu.addItem(ADD_NEW_MISTHIRDPARTY.getMessage(), this.addNewMisActor);
 			misActorSubMenu.addItem(ADD_NEW_MISPRINCIPAL.getMessage(), this.addNewMisPrincipal);
 			misActorSubMenu.addItem(ADD_NEW_MISEXPRINCIPAL.getMessage(), this.addNewMisExPrincipal);
 			this.contextMenu.addItem(ADD_NEW_MISACTOR.getMessage(), misActorSubMenu);
 		}
 
+
 		this.contextMenu.addItem(ADD_NEW_NOTE.getMessage(), this.addNewNote);
 		final MenuBar linkSubMenu = new MenuBar(true);
 		//関連の種類
 		for (final LinkKind relationKind : LinkKind.values()) {
-			if(Session.getActiveCanvas().getUMLDiagram().getType().isMisuseCaseType()){
-				if(relationKind.getName().equals("SimpleRelation")){
-					linkSubMenu.addItem(relationKind.getNameInMenu(), this.addRelation(relationKind));
-				}
-			}
 			if (relationKind.isForDiagram(Session.getActiveCanvas().getUMLDiagram().getType())) {
-
-				//linkSubMenu.addItem(relationKind.getNameInMenu(), this.addRelation(relationKind));
 				linkSubMenu.addItem(relationKind.getNameInMenu(), this.addRelation(relationKind));
 			}
 		}
 
 
 		this.contextMenu.addItem(ADD_RELATION.getMessage(), linkSubMenu);
-		this.contextMenu.addSeparator();
 
 //		this.contextMenu.addItem(CUT.getMessage(),  this.cut);
 //		this.contextMenu.addItem(COPY.getMessage(),  this.copy);
