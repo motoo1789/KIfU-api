@@ -3,7 +3,9 @@ package com.objetdirect.gwt.umlapi.client.editors;
 
 import com.objetdirect.gwt.umlapi.client.artifacts.MisActorArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.MisActorPartNameArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.UMLArtifact;
 import com.objetdirect.gwt.umlapi.client.helpers.UMLCanvas;
+import com.objetdirect.gwt.umlapi.client.mylogger.MyLoggerExecute;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLActor;
 
 public class MisActorPartNameFieldEditor extends FieldEditor {
@@ -35,9 +37,9 @@ public class MisActorPartNameFieldEditor extends FieldEditor {
 				//MyLoggerExecute.registEditEvent("ClassName:"+classArtifact.getId()+":"+cpna.getClassName()+":"+oldContent+":"+newName, canvas.toUrl());
 				//System.out.println("EditClassName:"+oldContent+" ==> "+newName);
 //				int classId = misactorArtifact.getId();
-//				MyLoggerExecute.registEditEvent(-1, "ClassName", "Edit",
-//						misactorArtifact.getClass().getName(), classId, null, -1, -1,
-//						null, oldContent, newContent, this.canvas.toUrl());
+				MyLoggerExecute.registEditEvent(-1, "MisActorName", "Edit",
+						misactorArtifact.getClass().getName(), misactorArtifact.getId(), null, -1, -1,
+						null, oldContent, newName, this.canvas.toUrl(), UMLArtifact.getIdCount());
 
 //				int preEventId, String editEvent, String eventType,
 //				String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,

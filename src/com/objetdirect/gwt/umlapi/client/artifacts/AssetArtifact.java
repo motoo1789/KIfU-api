@@ -17,7 +17,7 @@ public class AssetArtifact extends NodeArtifact{
 
 	public AssetArtifact(final String assetName, final String stereotype){
 		super();
-		this.assetName= new AssetPartNameArtifact(assetName);
+		this.assetName= new AssetPartNameArtifact(assetName, stereotype);
 		//this.assetType = new AssetPartTypesArtifact();
 		this.nodeParts.add(this.assetName);
 		//this.nodeParts.add(this.assetType);

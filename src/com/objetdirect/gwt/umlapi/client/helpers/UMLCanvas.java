@@ -30,6 +30,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.objetdirect.gwt.umlapi.client.artifacts.ActorArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.AssetAndMisUseRelationLinkArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.AssetArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassRelationLinkArtifact;
@@ -40,14 +41,21 @@ import com.objetdirect.gwt.umlapi.client.artifacts.LinkArtifact.LinkAdornment;
 import com.objetdirect.gwt.umlapi.client.artifacts.LinkArtifact.LinkStyle;
 import com.objetdirect.gwt.umlapi.client.artifacts.LinkClassRelationArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.LinkNoteArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.LinkUseCaseRelationArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.MessageLinkArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.MisActorArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.MisAndMisActorRelationLinkArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.MisAndSecurityUseRelationLinkArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.MisUseCaseArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.MisUseCaseRelationLinkArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.NoteArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.ObjectArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.ObjectRelationLinkArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.SecurityUseCaseArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.UMLArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.UseAndActorRelationLinkArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.UseAndMisUseRelationLinkArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.UseAndSecurityUseRelationLinkArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.UseCaseArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.UseCaseRelationLinkArtifact;
 import com.objetdirect.gwt.umlapi.client.editors.FieldEditor;
@@ -404,7 +412,7 @@ public class UMLCanvas extends AbsolutePanel {
 							newArtifact.setLocation(Point.add(Point.parse(parameters[0]), pasteShift));
 
 						} else if (artifact.equals("Asset")) {
-							newArtifact = new AssetArtifact((isForPasting && wasACopy ? "CopyOf" : "") +UMLAsset.parseNameOrStereotype(parameters[1]) );
+							newArtifact = new AssetArtifact((isForPasting && wasACopy ? "CopyOf" : "") +UMLAsset.parseNameOrStereotype(parameters[1]), UMLAsset.parseNameOrStereotype(parameters[2]) );
 							newArtifact.setLocation(Point.add(Point.parse(parameters[0]), pasteShift));
 
 						} else if (artifact.equals("Object")) {
@@ -449,7 +457,19 @@ public class UMLCanvas extends AbsolutePanel {
 							newArtifact = new LinkClassRelationArtifact((ClassArtifact) UMLArtifact.getArtifactById(classId),
 									(ClassRelationLinkArtifact) UMLArtifact.getArtifactById(relationId));
 
-						} else if (artifact.equals("ClassRelationLink")) {
+						}  else if (artifact.equals("LinkUseCaseRelation")) {
+							Integer useCaseId = 0;
+							Integer relationId = 0;
+							try {
+								useCaseId = Integer.parseInt(parameters[0].replaceAll("[<>]", ""));
+								relationId = Integer.parseInt(parameters[1].replaceAll("[<>]", ""));
+							} catch (final Exception ex) {
+								Log.error("Parsing url, id is NaN : " + artifactWithParameters + " : " + ex);
+							}
+							newArtifact = new LinkUseCaseRelationArtifact((UseCaseArtifact) UMLArtifact.getArtifactById(useCaseId),
+									(UseCaseRelationLinkArtifact) UMLArtifact.getArtifactById(relationId));
+
+						}  else if (artifact.equals("ClassRelationLink")) {
 							Integer classLeftId = 0;
 							Integer classRigthId = 0;
 							try {
@@ -492,6 +512,160 @@ public class UMLCanvas extends AbsolutePanel {
 							((UseCaseRelationLinkArtifact) newArtifact).setRightCardinality(parameters[10]);
 							((UseCaseRelationLinkArtifact) newArtifact).setRightConstraint(parameters[11]);
 							((UseCaseRelationLinkArtifact) newArtifact).setRightRole(parameters[12]);
+
+						} else if (artifact.equals("MisUseCaseRelationLink")) {
+							Integer MisUseCaseLeftId = 0;
+							Integer MisUseCaseRigthId = 0;
+							try {
+								MisUseCaseLeftId = Integer.parseInt(parameters[0].replaceAll("[<>]", ""));
+								MisUseCaseRigthId = Integer.parseInt(parameters[1].replaceAll("[<>]", ""));
+							} catch (final Exception ex) {
+								Log.error("Parsing url, id is NaN : " + artifactWithParameters + " : " + ex);
+							}
+							newArtifact = new MisUseCaseRelationLinkArtifact((MisUseCaseArtifact) UMLArtifact.getArtifactById(MisUseCaseLeftId),
+									(MisUseCaseArtifact) UMLArtifact.getArtifactById(MisUseCaseRigthId), LinkKind.getRelationKindFromName(parameters[2]));
+							((MisUseCaseRelationLinkArtifact) newArtifact).setName((isForPasting && wasACopy ? "CopyOf" : "") + parameters[3]);
+							((MisUseCaseRelationLinkArtifact) newArtifact).setLinkStyle(LinkStyle.getLinkStyleFromName(parameters[4]));
+							((MisUseCaseRelationLinkArtifact) newArtifact).setLeftAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[5]));
+							((MisUseCaseRelationLinkArtifact) newArtifact).setLeftCardinality(parameters[6]);
+							((MisUseCaseRelationLinkArtifact) newArtifact).setLeftConstraint(parameters[7]);
+							((MisUseCaseRelationLinkArtifact) newArtifact).setLeftRole(parameters[8]);
+							((MisUseCaseRelationLinkArtifact) newArtifact).setRightAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[9]));
+							((MisUseCaseRelationLinkArtifact) newArtifact).setRightCardinality(parameters[10]);
+							((MisUseCaseRelationLinkArtifact) newArtifact).setRightConstraint(parameters[11]);
+							((MisUseCaseRelationLinkArtifact) newArtifact).setRightRole(parameters[12]);
+
+						}else if (artifact.equals("UseAndSecurityUseRelationLink")) {
+							Integer useCaseId = 0;
+							Integer securityUseCaseId = 0;
+							try {
+								useCaseId = Integer.parseInt(parameters[0].replaceAll("[<>]", ""));
+								securityUseCaseId = Integer.parseInt(parameters[1].replaceAll("[<>]", ""));
+							} catch (final Exception ex) {
+								Log.error("Parsing url, id is NaN : " + artifactWithParameters + " : " + ex);
+							}
+							newArtifact = new UseAndSecurityUseRelationLinkArtifact((UseCaseArtifact) UMLArtifact.getArtifactById(useCaseId),
+									(SecurityUseCaseArtifact) UMLArtifact.getArtifactById(securityUseCaseId), LinkKind.getRelationKindFromName(parameters[2]));
+							((UseAndSecurityUseRelationLinkArtifact) newArtifact).setName((isForPasting && wasACopy ? "CopyOf" : "") + parameters[3]);
+							((UseAndSecurityUseRelationLinkArtifact) newArtifact).setLinkStyle(LinkStyle.getLinkStyleFromName(parameters[4]));
+							((UseAndSecurityUseRelationLinkArtifact) newArtifact).setLeftAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[5]));
+							((UseAndSecurityUseRelationLinkArtifact) newArtifact).setLeftCardinality(parameters[6]);
+							((UseAndSecurityUseRelationLinkArtifact) newArtifact).setLeftConstraint(parameters[7]);
+							((UseAndSecurityUseRelationLinkArtifact) newArtifact).setLeftRole(parameters[8]);
+							((UseAndSecurityUseRelationLinkArtifact) newArtifact).setRightAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[9]));
+							((UseAndSecurityUseRelationLinkArtifact) newArtifact).setRightCardinality(parameters[10]);
+							((UseAndSecurityUseRelationLinkArtifact) newArtifact).setRightConstraint(parameters[11]);
+							((UseAndSecurityUseRelationLinkArtifact) newArtifact).setRightRole(parameters[12]);
+
+						} else if (artifact.equals("MisAndSecurityUseRelationLink")) {
+							Integer misUseCaseId = 0;
+							Integer securityUseCaseId = 0;
+							try {
+								misUseCaseId = Integer.parseInt(parameters[0].replaceAll("[<>]", ""));
+								securityUseCaseId = Integer.parseInt(parameters[1].replaceAll("[<>]", ""));
+							} catch (final Exception ex) {
+								Log.error("Parsing url, id is NaN : " + artifactWithParameters + " : " + ex);
+							}
+							newArtifact = new MisAndSecurityUseRelationLinkArtifact((MisUseCaseArtifact) UMLArtifact.getArtifactById(misUseCaseId),
+									(SecurityUseCaseArtifact) UMLArtifact.getArtifactById(securityUseCaseId), LinkKind.getRelationKindFromName(parameters[2]));
+							((MisAndSecurityUseRelationLinkArtifact) newArtifact).setName((isForPasting && wasACopy ? "CopyOf" : "") + parameters[3]);
+							((MisAndSecurityUseRelationLinkArtifact) newArtifact).setLinkStyle(LinkStyle.getLinkStyleFromName(parameters[4]));
+							((MisAndSecurityUseRelationLinkArtifact) newArtifact).setLeftAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[5]));
+							((MisAndSecurityUseRelationLinkArtifact) newArtifact).setLeftCardinality(parameters[6]);
+							((MisAndSecurityUseRelationLinkArtifact) newArtifact).setLeftConstraint(parameters[7]);
+							((MisAndSecurityUseRelationLinkArtifact) newArtifact).setLeftRole(parameters[8]);
+							((MisAndSecurityUseRelationLinkArtifact) newArtifact).setRightAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[9]));
+							((MisAndSecurityUseRelationLinkArtifact) newArtifact).setRightCardinality(parameters[10]);
+							((MisAndSecurityUseRelationLinkArtifact) newArtifact).setRightConstraint(parameters[11]);
+							((MisAndSecurityUseRelationLinkArtifact) newArtifact).setRightRole(parameters[12]);
+
+						} else if (artifact.equals("UseAndActorRelationLink")) {
+							Integer useCaseId = 0;
+							Integer actorId = 0;
+							try {
+								useCaseId = Integer.parseInt(parameters[0].replaceAll("[<>]", ""));
+								actorId = Integer.parseInt(parameters[1].replaceAll("[<>]", ""));
+							} catch (final Exception ex) {
+								Log.error("Parsing url, id is NaN : " + artifactWithParameters + " : " + ex);
+							}
+							newArtifact = new UseAndActorRelationLinkArtifact((UseCaseArtifact) UMLArtifact.getArtifactById(useCaseId),
+									(ActorArtifact) UMLArtifact.getArtifactById(actorId), LinkKind.getRelationKindFromName(parameters[2]));
+							((UseAndActorRelationLinkArtifact) newArtifact).setName((isForPasting && wasACopy ? "CopyOf" : "") + parameters[3]);
+							((UseAndActorRelationLinkArtifact) newArtifact).setLinkStyle(LinkStyle.getLinkStyleFromName(parameters[4]));
+							((UseAndActorRelationLinkArtifact) newArtifact).setLeftAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[5]));
+							((UseAndActorRelationLinkArtifact) newArtifact).setLeftCardinality(parameters[6]);
+							((UseAndActorRelationLinkArtifact) newArtifact).setLeftConstraint(parameters[7]);
+							((UseAndActorRelationLinkArtifact) newArtifact).setLeftRole(parameters[8]);
+							((UseAndActorRelationLinkArtifact) newArtifact).setRightAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[9]));
+							((UseAndActorRelationLinkArtifact) newArtifact).setRightCardinality(parameters[10]);
+							((UseAndActorRelationLinkArtifact) newArtifact).setRightConstraint(parameters[11]);
+							((UseAndActorRelationLinkArtifact) newArtifact).setRightRole(parameters[12]);
+
+						}  else if (artifact.equals("MisAndMisActorRelationLink")) {
+							Integer misUseCaseId = 0;
+							Integer misActorId = 0;
+							try {
+								misUseCaseId = Integer.parseInt(parameters[0].replaceAll("[<>]", ""));
+								misActorId = Integer.parseInt(parameters[1].replaceAll("[<>]", ""));
+							} catch (final Exception ex) {
+								Log.error("Parsing url, id is NaN : " + artifactWithParameters + " : " + ex);
+							}
+							newArtifact = new MisAndMisActorRelationLinkArtifact((MisUseCaseArtifact) UMLArtifact.getArtifactById(misUseCaseId),
+									(MisActorArtifact) UMLArtifact.getArtifactById(misActorId), LinkKind.getRelationKindFromName(parameters[2]));
+							((MisAndMisActorRelationLinkArtifact) newArtifact).setName((isForPasting && wasACopy ? "CopyOf" : "") + parameters[3]);
+							((MisAndMisActorRelationLinkArtifact) newArtifact).setLinkStyle(LinkStyle.getLinkStyleFromName(parameters[4]));
+							((MisAndMisActorRelationLinkArtifact) newArtifact).setLeftAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[5]));
+							((MisAndMisActorRelationLinkArtifact) newArtifact).setLeftCardinality(parameters[6]);
+							((MisAndMisActorRelationLinkArtifact) newArtifact).setLeftConstraint(parameters[7]);
+							((MisAndMisActorRelationLinkArtifact) newArtifact).setLeftRole(parameters[8]);
+							((MisAndMisActorRelationLinkArtifact) newArtifact).setRightAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[9]));
+							((MisAndMisActorRelationLinkArtifact) newArtifact).setRightCardinality(parameters[10]);
+							((MisAndMisActorRelationLinkArtifact) newArtifact).setRightConstraint(parameters[11]);
+							((MisAndMisActorRelationLinkArtifact) newArtifact).setRightRole(parameters[12]);
+
+						}else if (artifact.equals("AssetAndMisUseRelationLink")) {
+							Integer assetId = 0;
+							Integer misUseCaseId = 0;
+							try {
+								assetId = Integer.parseInt(parameters[0].replaceAll("[<>]", ""));
+								misUseCaseId = Integer.parseInt(parameters[1].replaceAll("[<>]", ""));
+							} catch (final Exception ex) {
+								Log.error("Parsing url, id is NaN : " + artifactWithParameters + " : " + ex);
+							}
+							newArtifact = new AssetAndMisUseRelationLinkArtifact((AssetArtifact) UMLArtifact.getArtifactById(assetId),
+									(MisUseCaseArtifact) UMLArtifact.getArtifactById(misUseCaseId), LinkKind.getRelationKindFromName(parameters[2]));
+							((AssetAndMisUseRelationLinkArtifact) newArtifact).setName((isForPasting && wasACopy ? "CopyOf" : "") + parameters[3]);
+							((AssetAndMisUseRelationLinkArtifact) newArtifact).setLinkStyle(LinkStyle.getLinkStyleFromName(parameters[4]));
+							((AssetAndMisUseRelationLinkArtifact) newArtifact).setLeftAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[5]));
+							((AssetAndMisUseRelationLinkArtifact) newArtifact).setLeftCardinality(parameters[6]);
+							((AssetAndMisUseRelationLinkArtifact) newArtifact).setLeftConstraint(parameters[7]);
+							((AssetAndMisUseRelationLinkArtifact) newArtifact).setLeftRole(parameters[8]);
+							((AssetAndMisUseRelationLinkArtifact) newArtifact).setRightAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[9]));
+							((AssetAndMisUseRelationLinkArtifact) newArtifact).setRightCardinality(parameters[10]);
+							((AssetAndMisUseRelationLinkArtifact) newArtifact).setRightConstraint(parameters[11]);
+							((AssetAndMisUseRelationLinkArtifact) newArtifact).setRightRole(parameters[12]);
+
+						}else if (artifact.equals("UseAndMisUseRelationLink")) {
+							Integer useCaseId = 0;
+							Integer misUseCaseId = 0;
+							try {
+								useCaseId = Integer.parseInt(parameters[0].replaceAll("[<>]", ""));
+								misUseCaseId = Integer.parseInt(parameters[1].replaceAll("[<>]", ""));
+							} catch (final Exception ex) {
+								Log.error("Parsing url, id is NaN : " + artifactWithParameters + " : " + ex);
+							}
+							newArtifact = new UseAndMisUseRelationLinkArtifact((UseCaseArtifact) UMLArtifact.getArtifactById(useCaseId),
+									(MisUseCaseArtifact) UMLArtifact.getArtifactById(misUseCaseId), LinkKind.getRelationKindFromName(parameters[2]));
+							((UseAndMisUseRelationLinkArtifact) newArtifact).setName((isForPasting && wasACopy ? "CopyOf" : "") + parameters[3]);
+							((UseAndMisUseRelationLinkArtifact) newArtifact).setLinkStyle(LinkStyle.getLinkStyleFromName(parameters[4]));
+							((UseAndMisUseRelationLinkArtifact) newArtifact).setLeftAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[5]));
+							((UseAndMisUseRelationLinkArtifact) newArtifact).setLeftCardinality(parameters[6]);
+							((UseAndMisUseRelationLinkArtifact) newArtifact).setLeftConstraint(parameters[7]);
+							((UseAndMisUseRelationLinkArtifact) newArtifact).setLeftRole(parameters[8]);
+							((UseAndMisUseRelationLinkArtifact) newArtifact).setRightAdornment(LinkAdornment.getLinkAdornmentFromName(parameters[9]));
+							((UseAndMisUseRelationLinkArtifact) newArtifact).setRightCardinality(parameters[10]);
+							((UseAndMisUseRelationLinkArtifact) newArtifact).setRightConstraint(parameters[11]);
+							((UseAndMisUseRelationLinkArtifact) newArtifact).setRightRole(parameters[12]);
 
 						} else if (artifact.equals("ObjectRelationLink")) {
 							Integer objectLeftId = 0;

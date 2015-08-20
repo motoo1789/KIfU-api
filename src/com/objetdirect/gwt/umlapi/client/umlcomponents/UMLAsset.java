@@ -1,7 +1,5 @@
 package com.objetdirect.gwt.umlapi.client.umlcomponents;
 
-import java.util.ArrayList;
-
 import com.allen_sauer.gwt.log.client.Log;
 import com.objetdirect.gwt.umlapi.client.GWTUMLAPIException;
 import com.objetdirect.gwt.umlapi.client.analyser.LexicalAnalyzer;
@@ -27,23 +25,29 @@ public class UMLAsset extends UMLNode{
 	}
 
 	private String name;
-	private ArrayList<UMLAssetType> stereotypes;
+	private String stereotype;
 
-	public UMLAsset(final String name){
+	public UMLAsset(final String assetName){
 		super();
-		this.name = name;
+		this.name = assetName;
 	}
 
-	public final ArrayList<UMLAssetType> getStereoTypes(){
-		return this.stereotypes;
+	public UMLAsset(String assetName, String stereotype) {
+		super();
+		this.name = assetName;
+		this.stereotype = stereotype;
+	}
+
+	public final String getStereoTypes(){
+		return this.stereotype;
 	}
 
 	public final String getName(){
 		return this.name;
 	}
 
-	public final void setStereotypes(final ArrayList<UMLAssetType> stereotypes){
-		this.stereotypes = stereotypes;
+	public final void setStereotypes(final String stereotype){
+		this.stereotype = stereotype;
 	}
 
 	public final void setName(final String name){
@@ -53,7 +57,7 @@ public class UMLAsset extends UMLNode{
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return this.name;
+		return this.name+"!"+this.stereotype;
 	}
 
 

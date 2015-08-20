@@ -16,7 +16,7 @@ public class SecurityUseCaseArtifact extends NodeArtifact{
 
 	public SecurityUseCaseArtifact(final String securityusecaseName, final String stereotype){
 		super();
-		this.securityusecaseName= new SecurityUseCasePartNameArtifact(securityusecaseName);
+		this.securityusecaseName= new SecurityUseCasePartNameArtifact(securityusecaseName, stereotype);
 
 		this.nodeParts.add(this.securityusecaseName);
 

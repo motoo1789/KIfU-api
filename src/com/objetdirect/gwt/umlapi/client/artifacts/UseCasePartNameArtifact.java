@@ -18,7 +18,6 @@ public class UseCasePartNameArtifact extends NodePartArtifact{
 	private final UMLUseCase uMLusecase;
 	private GfxObject nameEllip;
 	private GfxObject nameText;
-	private GfxObject nameImage;
 
 	public UseCasePartNameArtifact(final String usecaseName){
 		super();
@@ -35,15 +34,16 @@ public class UseCasePartNameArtifact extends NodePartArtifact{
     		this.computeBounds();
     	}
 
-    	this.nameEllip = GfxManager.getPlatform().buildEllipse(this.nodeWidth,this.height);
+    	//this.nameEllip = GfxManager.getPlatform().buildEllipse(this.nodeWidth,this.height);
+    	this.nameEllip = GfxManager.getPlatform().buildEllipse(this.width,this.height);
     	GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.nameEllip);
-    	GfxManager.getPlatform().setFillColor(nameEllip, ThemeManager.getTheme().getClassBackgroundColor());
+    	GfxManager.getPlatform().setFillColor(this.nameEllip, ThemeManager.getTheme().getClassBackgroundColor());
     	GfxManager.getPlatform().setStroke(this.nameEllip, ThemeManager.getTheme().getClassForegroundColor(), 1); //caution
 
     	GfxManager.getPlatform().translate(
 				this.nameText,
-				new Point((this.nodeWidth - GfxManager.getPlatform().getTextWidthFor(this.nameText) - OptionsManager.get("TextRightPadding") - OptionsManager
-						.get("TextLeftPadding")) / 2, OptionsManager.get("EllipseTopPadding"))); //一緒でいいかも
+				new Point( (this.nodeWidth - GfxManager.getPlatform().getTextWidthFor(this.nameText) - OptionsManager.get("TextRightPadding") - OptionsManager
+						.get("TextLeftPadding")), OptionsManager.get("EllipseTopPadding"))); //一緒でいいかも
 		GfxManager.getPlatform().moveToFront(this.textVirtualGroup);
     }
 

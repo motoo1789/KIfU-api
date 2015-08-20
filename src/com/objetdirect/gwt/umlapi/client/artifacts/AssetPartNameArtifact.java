@@ -21,9 +21,9 @@ public class AssetPartNameArtifact extends NodePartArtifact{
 	private String stereotype="SecurityProperty";
 	private GfxObject stereotypeText;
 
-	public AssetPartNameArtifact(final String assetName){
+	public AssetPartNameArtifact(final String assetName, final String stereotype){
 		super();
-		this.uMLasset = new UMLAsset(assetName);
+		this.uMLasset = new UMLAsset(assetName ,  stereotype);
 		this.stereotype = stereotype.equals("") ? "" : "«" + stereotype + "»";
 		this.height = 0;
 		this.width = 0;

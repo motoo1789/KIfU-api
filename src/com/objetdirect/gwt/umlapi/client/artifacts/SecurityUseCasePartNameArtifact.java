@@ -22,7 +22,7 @@ public class SecurityUseCasePartNameArtifact extends NodePartArtifact{
 	private String stereotype="Architecture";
 	private GfxObject stereotypeText;
 
-	public SecurityUseCasePartNameArtifact(final String securityusecaseName){
+	public SecurityUseCasePartNameArtifact(final String securityusecaseName, final String stereotype){
 		super();
 		this.uMLsecurityusecase = new UMLSecurityUseCase(securityusecaseName);
 		this.stereotype = stereotype.equals("") ? "" : "«" + stereotype + "»";

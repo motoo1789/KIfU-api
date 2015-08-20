@@ -2,7 +2,9 @@ package com.objetdirect.gwt.umlapi.client.editors;
 
 import com.objetdirect.gwt.umlapi.client.artifacts.SecurityUseCaseArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.SecurityUseCasePartNameArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.UMLArtifact;
 import com.objetdirect.gwt.umlapi.client.helpers.UMLCanvas;
+import com.objetdirect.gwt.umlapi.client.mylogger.MyLoggerExecute;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLSecurityUseCase;
 
 
@@ -41,7 +43,17 @@ public class SecurityUseCasePartNameFieldEditor extends FieldEditor {
 			if (newStereotype.equals("")) {
 				((SecurityUseCasePartNameArtifact) this.artifact).setStereotype("«Architecture»");
 			} else {
+				String oldContent = ((SecurityUseCasePartNameArtifact) this.artifact).getSecurityUseCaseName();
+				SecurityUseCasePartNameArtifact cpna = (SecurityUseCasePartNameArtifact) this.artifact;
+				SecurityUseCaseArtifact securityUseCaseArtifact = (SecurityUseCaseArtifact)cpna.getNodeArtifact();
+
+
 				((SecurityUseCasePartNameArtifact) this.artifact).setStereotype("«" + newStereotype + "»");
+
+				MyLoggerExecute.registEditEvent(-1, "SecurityUseCaseStereotype", "Edit",
+						securityUseCaseArtifact.getClass().getName(), securityUseCaseArtifact.getId(), null, -1, -1,
+						null, oldContent, newStereotype, this.canvas.toUrl(), UMLArtifact.getIdCount());
+
 			}
 		} else {
 			final String newName = UMLSecurityUseCase.parseNameOrStereotype(newContentWithoutSpaces);
@@ -51,7 +63,7 @@ public class SecurityUseCasePartNameFieldEditor extends FieldEditor {
 				//TODO takafumi Class Name Changeed Log
 				String oldContent = ((SecurityUseCasePartNameArtifact) this.artifact).getSecurityUseCaseName();
 				SecurityUseCasePartNameArtifact cpna = (SecurityUseCasePartNameArtifact) this.artifact;
-				SecurityUseCaseArtifact securityusecaseArtifact = (SecurityUseCaseArtifact)cpna.getNodeArtifact();
+				SecurityUseCaseArtifact securityUseCaseArtifact = (SecurityUseCaseArtifact)cpna.getNodeArtifact();
 
 				((SecurityUseCasePartNameArtifact) this.artifact).setSecurityUseCaseName(newName);
 
@@ -59,9 +71,9 @@ public class SecurityUseCasePartNameFieldEditor extends FieldEditor {
 				//MyLoggerExecute.registEditEvent("ClassName:"+classArtifact.getId()+":"+cpna.getClassName()+":"+oldContent+":"+newName, canvas.toUrl());
 				//System.out.println("EditClassName:"+oldContent+" ==> "+newName);
 //				int classId = securityusecaseArtifact.getId();
-//				MyLoggerExecute.registEditEvent(-1, "ClassName", "Edit",
-//						securityusecaseArtifact.getClass().getName(), classId, null, -1, -1,
-//						null, oldContent, newContent, this.canvas.toUrl());
+				MyLoggerExecute.registEditEvent(-1, "SecurityUseCaseName", "Edit",
+						securityUseCaseArtifact.getClass().getName(), securityUseCaseArtifact.getId(), null, -1, -1,
+						null, oldContent, newName, this.canvas.toUrl(), UMLArtifact.getIdCount());
 
 //				int preEventId, String editEvent, String eventType,
 //				String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,

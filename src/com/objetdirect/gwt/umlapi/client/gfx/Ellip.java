@@ -50,8 +50,10 @@ public class Ellip extends GraphicObject{
 
 	protected native JavaScriptObject createGfx(JavaScriptObject surface,double width, double height)/*-{
 	 return surface.createEllipse({
-	   width :  width,
-	   height : height
+	   cx :  width/2,
+	   cy : height/2,
+	   rx : width,
+	   ry : height
 	   });
 	  }-*/;
 }

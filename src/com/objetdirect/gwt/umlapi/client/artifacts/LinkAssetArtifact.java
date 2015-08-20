@@ -70,7 +70,7 @@ public class LinkAssetArtifact extends LinkArtifact {
 	 */
 	@Override
 	public String toURL() {
-		return "LinkNote$<" + this.asset.getId() + ">!<" + this.target.getId() + ">";
+		return "LinkAsset$<" + this.asset.getId() + ">!<" + this.target.getId() + ">";
 	}
 
 	@Override

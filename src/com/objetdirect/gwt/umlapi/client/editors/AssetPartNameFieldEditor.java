@@ -2,8 +2,11 @@
 package com.objetdirect.gwt.umlapi.client.editors;
 
 
+import com.objetdirect.gwt.umlapi.client.artifacts.AssetArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.AssetPartNameArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.UMLArtifact;
 import com.objetdirect.gwt.umlapi.client.helpers.UMLCanvas;
+import com.objetdirect.gwt.umlapi.client.mylogger.MyLoggerExecute;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLAsset;
 
 /**
@@ -47,7 +50,17 @@ public class AssetPartNameFieldEditor extends FieldEditor {
 			if (newStereotype.equals("")) {
 				((AssetPartNameArtifact) this.artifact).setStereotype("«SecurityProperty»");
 			} else {
+				String oldContent = ((AssetPartNameArtifact) this.artifact).getStereotype();
+				AssetPartNameArtifact cpna = (AssetPartNameArtifact) this.artifact;
+				AssetArtifact assetArtifact = (AssetArtifact)cpna.getNodeArtifact();
+
 				((AssetPartNameArtifact) this.artifact).setStereotype("«" + newStereotype + "»");
+				//MyLoggerExecute.registEditEvent("ClassName:"+classArtifact.getId()+":"+cpna.getClassName()+":"+oldContent+":"+newName, canvas.toUrl());
+				//System.out.println("EditClassName:"+oldContent+" ==> "+newName);
+//				int classId = assetArtifact.getId();
+				MyLoggerExecute.registEditEvent(-1, "AssetStereoType", "Edit",
+						assetArtifact.getClass().getName(), assetArtifact.getId(), null, -1, -1,
+						null, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
 			}
 		} else {
 			final String newName = UMLAsset.parseNameOrStereotype(newContentWithoutSpaces);
@@ -55,17 +68,17 @@ public class AssetPartNameFieldEditor extends FieldEditor {
 				((AssetPartNameArtifact) this.artifact).setAssetName("Asset");
 			} else {
 				//TODO takafumi Class Name Changeed Log
-//				String oldContent = ((AssetPartNameArtifact) this.artifact).getAssetName();
-//				AssetPartNameArtifact cpna = (AssetPartNameArtifact) this.artifact;
-//				AssetArtifact assetArtifact = (AssetArtifact)cpna.getNodeArtifact();
+				String oldContent = ((AssetPartNameArtifact) this.artifact).getAssetName();
+				AssetPartNameArtifact cpna = (AssetPartNameArtifact) this.artifact;
+				AssetArtifact assetArtifact = (AssetArtifact)cpna.getNodeArtifact();
 
 				((AssetPartNameArtifact) this.artifact).setAssetName(newName);
 				//MyLoggerExecute.registEditEvent("ClassName:"+classArtifact.getId()+":"+cpna.getClassName()+":"+oldContent+":"+newName, canvas.toUrl());
 				//System.out.println("EditClassName:"+oldContent+" ==> "+newName);
 //				int classId = assetArtifact.getId();
-//				MyLoggerExecute.registEditEvent(-1, "AssetName", "Edit",
-//						assetArtifact.getClass().getName(), classId, null, -1, -1,
-//						null, oldContent, newContent, this.canvas.toUrl());
+				MyLoggerExecute.registEditEvent(-1, "AssetName", "Edit",
+						assetArtifact.getClass().getName(), assetArtifact.getId(), null, -1, -1,
+						null, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
 
 //				int preEventId, String editEvent, String eventType,
 //				String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,

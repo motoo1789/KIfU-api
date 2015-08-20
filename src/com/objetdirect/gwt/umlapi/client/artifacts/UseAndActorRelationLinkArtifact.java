@@ -101,16 +101,6 @@ public class UseAndActorRelationLinkArtifact extends RelationLinkArtifact {
 		return rightMenu;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see com.objetdirect.gwt.umlapi.client.artifacts.LinkArtifact#removeCreatedDependency()
-	 */
-	@Override
-	public void removeCreatedDependency() {
-		this.usecaseArtifact.removeDependency(this);
-		this.actorArtifact.removeDependency(this);
-	}
 
 	/*
 	 * (non-Javadoc)
@@ -119,7 +109,11 @@ public class UseAndActorRelationLinkArtifact extends RelationLinkArtifact {
 	 */
 	@Override
 	public String toURL() {
-		return "UseAndActorRelationLink$<" + this.usecaseArtifact.getId() + ">!<" + this.actorArtifact.getId() + ">";
+		return "UseAndActorRelationLink$<" + this.usecaseArtifact.getId() + ">!<" + this.actorArtifact.getId() + ">!" + this.relation.getLinkKind().getName()
+				+ "!" + this.relation.getName() + "!" + this.relation.getLinkStyle().getName() + "!" + this.relation.getLeftAdornment().getName() + "!"
+				+ this.relation.getLeftCardinality() + "!" + this.relation.getLeftConstraint() + "!" + this.relation.getLeftRole() + "!"
+				+ this.relation.getRightAdornment().getName() + "!" + this.relation.getRightCardinality() + "!" + this.relation.getRightConstraint() + "!"
+				+ this.relation.getRightRole();
 	}
 
 	/*
@@ -222,6 +216,194 @@ public class UseAndActorRelationLinkArtifact extends RelationLinkArtifact {
 		GfxManager.getPlatform().setStroke(this.arrowVirtualGroup, ThemeManager.getTheme().getInstantiationHighlightedForegroundColor(), 2);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.objetdirect.gwt.umlapi.client.artifacts.LinkArtifact#removeCreatedDependency()
+	 */
+	@Override
+	public void removeCreatedDependency() {
+		this.usecaseArtifact.removeDependency(this);
+		this.actorArtifact.removeDependency(this);
+	}
+
+	/**
+	 * Reset the navigability of the left side to unknown <br />
+	 * The left side must not be a generalization, realization, aggregation or composition otherwise this method do nothing
+	 */
+	public void resetLeftNavigability() {
+		if (this.relation.getLeftAdornment().isNavigabilityAdornment()) {
+			this.relation.setLeftAdornment(LinkAdornment.NONE);
+		}
+	}
+
+	/**
+	 * Reset the navigability of the right side to unknown <br />
+	 * The right side must not be a generalization, realization, aggregation or composition otherwise this method do nothing
+	 */
+	public void resetRightNavigability() {
+		if (this.relation.getRightAdornment().isNavigabilityAdornment()) {
+			this.relation.setRightAdornment(LinkAdornment.NONE);
+		}
+	}
+
+	/**
+	 * Setter for the left and right cardinalities in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param leftCardinality
+	 *            The left cardinality text to be set
+	 * @param rightCardinality
+	 *            The right cardinality text to be set
+	 */
+	public void setCardinalities(final String leftCardinality, final String rightCardinality) {
+		this.relation.setLeftCardinality(leftCardinality);
+		this.relation.setRightCardinality(rightCardinality);
+	}
+
+	/**
+	 * Setter for the relation left {@link LinkArtifact.LinkAdornment}
+	 *
+	 * @param leftAdornment
+	 *            The left {@link LinkArtifact.LinkAdornment} to be set
+	 */
+	public void setLeftAdornment(final LinkAdornment leftAdornment) {
+		this.relation.setLeftAdornment(leftAdornment);
+	}
+
+	/**
+	 * Setter for the leftCardinality in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param leftCardinality
+	 *            The leftCardinality text to be set
+	 */
+	public void setLeftCardinality(final String leftCardinality) {
+		this.relation.setLeftCardinality(leftCardinality);
+	}
+
+	/**
+	 * Setter for the leftConstraint in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param leftConstraint
+	 *            The leftConstraint text to be set
+	 */
+	public void setLeftConstraint(final String leftConstraint) {
+		this.relation.setLeftConstraint(leftConstraint);
+	}
+
+	/**
+	 * Set the state of left navigability <br />
+	 * The left side must not be a generalization, realization, aggregation or composition otherwise this method do nothing <br />
+	 * To set the unknown state see {@link ClassRelationLinkArtifact#resetLeftNavigability()}
+	 *
+	 * @param isNavigable
+	 *            If true set the link's side to navigable otherwise set it to NOT navigable
+	 *
+	 */
+	public void setLeftNavigability(final boolean isNavigable) {
+		if (this.relation.getLeftAdornment().isNavigabilityAdornment()) {
+			this.relation.setLeftAdornment(isNavigable ? LinkAdornment.WIRE_ARROW : LinkAdornment.WIRE_CROSS);
+		}
+
+	}
+
+	/**
+	 * Setter for the leftRole in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param leftRole
+	 *            The leftRole text to be set
+	 */
+	public void setLeftRole(final String leftRole) {
+		this.relation.setLeftRole(leftRole);
+	}
+
+	/**
+	 * Setter for the relation {@link LinkArtifact.LinkStyle}
+	 *
+	 * @param linkStyle
+	 *            The {@link LinkArtifact.LinkStyle} to be set
+	 */
+	public void setLinkStyle(final LinkStyle linkStyle) {
+		this.relation.setLinkStyle(linkStyle);
+	}
+
+	/**
+	 * Setter for the name in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param name
+	 *            The name text to be set
+	 */
+	public void setName(final String name) {
+		this.relation.setName(name);
+	}
+
+	public String getName() {
+		return this.relation.getName();
+	}
+
+	/**
+	 * Setter for the relation {@link LinkKind}
+	 *
+	 * @param relationKind
+	 *            The {@link LinkKind} to be set
+	 */
+	public void setRelationKind(final LinkKind relationKind) {
+		this.relation.setLinkKind(relationKind);
+	}
+
+	/**
+	 * Setter for the relation right {@link LinkArtifact.LinkAdornment}
+	 *
+	 * @param rightAdornment
+	 *            The right{@link LinkArtifact.LinkAdornment} to be set
+	 */
+	public void setRightAdornment(final LinkAdornment rightAdornment) {
+		this.relation.setRightAdornment(rightAdornment);
+	}
+
+	/**
+	 * Setter for the rightCardinality in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param rightCardinality
+	 *            The rightCardinality text to be set
+	 */
+	public void setRightCardinality(final String rightCardinality) {
+		this.relation.setRightCardinality(rightCardinality);
+	}
+
+	/**
+	 * Setter for the rightConstraint in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param rightConstraint
+	 *            The rightConstraint text to be set
+	 */
+	public void setRightConstraint(final String rightConstraint) {
+		this.relation.setRightConstraint(rightConstraint);
+	}
+
+	/**
+	 * Set the state of right navigability <br />
+	 * The right side must not be a generalization, realization, aggregation or composition otherwise this method do nothing <br />
+	 * To set the unknown state see {@link ClassRelationLinkArtifact#resetRightNavigability()}
+	 *
+	 * @param isNavigable
+	 *            If true set the link's side to navigable otherwise set it to NOT navigable
+	 *
+	 */
+	public void setRightNavigability(final boolean isNavigable) {
+		if (this.relation.getRightAdornment().isNavigabilityAdornment()) {
+			this.relation.setRightAdornment(isNavigable ? LinkAdornment.WIRE_ARROW : LinkAdornment.WIRE_CROSS);
+		}
+	}
+
+	/**
+	 * Setter for the rightRole in {@link UMLRelation} This does not update the graphical object
+	 *
+	 * @param rightRole
+	 *            The rightRole text to be set
+	 */
+	public void setRightRole(final String rightRole) {
+		this.relation.setRightRole(rightRole);
+	}
 
 
 }

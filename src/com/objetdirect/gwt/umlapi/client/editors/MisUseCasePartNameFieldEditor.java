@@ -17,7 +17,9 @@ package com.objetdirect.gwt.umlapi.client.editors;
 
 import com.objetdirect.gwt.umlapi.client.artifacts.MisUseCaseArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.MisUseCasePartNameArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.UMLArtifact;
 import com.objetdirect.gwt.umlapi.client.helpers.UMLCanvas;
+import com.objetdirect.gwt.umlapi.client.mylogger.MyLoggerExecute;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLMisUseCase;
 
 /**
@@ -49,7 +51,15 @@ public class MisUseCasePartNameFieldEditor extends FieldEditor {
 			if (newStereotype.equals("")) {
 				((MisUseCasePartNameArtifact) this.artifact).setStereotype("«Architecture»");
 			} else {
+				String oldContent = ((MisUseCasePartNameArtifact) this.artifact).getMisUseCaseName();
+				MisUseCasePartNameArtifact cpna = (MisUseCasePartNameArtifact) this.artifact;
+				MisUseCaseArtifact misuseCaseArtifact = (MisUseCaseArtifact)cpna.getNodeArtifact();
+
 				((MisUseCasePartNameArtifact) this.artifact).setStereotype("«" + newStereotype + "»");
+
+				MyLoggerExecute.registEditEvent(-1, "MisuseCaseStereotype", "Edit",
+						misuseCaseArtifact.getClass().getName(), misuseCaseArtifact.getId(), null, -1, -1,
+						null, oldContent, newStereotype, this.canvas.toUrl(), UMLArtifact.getIdCount());
 			}
 		} else {
 			final String newName = UMLMisUseCase.parseNameOrStereotype(newContentWithoutSpaces);
@@ -59,7 +69,7 @@ public class MisUseCasePartNameFieldEditor extends FieldEditor {
 				//TODO takafumi Class Name Changeed Log
 				String oldContent = ((MisUseCasePartNameArtifact) this.artifact).getMisUseCaseName();
 				MisUseCasePartNameArtifact cpna = (MisUseCasePartNameArtifact) this.artifact;
-				MisUseCaseArtifact misusecaseArtifact = (MisUseCaseArtifact)cpna.getNodeArtifact();
+				MisUseCaseArtifact misuseCaseArtifact = (MisUseCaseArtifact)cpna.getNodeArtifact();
 
 				((MisUseCasePartNameArtifact) this.artifact).setMisUseCaseName(newName);
 
@@ -67,9 +77,9 @@ public class MisUseCasePartNameFieldEditor extends FieldEditor {
 				//MyLoggerExecute.registEditEvent("ClassName:"+classArtifact.getId()+":"+cpna.getClassName()+":"+oldContent+":"+newName, canvas.toUrl());
 				//System.out.println("EditClassName:"+oldContent+" ==> "+newName);
 //				int classId = misusecaseArtifact.getId();
-//				MyLoggerExecute.registEditEvent(-1, "ClassName", "Edit",
-//						misusecaseArtifact.getClass().getName(), classId, null, -1, -1,
-//						null, oldContent, newContent, this.canvas.toUrl());
+				MyLoggerExecute.registEditEvent(-1, "MisuseCaseName", "Edit",
+						misuseCaseArtifact.getClass().getName(), misuseCaseArtifact.getId(), null, -1, -1,
+						null, oldContent, newName, this.canvas.toUrl(), UMLArtifact.getIdCount());
 
 //				int preEventId, String editEvent, String eventType,
 //				String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
