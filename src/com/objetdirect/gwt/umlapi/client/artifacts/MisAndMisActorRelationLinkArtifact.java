@@ -34,7 +34,7 @@ public class MisAndMisActorRelationLinkArtifact extends RelationLinkArtifact {
 			Log.error("Making a instantiation relation artifact for : " + relationKind.getName());
 		}
 		this.relation = new UMLRelation(relationKind);
-		this.relation.setName("");
+		this.relation.setName("No Name");
 		this.misusecaseArtifact = left;
 		left.addDependency(this, right);
 		this.misactorArtifact = right;

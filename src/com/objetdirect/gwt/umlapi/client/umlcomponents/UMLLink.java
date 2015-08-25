@@ -81,7 +81,7 @@ public abstract class UMLLink {
 		/**
 		 * Note relation
 		 */
-		NOTE("Note link",NOTE_LINK.getMessage(), LinkAdornment.NONE, LinkAdornment.NONE, "", "", LinkStyle.SOLID, Type.HYBRID),
+		NOTE("Note link",NOTE_LINK.getMessage(), LinkAdornment.NONE, LinkAdornment.NONE, "", "", LinkStyle.SOLID, Type.SUPER_HYBRID),
 		/**
 		 * Class relation
 		 */

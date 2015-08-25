@@ -10,6 +10,7 @@ package com.objetdirect.gwt.umlapi.client.helpers;
 public enum TextResource {
 	SUPER_HYBRID_TR("Super hybrid", "スーパーハイブリッド"),
 	CLASS_AND_MISUSECASE_TR("Class and MisuseCase", "クラス図とミスユースケース図"),
+	EDIT_MISUSECASE_DIAGRAM("Edit Misuse Case Diaram", "ミスユースケース図を編集"),
 	MISUSECASE_DIAGRAM("MisuseCase Diagram", "ミスユースケース図"),
 	CLASS_DIAGRAM("Class Diagram", "クラス図"),
 	ASSET_LINK("Asset link", "アセットリンク"),

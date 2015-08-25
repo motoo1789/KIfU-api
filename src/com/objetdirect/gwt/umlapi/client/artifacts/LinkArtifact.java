@@ -395,7 +395,13 @@ public abstract class LinkArtifact extends UMLArtifact {
 		 }//relation from asset to misusecase
 		 else if((uMLArtifact.getClass() ==AssetArtifact.class) && (uMLArtifactNew.getClass() == MisUseCaseArtifact.class)){
 				return new AssetAndMisUseRelationLinkArtifact((AssetArtifact) uMLArtifact, (MisUseCaseArtifact) uMLArtifactNew, linkKind);
-		 }
+		 }//TODO Asset to RelationArtifact
+		 else if (uMLArtifactNew.getClass() == AssetArtifact.class) {
+			return new LinkAssetArtifact((AssetArtifact) uMLArtifactNew, uMLArtifact);
+		}
+		if (uMLArtifact.getClass() == AssetArtifact.class) {
+			return new LinkAssetArtifact((AssetArtifact) uMLArtifact, uMLArtifactNew);
+		}
 		else if ((linkKind != LinkKind.GENERALIZATION_RELATION) && (linkKind != LinkKind.REALIZATION_RELATION)
 				&& (uMLArtifact.getClass() == ObjectArtifact.class) && (uMLArtifactNew.getClass() == ObjectArtifact.class)) {
 			return new ObjectRelationLinkArtifact((ObjectArtifact) uMLArtifactNew, (ObjectArtifact) uMLArtifact, linkKind);
