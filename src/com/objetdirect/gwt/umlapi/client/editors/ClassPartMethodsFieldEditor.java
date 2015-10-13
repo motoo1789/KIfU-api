@@ -64,6 +64,11 @@ public class ClassPartMethodsFieldEditor extends FieldEditor {
 	 */
 	@Override
 	protected boolean updateUMLArtifact(final String newContent) {
+		String oldContent = this.methodToChange.toString();
+		ClassPartMethodsArtifact cpm = (ClassPartMethodsArtifact) this.artifact;
+		ClassArtifact classArtifact = (ClassArtifact)cpm.getNodeArtifact();
+		UMLClassMethod  ucm = new UMLClassMethod(null, "", "", null);
+
 		if (newContent.trim().equals("")) {
 			((ClassPartMethodsArtifact) this.artifact).remove(this.methodToChange);
 			((ClassPartMethodsArtifact) this.artifact).getNodeArtifact().rebuildGfxObject();
@@ -76,12 +81,7 @@ public class ClassPartMethodsFieldEditor extends FieldEditor {
 			return false;
 		}
 
-		//TODO takafumi Class Method Changeed Log
-		String oldContent = this.methodToChange.toString();
-		ClassPartMethodsArtifact cpm = (ClassPartMethodsArtifact) this.artifact;
-		ClassArtifact classArtifact = (ClassArtifact)cpm.getNodeArtifact();
-
-
+		//TODO takafumi Class Method Changed Log
 		this.methodToChange.setVisibility(newMethod.getVisibility());
 		this.methodToChange.setName(newMethod.getName());
 		this.methodToChange.setReturnType(newMethod.getReturnType());
@@ -90,8 +90,8 @@ public class ClassPartMethodsFieldEditor extends FieldEditor {
 		//MyLoggerExecute.registEditEvent("ClassMethod:"+classArtifact.getId()+":"+classArtifact.getName()+":"+oldContent+":"+this.methodToChange.toString(), canvas.toUrl());
 		//System.out.println("EditClassMethod:"+oldContent+" ==> "+this.methodToChange.toString());
 
-		MyLoggerExecute.registEditEvent(-1, "ClassMethod", "Edit",
-				classArtifact.getClass().getName(), classArtifact.getId(), null, -1, -1,
+		MyLoggerExecute.registEditEvent(-1, "Method", "Edit",
+				ucm.getClass().getName(), classArtifact.getId(), null, -1, -1,
 				null, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
 
 //		int preEventId, String editEvent, String eventType,

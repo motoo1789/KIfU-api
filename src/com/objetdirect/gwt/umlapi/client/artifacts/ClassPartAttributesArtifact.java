@@ -34,6 +34,7 @@ import com.objetdirect.gwt.umlapi.client.helpers.GWTUMLDrawerHelper;
 import com.objetdirect.gwt.umlapi.client.helpers.MenuBarAndTitle;
 import com.objetdirect.gwt.umlapi.client.helpers.OptionsManager;
 import com.objetdirect.gwt.umlapi.client.helpers.ThemeManager;
+import com.objetdirect.gwt.umlapi.client.mylogger.MyLoggerExecute;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLClassAttribute;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLVisibility;
 
@@ -117,7 +118,7 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 
 	@Override
 	public void edit() {
-		final UMLClassAttribute attributeToCreate = new UMLClassAttribute(UMLVisibility.PROTECTED, "String", "attribute");
+		final UMLClassAttribute attributeToCreate = new UMLClassAttribute(UMLVisibility.PRIVATE, "String", "attribute");
 		this.attributes.add(attributeToCreate);
 		this.nodeArtifact.rebuildGfxObject();
 		this.attributeGfxObjects.put(this.lastGfxObject, attributeToCreate);
@@ -201,6 +202,11 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 	 *            The attribute to be removed
 	 */
 	public void remove(final UMLClassAttribute attribute) {
+		ClassArtifact classArtifact = (ClassArtifact) (this.getNodeArtifact() );
+		MyLoggerExecute.registEditEvent(-1, "Attribute", "Remove",
+				attribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
+				null, attribute.toString(), "", this.canvas.toUrl(), UMLArtifact.getIdCount());
+
 		this.attributes.remove(attribute);
 	}
 

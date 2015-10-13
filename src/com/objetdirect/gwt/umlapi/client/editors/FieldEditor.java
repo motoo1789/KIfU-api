@@ -175,9 +175,10 @@ public abstract class FieldEditor {
 		FieldEditor.editField = null;
 		GWTUMLDrawerHelper.disableBrowserEvents();
 		HotKeyManager.setInputEnabled(true);
-		if (isStillNextable) {
-			this.next();
-		}
+		//TODO うまい方法考えるまで消しとく
+//		if (isStillNextable) {
+//			this.next();
+//		}
 
 	}
 }

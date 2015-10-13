@@ -64,11 +64,18 @@ public class ClassPartAttributesFieldEditor extends FieldEditor {
 
 	@Override
 	protected boolean updateUMLArtifact(final String newContent) {
+		String oldContent = this.attributeToChange.toString();
+		ClassPartAttributesArtifact cpm = (ClassPartAttributesArtifact) this.artifact;
+		ClassArtifact classArtifact = (ClassArtifact)cpm.getNodeArtifact();
+
+		UMLClassAttribute uca = new UMLClassAttribute(null, "", "");
+
 		if (newContent.trim().equals("")) {
 			((ClassPartAttributesArtifact) this.artifact).remove(this.attributeToChange);
 			((ClassPartAttributesArtifact) this.artifact).getNodeArtifact().rebuildGfxObject();
 			return false;
 		}
+
 		final UMLClassAttribute newAttribute = UMLClassAttribute.parseAttribute(newContent);
 		if ((newAttribute.getName() + newAttribute.getType()).equals("")) {
 			((ClassPartAttributesArtifact) this.artifact).remove(this.attributeToChange);
@@ -77,9 +84,7 @@ public class ClassPartAttributesFieldEditor extends FieldEditor {
 		}
 
 		//TODO takafumi Class Attributes Changeed Log
-		String oldContent = this.attributeToChange.toString();
-		ClassPartAttributesArtifact cpm = (ClassPartAttributesArtifact) this.artifact;
-		ClassArtifact classArtifact = (ClassArtifact)cpm.getNodeArtifact();
+
 
 		this.attributeToChange.setVisibility(newAttribute.getVisibility());
 		this.attributeToChange.setName(newAttribute.getName());

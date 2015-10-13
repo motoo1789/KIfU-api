@@ -63,7 +63,7 @@ public class RelationFieldEditor extends FieldEditor {
 	 * @see com.objetdirect.gwt.umlapi.client.editors.FieldEditor#updateUMLArtifact(java.lang.String)
 	 */
 	@Override
-	protected boolean updateUMLArtifact(final String newContent) {
+	protected boolean updateUMLArtifact(String newContent) {
 
 		//TODO takafumi RelationField Changeed Log [Making]
 		RelationLinkArtifact rla = (RelationLinkArtifact) this.artifact;
@@ -71,13 +71,28 @@ public class RelationFieldEditor extends FieldEditor {
 		String oldContent = rla.getPartContent(this.relationshipPart);
 
 		System.out.println("Relationship:"+rla.toURL()+":"+rla.toString()+" ==> "+newContent);
-		((RelationLinkArtifact) this.artifact).setPartContent(this.relationshipPart, newContent);
+
 		//MyLoggerExecute.registEditEvent("Relationship:"+rla.getId()+":"+rla.toString()+":"+rla.toString()+":"+newContent, canvas.toUrl());
 
-		MyLoggerExecute.registEditEvent(-1, "Relation", "Edit",
-				rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
-				part, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
+		if(newContent.trim().equals("")){
+			MyLoggerExecute.registEditEvent(-1, "Relation", "Remove",
+					rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
+					part, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
 
+			//クリックしやすくするためスペースを入れる
+			if(this.relationshipPart == RelationLinkArtifactPart.NAME){
+				newContent = "No Name";
+			}
+			else{
+				newContent = "undefined";
+			}
+		}
+		else{
+			MyLoggerExecute.registEditEvent(-1, "Relation", "Edit",
+					rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
+					part, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
+		}
+		((RelationLinkArtifact) this.artifact).setPartContent(this.relationshipPart, newContent);
 //		int preEventId, String editEvent, String eventType,
 //		String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
 //		String targetPart, String beforeEdit, String afterEdit, String canvasUrl
