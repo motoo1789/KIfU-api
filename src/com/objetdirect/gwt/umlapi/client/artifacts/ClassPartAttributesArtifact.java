@@ -202,12 +202,17 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 	 *            The attribute to be removed
 	 */
 	public void remove(final UMLClassAttribute attribute) {
+		this.attributes.remove(attribute);
 		ClassArtifact classArtifact = (ClassArtifact) (this.getNodeArtifact() );
+
 		MyLoggerExecute.registEditEvent(-1, "Attribute", "Remove",
+				attribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
+				null, attribute.toString(), "", null, UMLArtifact.getIdCount());
+
+		MyLoggerExecute.registEditEvent(-1, "Attribute", "RemoveArtifacts",
 				attribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
 				null, attribute.toString(), "", this.canvas.toUrl(), UMLArtifact.getIdCount());
 
-		this.attributes.remove(attribute);
 	}
 
 	/*

@@ -67,22 +67,36 @@ public class ClassPartNameFieldEditor extends FieldEditor {
 			}
 		} else {
 			final String newName = UMLClass.parseNameOrStereotype(newContentWithoutSpaces);
+			String oldContent = ((ClassPartNameArtifact) this.artifact).getClassName();
+			ClassPartNameArtifact cpna = (ClassPartNameArtifact) this.artifact;
+			ClassArtifact classArtifact = (ClassArtifact)cpna.getNodeArtifact();
+			int classId = classArtifact.getId();
+
 			if (newName.equals("")) {
 				((ClassPartNameArtifact) this.artifact).setClassName("Class");
-			} else {
-				//TODO takafumi Class Name Changeed Log
-				String oldContent = ((ClassPartNameArtifact) this.artifact).getClassName();
-				ClassPartNameArtifact cpna = (ClassPartNameArtifact) this.artifact;
-				ClassArtifact classArtifact = (ClassArtifact)cpna.getNodeArtifact();
-
-				((ClassPartNameArtifact) this.artifact).setClassName(newName);
-
-				//MyLoggerExecute.registEditEvent("ClassName:"+classArtifact.getId()+":"+cpna.getClassName()+":"+oldContent+":"+newName, canvas.toUrl());
-				//System.out.println("EditClassName:"+oldContent+" ==> "+newName);
-				int classId = classArtifact.getId();
-				MyLoggerExecute.registEditEvent(-1, "ClassName", "Edit",
+				MyLoggerExecute.registEditEvent(-1, "ClassName", "Remove",
+						classArtifact.getClass().getName(), classId, null, -1, -1,
+						null, oldContent, newContent, null, UMLArtifact.getIdCount());
+				MyLoggerExecute.registEditEvent(-1, "ClassName", "RemoveArtifacts",
 						classArtifact.getClass().getName(), classId, null, -1, -1,
 						null, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
+			} else {
+				((ClassPartNameArtifact) this.artifact).setClassName(newName);
+				//TODO takafumi Class Name Changeed Log
+				//MyLoggerExecute.registEditEvent("ClassName:"+classArtifact.getId()+":"+cpna.getClassName()+":"+oldContent+":"+newName, canvas.toUrl());
+				//System.out.println("EditClassName:"+oldContent+" ==> "+newName);
+				if(oldContent.equals(newContent)){
+					//Nothing to do
+				}
+				else if(oldContent.replaceAll("\\s", "").matches("Class"+"[0-9]*")){
+				MyLoggerExecute.registEditEvent(-1, "ClassName", "Create",
+						cpna.getClass().getName(), classArtifact.getId(), null, -1, -1,
+						null, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
+				}else {
+					MyLoggerExecute.registEditEvent(-1, "ClassName", "Edit",
+							cpna.getClass().getName(), classArtifact.getId(), null, -1, -1,
+							null, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
+				}
 
 //				int preEventId, String editEvent, String eventType,
 //				String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,

@@ -82,21 +82,29 @@ public class ClassPartAttributesFieldEditor extends FieldEditor {
 			((ClassPartAttributesArtifact) this.artifact).getNodeArtifact().rebuildGfxObject();
 			return false;
 		}
-
-		//TODO takafumi Class Attributes Changeed Log
-
-
 		this.attributeToChange.setVisibility(newAttribute.getVisibility());
 		this.attributeToChange.setName(newAttribute.getName());
 		this.attributeToChange.setType(newAttribute.getType());
 
-		MyLoggerExecute.registEditEvent(-1, "Attribute", "Edit",
+		if(oldContent.equals(newAttribute.toString())){
+			//Nothing to do
+		}
+		else if(oldContent.replaceAll("\\s", "").equals("-attribute:String")){
+		MyLoggerExecute.registEditEvent(-1, "Attribute", "Create",
 				newAttribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
 				null, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
-
+		}else {
+			MyLoggerExecute.registEditEvent(-1, "Attribute", "Edit",
+					newAttribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
+					null, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
+		}
 //		int preEventId, String editEvent, String eventType,
 //		String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
 //		String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+
+		//TODO takafumi Class Attributes Changeed Log
+
+
 		((ClassPartAttributesArtifact) this.artifact).getNodeArtifact().rebuildGfxObject();
 		return true;
 	}

@@ -77,22 +77,40 @@ public class RelationFieldEditor extends FieldEditor {
 		if(newContent.trim().equals("")){
 			MyLoggerExecute.registEditEvent(-1, "Relation", "Remove",
 					rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
+					part, oldContent, newContent, null, UMLArtifact.getIdCount());
+			MyLoggerExecute.registEditEvent(-1, "Relation", "RemoveArtifacts",
+					rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
 					part, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
 
 			//クリックしやすくするためスペースを入れる
 			if(this.relationshipPart == RelationLinkArtifactPart.NAME){
 				newContent = "No Name";
 			}
-			else{
+			else if (this.relationshipPart == RelationLinkArtifactPart.LEFT_CARDINALITY
+					||  this.relationshipPart == RelationLinkArtifactPart.RIGHT_CARDINALITY){
 				newContent = "undefined";
 			}
 		}
 		else{
-			MyLoggerExecute.registEditEvent(-1, "Relation", "Edit",
-					rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
-					part, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
+
+			((RelationLinkArtifact) this.artifact).setPartContent(this.relationshipPart, newContent);
+
+			if(oldContent.equals(newContent)){
+				//Nothing to do
+			}
+			else if((this.relationshipPart == RelationLinkArtifactPart.NAME && oldContent.equals("No Name"))
+					||( (this.relationshipPart == RelationLinkArtifactPart.LEFT_CARDINALITY
+					||  this.relationshipPart == RelationLinkArtifactPart.RIGHT_CARDINALITY) && oldContent.equals("undefined") ) ){
+				MyLoggerExecute.registEditEvent(-1, "Relation", "Create",
+						rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
+						part, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
+			}else {
+				MyLoggerExecute.registEditEvent(-1, "Relation", "Edit",
+						rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
+						part, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
+			}
+
 		}
-		((RelationLinkArtifact) this.artifact).setPartContent(this.relationshipPart, newContent);
 //		int preEventId, String editEvent, String eventType,
 //		String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
 //		String targetPart, String beforeEdit, String afterEdit, String canvasUrl

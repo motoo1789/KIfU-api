@@ -217,12 +217,16 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 	 *            The method to be removed
 	 */
 	public void remove(final UMLClassMethod method) {
+		this.methods.remove(method);
 		ClassArtifact classArtifact = (ClassArtifact) (this.getNodeArtifact() );
 		MyLoggerExecute.registEditEvent(-1, "Method", "Remove",
 				classArtifact.getClass().getName(), classArtifact.getId(), null, -1, -1,
+				null, method.toString(), "", null, UMLArtifact.getIdCount());
+		MyLoggerExecute.registEditEvent(-1, "Method", "RemoveArtifacts",
+				classArtifact.getClass().getName(), classArtifact.getId(), null, -1, -1,
 				null, method.toString(), "", this.canvas.toUrl(), UMLArtifact.getIdCount());
 
-		this.methods.remove(method);
+
 	}
 
 	/*

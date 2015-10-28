@@ -81,22 +81,31 @@ public class ClassPartMethodsFieldEditor extends FieldEditor {
 			return false;
 		}
 
-		//TODO takafumi Class Method Changed Log
 		this.methodToChange.setVisibility(newMethod.getVisibility());
 		this.methodToChange.setName(newMethod.getName());
 		this.methodToChange.setReturnType(newMethod.getReturnType());
 		this.methodToChange.setParameters(newMethod.getParameters());
 
-		//MyLoggerExecute.registEditEvent("ClassMethod:"+classArtifact.getId()+":"+classArtifact.getName()+":"+oldContent+":"+this.methodToChange.toString(), canvas.toUrl());
-		//System.out.println("EditClassMethod:"+oldContent+" ==> "+this.methodToChange.toString());
-
-		MyLoggerExecute.registEditEvent(-1, "Method", "Edit",
+		if(oldContent.toString().equals(newContent.toString())){
+			//Nothing to do
+		}
+		else if(oldContent.toString().replaceAll("\\s", "").equals("+method(parameter1:String):void")){
+		MyLoggerExecute.registEditEvent(-1, "Method", "Create",
 				ucm.getClass().getName(), classArtifact.getId(), null, -1, -1,
 				null, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
+		}else {
+			MyLoggerExecute.registEditEvent(-1, "Method", "Edit",
+					ucm.getClass().getName(), classArtifact.getId(), null, -1, -1,
+					null, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
+		}
+		//MyLoggerExecute.registEditEvent("ClassMethod:"+classArtifact.getId()+":"+classArtifact.getName()+":"+oldContent+":"+this.methodToChange.toString(), canvas.toUrl());
+		//System.out.println("EditClassMethod:"+oldContent+" ==> "+this.methodToChange.toString());
 
 //		int preEventId, String editEvent, String eventType,
 //		String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
 //		String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+		//TODO takafumi Class Method Changed Log
+
 
 		((ClassPartMethodsArtifact) this.artifact).getNodeArtifact().rebuildGfxObject();
 

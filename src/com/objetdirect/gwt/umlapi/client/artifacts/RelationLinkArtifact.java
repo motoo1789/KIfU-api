@@ -505,4 +505,9 @@ public abstract class RelationLinkArtifact extends LinkArtifact {
 		return line;
 	}
 
+	//TODO takafumi
+	public UMLRelation getRelation() {
+		return relation;
+	}
+
 }
