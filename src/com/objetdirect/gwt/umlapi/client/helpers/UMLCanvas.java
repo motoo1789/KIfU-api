@@ -2114,6 +2114,7 @@ public class UMLCanvas extends AbsolutePanel {
 		}
 	}
 
+
 	/**
 	 * @return height
 	 */
