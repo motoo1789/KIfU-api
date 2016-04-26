@@ -47,7 +47,8 @@ import com.objetdirect.gwt.umlapi.client.gfx.GfxFont;
  * NoteCornerHeight -> 15 <br />
  * NoteCornerWidth -> 15 <br />
  * UnderlineShift -> 4 <br />
- * QualityLevel -> 1 <br />
+ * <!-- QualityLevel -> 1 <br /> -->
+ * QualityLevel -> 2 <br />
  * FontSize -> 10 <br />
  * SmallFontSize -> 9 <br />
  * DiagramType -> 2 <br />
@@ -140,8 +141,8 @@ public class OptionsManager {
 
 		OptionsManager.optionsList.put("UnderlineShift", 4);
 
+//		OptionsManager.optionsList.put("QualityLevel", 1);
 		OptionsManager.optionsList.put("QualityLevel", 1);
-
 		OptionsManager.optionsList.put("FontSize", 12);//TODO set appropriate size
 		OptionsManager.optionsList.put("SmallFontSize", 11);
 

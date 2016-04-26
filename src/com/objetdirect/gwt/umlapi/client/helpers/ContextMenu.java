@@ -21,6 +21,7 @@ import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.PopupPanel.PositionCallback;
 import com.objetdirect.gwt.umlapi.client.contrib.PopupMenu;
 import com.objetdirect.gwt.umlapi.client.engine.Point;
+import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLDiagram;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLDiagram.Type;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLLink.LinkKind;
 
@@ -33,43 +34,43 @@ import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLLink.LinkKind;
 public class ContextMenu {
 
 	private final Command			addNewClass		= new Command() {
-														public void execute() {
-															ContextMenu.this.canvas.addNewClass(ContextMenu.this.location);
-														}
-													};
+		public void execute() {
+			ContextMenu.this.canvas.addNewClass(ContextMenu.this.location);
+		}
+	};
 	private final Command			addNewObject	= new Command() {
-														public void execute() {
-															ContextMenu.this.canvas.addNewObject(ContextMenu.this.location);
-														}
-													};
+		public void execute() {
+			ContextMenu.this.canvas.addNewObject(ContextMenu.this.location);
+		}
+	};
 	private final Command			addNewLifeLine	= new Command() {
-														public void execute() {
-															ContextMenu.this.canvas.addNewLifeLine(ContextMenu.this.location);
-														}
-													};
+		public void execute() {
+			ContextMenu.this.canvas.addNewLifeLine(ContextMenu.this.location);
+		}
+	};
 	private final Command			addNewNote		= new Command() {
-														public void execute() {
-															ContextMenu.this.canvas.addNewNote(ContextMenu.this.location);
-														}
-													};
+		public void execute() {
+			ContextMenu.this.canvas.addNewNote(ContextMenu.this.location);
+		}
+	};
 	private final Command			bringHelp		= new Command() {
-														public void execute() {
-															HelpManager.bringHelpPopup();
-														}
-													};
+		public void execute() {
+			HelpManager.bringHelpPopup();
+		}
+	};
 
 	private final Command			clearDiagram	= new Command() {
-														public void execute() {
-															ContextMenu.this.canvas.selectAll();
-															ContextMenu.this.canvas.removeSelected();
-														}
-													};
+		public void execute() {
+			ContextMenu.this.canvas.selectAll();
+			ContextMenu.this.canvas.removeSelected();
+		}
+	};
 	private final Command			changeLinkStyle	= new Command() {
-														public void execute() {
-															OptionsManager.set("AngularLinks", 1 - OptionsManager.get("AngularLinks"));
-															ContextMenu.this.canvas.rebuildAllLinks();
-														}
-													};
+		public void execute() {
+			OptionsManager.set("AngularLinks", 1 - OptionsManager.get("AngularLinks"));
+			ContextMenu.this.canvas.rebuildAllLinks();
+		}
+	};
 
 	//For MisuseCase
 	private final Command			addNewUseCase		= new Command() {
@@ -117,29 +118,29 @@ public class ContextMenu {
 	private PopupMenu				contextMenu;
 
 	private final Command			remove			= new Command() {
-														public void execute() {
-															ContextMenu.this.canvas.removeSelected();
-														}
-													};
+		public void execute() {
+			ContextMenu.this.canvas.removeSelected();
+		}
+	};
 
 	private final MenuBarAndTitle	specificRightMenu;
 
 	private final Point				location;
 	private final Command	 			cut			= new Command() {
-														public void execute() {
-															ContextMenu.this.canvas.cut();
-														}
-													};
+		public void execute() {
+			ContextMenu.this.canvas.cut();
+		}
+	};
 	private final Command	 			copy			= new Command() {
-														public void execute() {
-															ContextMenu.this.canvas.copy();
-														}
-													};
+		public void execute() {
+			ContextMenu.this.canvas.copy();
+		}
+	};
 	private final Command	 			paste			= new Command() {
-														public void execute() {
-															ContextMenu.this.canvas.paste();
-														}
-													};
+		public void execute() {
+			ContextMenu.this.canvas.paste();
+		}
+	};
 
 	/**
 	 * Constructor of ContextMenu without a specific context menu part
@@ -242,24 +243,31 @@ public class ContextMenu {
 		//関連の種類
 		for (final LinkKind relationKind : LinkKind.values()) {
 			if (relationKind.isForDiagram(Session.getActiveCanvas().getUMLDiagram().getType())) {
-				linkSubMenu.addItem(relationKind.getNameInMenu(), this.addRelation(relationKind));
+				if(Session.getActiveCanvas().getUMLDiagram().getType()==UMLDiagram.Type.CLASS){
+					if (relationKind.getName().equals("SimpleRelation") || relationKind.equals("Assosiation")) {
+						linkSubMenu.addItem(relationKind.getNameInMenu(), this.addRelation(relationKind));
+					}
+				}
+				else{
+					linkSubMenu.addItem(relationKind.getNameInMenu(), this.addRelation(relationKind));
+				}
 			}
 		}
 
 
 		this.contextMenu.addItem(ADD_RELATION.getMessage(), linkSubMenu);
 
-//		this.contextMenu.addItem(CUT.getMessage(),  this.cut);
-//		this.contextMenu.addItem(COPY.getMessage(),  this.copy);
-//		this.contextMenu.addItem(PASTE.getMessage(), this.paste);
+		//		this.contextMenu.addItem(CUT.getMessage(),  this.cut);
+		//		this.contextMenu.addItem(COPY.getMessage(),  this.copy);
+		//		this.contextMenu.addItem(PASTE.getMessage(), this.paste);
 
 		this.contextMenu.addSeparator();
-//		if (this.canvas.getUMLDiagram().getType().isClassOrObjectType()) {
-//			this.contextMenu.addItem(SWITCH_LINK_STYLE.getMessage(), this.changeLinkStyle);
-//		}
+		//		if (this.canvas.getUMLDiagram().getType().isClassOrObjectType()) {
+		//			this.contextMenu.addItem(SWITCH_LINK_STYLE.getMessage(), this.changeLinkStyle);
+		//		}
 
 		//this.contextMenu.addItem(CLEAR_DIAGRAM.getMessage(), this.clearDiagram);
 		this.contextMenu.addItem(REMOVE.getMessage(), this.remove);
-//		this.contextMenu.addItem(HOTKEYS.getMessage(), this.bringHelp);
+		//		this.contextMenu.addItem(HOTKEYS.getMessage(), this.bringHelp);
 	}
 }
