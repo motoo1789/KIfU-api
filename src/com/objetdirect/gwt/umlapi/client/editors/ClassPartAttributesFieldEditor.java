@@ -86,6 +86,7 @@ public class ClassPartAttributesFieldEditor extends FieldEditor {
 		this.attributeToChange.setName(newAttribute.getName());
 		this.attributeToChange.setType(newAttribute.getType());
 
+		((ClassPartAttributesArtifact) this.artifact).getNodeArtifact().rebuildGfxObject();
 		if(oldContent.equals(newAttribute.toString())){
 			//Nothing to do
 		}
@@ -103,9 +104,6 @@ public class ClassPartAttributesFieldEditor extends FieldEditor {
 //		String targetPart, String beforeEdit, String afterEdit, String canvasUrl
 
 		//TODO takafumi Class Attributes Changeed Log
-
-
-		((ClassPartAttributesArtifact) this.artifact).getNodeArtifact().rebuildGfxObject();
 		return true;
 	}
 }

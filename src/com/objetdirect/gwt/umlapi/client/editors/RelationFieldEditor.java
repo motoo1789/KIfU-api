@@ -75,13 +75,6 @@ public class RelationFieldEditor extends FieldEditor {
 		//MyLoggerExecute.registEditEvent("Relationship:"+rla.getId()+":"+rla.toString()+":"+rla.toString()+":"+newContent, canvas.toUrl());
 
 		if(newContent.trim().equals("")){
-			MyLoggerExecute.registEditEvent(-1, "Relation", "Remove",
-					rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
-					part, oldContent, newContent, null, UMLArtifact.getIdCount());
-			MyLoggerExecute.registEditEvent(-1, "Relation", "RemoveArtifacts",
-					rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
-					part, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
-
 			//クリックしやすくするためスペースを入れる
 			if(this.relationshipPart == RelationLinkArtifactPart.NAME){
 				newContent = "No Name";
@@ -90,10 +83,21 @@ public class RelationFieldEditor extends FieldEditor {
 					||  this.relationshipPart == RelationLinkArtifactPart.RIGHT_CARDINALITY){
 				newContent = "undefined";
 			}
-		}
-		else{
 
 			((RelationLinkArtifact) this.artifact).setPartContent(this.relationshipPart, newContent);
+			this.artifact.rebuildGfxObject();
+
+			MyLoggerExecute.registEditEvent(-1, "Relation", "Remove",
+					rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
+					part, oldContent, newContent, null, UMLArtifact.getIdCount());
+			MyLoggerExecute.registEditEvent(-1, "Relation", "RemoveArtifacts",
+					rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
+					part, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
+		}
+		else{//if(newContent.trim().equals("")){
+
+			((RelationLinkArtifact) this.artifact).setPartContent(this.relationshipPart, newContent);
+			this.artifact.rebuildGfxObject();
 
 			if(oldContent.equals(newContent)){
 				//Nothing to do
@@ -115,7 +119,7 @@ public class RelationFieldEditor extends FieldEditor {
 //		String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
 //		String targetPart, String beforeEdit, String afterEdit, String canvasUrl
 
-		this.artifact.rebuildGfxObject();
+
 		return false;
 	}
 

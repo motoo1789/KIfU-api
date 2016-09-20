@@ -1,6 +1,6 @@
 @echo off
 
-cd C:\Users\tanaka\git\ForThird\GWTUMLAPI
+cd C:\Users\tanaka\git\KIfU\GWTUMLAPI
 
 call ant jar
 

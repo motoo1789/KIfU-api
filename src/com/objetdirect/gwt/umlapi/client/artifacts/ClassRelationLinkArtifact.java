@@ -418,6 +418,7 @@ public class ClassRelationLinkArtifact extends RelationLinkArtifact {
 	@Override
 	public void unselect() {
 		super.unselect();
+
 		GfxManager.getPlatform().setStroke(this.line, ThemeManager.getTheme().getClassRelationForegroundColor(), 1);
 		GfxManager.getPlatform().setStroke(this.arrowVirtualGroup, ThemeManager.getTheme().getClassRelationForegroundColor(), 1);
 	}
@@ -432,16 +433,20 @@ public class ClassRelationLinkArtifact extends RelationLinkArtifact {
 		}
 		switch (isLeft ? this.leftDirection : this.rightDirection) {
 			case LEFT:
-				return relative_point1.getX() - textWidth - OptionsManager.get("RectangleLeftPadding");
+				return relative_point1.getX() - textWidth - OptionsManager.get("RectangleLeftPadding")/2;
+				//return relative_point1.getX() + OptionsManager.get("RectangleRightPadding")/2;
 			case RIGHT:
-				return relative_point1.getX() + OptionsManager.get("RectangleRightPadding");
+				return relative_point1.getX() + OptionsManager.get("RectangleRightPadding")/2;
+				//return relative_point1.getX() - textWidth - OptionsManager.get("RectangleLeftPadding")/2;
 			case UP:
 			case DOWN:
 			case UNKNOWN:
 				if (relative_point1.getX() < relative_point2.getX()) {
-					return relative_point1.getX() - textWidth - OptionsManager.get("RectangleLeftPadding");
+					//return relative_point1.getX() - textWidth - OptionsManager.get("RectangleLeftPadding")/2;
+					return relative_point1.getX() - textWidth/2 + OptionsManager.get("RectangleRightPadding")/2;
 				}
-				return relative_point1.getX() + OptionsManager.get("RectangleRightPadding");
+				//return relative_point1.getX() + OptionsManager.get("RectangleRightPadding")/2;
+				return relative_point1.getX() - textWidth/2 - OptionsManager.get("RectangleLeftPadding")/2;
 		}
 		return 0;
 	}
@@ -455,19 +460,24 @@ public class ClassRelationLinkArtifact extends RelationLinkArtifact {
 		}
 		final int textHeight = GfxManager.getPlatform().getTextHeightFor(text);
 		final int delta = this.current_delta;
-		this.current_delta += 8; // TODO : Fix Height
+		this.current_delta =0; // TODO : Fix Height
 		switch (isLeft ? this.leftDirection : this.rightDirection) {
 			case LEFT:
 			case RIGHT:
 				if (relative_point1.getY() > relative_point2.getY()) {
-					return relative_point1.getY() + OptionsManager.get("RectangleBottomPadding") + delta;
+					//return relative_point1.getY() + OptionsManager.get("RectangleBottomPadding")/2 + delta;
+					return relative_point1.getY() - textHeight/2 - OptionsManager.get("RectangleTopPadding")/2 - delta;
 				}
-				return relative_point1.getY() - textHeight - OptionsManager.get("RectangleTopPadding") - delta;
+				//return relative_point1.getY() - textHeight - OptionsManager.get("RectangleTopPadding")/2 - delta;
+				return relative_point1.getY() - textHeight/2 + OptionsManager.get("RectangleBottomPadding")/2 + delta;
 			case UP:
-				return relative_point1.getY() - textHeight - OptionsManager.get("RectangleTopPadding") - delta;
+				return relative_point1.getY() - textHeight - OptionsManager.get("RectangleTopPadding")/2 - delta;
+				//return relative_point1.getY() + OptionsManager.get("RectangleBottomPadding")/2 + delta;
 			case DOWN:
 			case UNKNOWN:
-				return relative_point1.getY() + OptionsManager.get("RectangleBottomPadding") + delta;
+				return relative_point1.getY() + OptionsManager.get("RectangleBottomPadding")/2 + delta;
+				//return relative_point1.getY() - textHeight - OptionsManager.get("RectangleTopPadding")/2 - delta;
+				//return relative_point1.getY() - textHeight + delta;
 		}
 		return 0;
 	}
@@ -514,6 +524,8 @@ public class ClassRelationLinkArtifact extends RelationLinkArtifact {
 
 		this.current_delta = 0;
 		if (!this.relation.getLeftCardinality().equals("")) {
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup,
+					this.createText(this.relation.getLeftCardinality(), RelationLinkArtifactPart.LEFT_CARDINALITY));
 			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup,
 					this.createText(this.relation.getLeftCardinality(), RelationLinkArtifactPart.LEFT_CARDINALITY));
 		}
@@ -602,6 +614,7 @@ public class ClassRelationLinkArtifact extends RelationLinkArtifact {
 		this.gfxObjectPart.put(part, textGfxObject);
 		return textGfxObject;
 	}
+
 
 	private Command deleteCommand(final RelationLinkArtifactPart relationArtifactPart) {
 		return new Command() {

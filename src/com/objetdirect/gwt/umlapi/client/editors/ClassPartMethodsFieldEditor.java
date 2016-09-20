@@ -86,6 +86,8 @@ public class ClassPartMethodsFieldEditor extends FieldEditor {
 		this.methodToChange.setReturnType(newMethod.getReturnType());
 		this.methodToChange.setParameters(newMethod.getParameters());
 
+		((ClassPartMethodsArtifact) this.artifact).getNodeArtifact().rebuildGfxObject();
+
 		if(oldContent.toString().equals(newContent.toString())){
 			//Nothing to do
 		}
@@ -107,7 +109,7 @@ public class ClassPartMethodsFieldEditor extends FieldEditor {
 		//TODO takafumi Class Method Changed Log
 
 
-		((ClassPartMethodsArtifact) this.artifact).getNodeArtifact().rebuildGfxObject();
+
 
 		return true;
 

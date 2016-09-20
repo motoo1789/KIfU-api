@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class DriverAccessor {
 
 	//private final static String DRIVER_URL="jdbc:mysql://localhost:3306/kifu3?useUnicode=true&characterEncoding=Windows-31J";
-	private final static String DRIVER_URL="jdbc:mysql://localhost:3306/kifu4?useUnicode=true&characterEncoding=Windows-31J";
+	private final static String DRIVER_URL="jdbc:mysql://localhost:3306/kifu5?useUnicode=true&characterEncoding=Windows-31J";
 
 	private final static String DRIVER_NAME="com.mysql.jdbc.Driver";
 

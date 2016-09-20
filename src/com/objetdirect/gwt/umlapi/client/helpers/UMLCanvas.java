@@ -114,7 +114,7 @@ public class UMLCanvas extends AbsolutePanel {
 	// moved before
 	// adding an
 	// artifact
-	private final Point										canvasOffset					= Point.getOrigin();
+	private  Point										canvasOffset					= Point.getOrigin();
 	private Point											duringDragOffset				= Point.getOrigin();
 	private HashMap<UMLArtifact, ArrayList<Point>>			previouslySelectedArtifacts;
 
@@ -1691,7 +1691,7 @@ public class UMLCanvas extends AbsolutePanel {
 	}
 
 	void mouseRightPressed(final GfxObject gfxObject, final Point location) {
-		final Point realPoint = this.convertToRealPoint(location);
+		final Point realPoint = this.convertToRealPointForContextMenu(location);
 		this.dropRightMenu(gfxObject, realPoint);
 	}
 
@@ -1866,6 +1866,12 @@ public class UMLCanvas extends AbsolutePanel {
 	private Point convertToRealPoint(final Point location) {
 		return Point.add(location, new Point(RootPanel.getBodyElement().getScrollLeft() - this.getAbsoluteLeft(), RootPanel.getBodyElement().getScrollTop()
 				- this.getAbsoluteTop()));
+		//return Point.add(location, new Point(RootPanel.getBodyElement().getScrollLeft(), RootPanel.getBodyElement().getScrollTop()));
+	}
+	private Point convertToRealPointForContextMenu(final Point location) {
+//		return Point.add(location, new Point(RootPanel.getBodyElement().getScrollLeft() - this.getAbsoluteLeft(), RootPanel.getBodyElement().getScrollTop()
+//				- this.getAbsoluteTop()));
+		return Point.add(location, new Point(RootPanel.getBodyElement().getScrollLeft(), RootPanel.getBodyElement().getScrollTop()));
 	}
 
 	private void deselectAllArtifacts() {
@@ -2147,4 +2153,5 @@ public class UMLCanvas extends AbsolutePanel {
 		this.height = height;
 		this.width = width;
 	}
+
 }

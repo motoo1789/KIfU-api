@@ -65,12 +65,16 @@ public class ClassPartNameFieldEditor extends FieldEditor {
 			} else {
 				((ClassPartNameArtifact) this.artifact).setStereotype("«" + newStereotype + "»");
 			}
+			((ClassPartNameArtifact) this.artifact).getNodeArtifact().rebuildGfxObject();
 		} else {
 			final String newName = UMLClass.parseNameOrStereotype(newContentWithoutSpaces);
 			String oldContent = ((ClassPartNameArtifact) this.artifact).getClassName();
 			ClassPartNameArtifact cpna = (ClassPartNameArtifact) this.artifact;
 			ClassArtifact classArtifact = (ClassArtifact)cpna.getNodeArtifact();
 			int classId = classArtifact.getId();
+
+			((ClassPartNameArtifact) this.artifact).setClassName(newName);
+			((ClassPartNameArtifact) this.artifact).getNodeArtifact().rebuildGfxObject();
 
 			if (newName.equals("")) {
 				((ClassPartNameArtifact) this.artifact).setClassName("Class");
@@ -81,7 +85,6 @@ public class ClassPartNameFieldEditor extends FieldEditor {
 						classArtifact.getClass().getName(), classId, null, -1, -1,
 						null, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
 			} else {
-				((ClassPartNameArtifact) this.artifact).setClassName(newName);
 				//TODO takafumi Class Name Changeed Log
 				//MyLoggerExecute.registEditEvent("ClassName:"+classArtifact.getId()+":"+cpna.getClassName()+":"+oldContent+":"+newName, canvas.toUrl());
 				//System.out.println("EditClassName:"+oldContent+" ==> "+newName);
@@ -103,7 +106,7 @@ public class ClassPartNameFieldEditor extends FieldEditor {
 //				String targetPart, String beforeEdit, String afterEdit, String canvasUrl
 			}
 		}
-		((ClassPartNameArtifact) this.artifact).getNodeArtifact().rebuildGfxObject();
+
 		return false;
 	}
 }

@@ -68,6 +68,7 @@ public class NoteFieldEditor extends FieldEditor {
 
 		((NoteArtifact) this.artifact).setContent(newContent);
 
+		this.artifact.rebuildGfxObject();
 //		MyLoggerExecute.registEditEvent("Note:"+this.artifact.getId()+":"+oldContent+":"+newContent, canvas.toUrl());
 
 		MyLoggerExecute.registEditEvent(-1, "Note", "Edit",
@@ -80,7 +81,7 @@ public class NoteFieldEditor extends FieldEditor {
 
 		System.out.println("EditNote:"+oldContent+":"+newContent);
 
-		this.artifact.rebuildGfxObject();
+
 		return false;
 	}
 }
