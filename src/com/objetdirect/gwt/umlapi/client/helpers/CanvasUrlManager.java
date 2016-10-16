@@ -69,9 +69,19 @@ public class CanvasUrlManager {
 				Point.getOrigin(), Point.getOrigin(), Point.getOrigin(), new UMLCanvas(new UMLDiagram(UMLDiagram.Type.SUPER_HYBRID)));
 	}
 
+	public UMLArtifact getUMLArtifactById(String url, int artifactId){
+		fromURL(url, false);
+		for(UMLArtifact artifact : this.artifactList){
+			if(artifact.getId() == artifactId) return artifact;
+		}
+		return null;
+	}
+
 	public List<UMLArtifact> fromURL(final String url, final boolean isForPasting, final boolean wasACopy,
 			Point currentMousePosition, Point copyMousePosition, Point canvasOffset, UMLCanvas canvas) {
 		//try {
+		artifactList.clear();
+
 		if (!url.equals("AA==")) {
 			String diagram = isForPasting ? url : GWTUMLDrawerHelper.decodeBase64(url);
 			Point pasteShift = isForPasting ? Point.substract(Point.substract(currentMousePosition, copyMousePosition), canvasOffset) : Point.getOrigin();

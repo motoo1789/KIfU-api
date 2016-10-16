@@ -7,31 +7,31 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.objetdirect.gwt.umlapi.client.helpers.Session;
 
 public class MyLoggerExecute {
-
-//	public static void registEditEvent(String logData, String canvasUrl ){
-//		if( ( Session.getMode() ).equals("drawer")){
-//			MyLoggerServiceAsync async = (MyLoggerServiceAsync)GWT.create(MyLoggerService.class);
-//			ServiceDefTarget entryPoint = (ServiceDefTarget) async;
-//			String entryURL = GWT.getModuleBaseURL() + "registEditEvent";
-//			entryPoint.setServiceEntryPoint(entryURL);
-//
-//			@SuppressWarnings("rawtypes")
-//			AsyncCallback callback = new AsyncCallback(){
-//				public void onSuccess(Object result){
-//
-//				}
-//				public void onFailure(Throwable caught){
-//
-//				}
-//			};
-//
-//			async.registEditEvent(logData, canvasUrl, Session.getStep(), callback);
-//		}
-//		else{
-//
-//		}
-//
-//	}
+	private static String preEditEventType = "";
+	//	public static void registEditEvent(String logData, String canvasUrl ){
+	//		if( ( Session.getMode() ).equals("drawer")){
+	//			MyLoggerServiceAsync async = (MyLoggerServiceAsync)GWT.create(MyLoggerService.class);
+	//			ServiceDefTarget entryPoint = (ServiceDefTarget) async;
+	//			String entryURL = GWT.getModuleBaseURL() + "registEditEvent";
+	//			entryPoint.setServiceEntryPoint(entryURL);
+	//
+	//			@SuppressWarnings("rawtypes")
+	//			AsyncCallback callback = new AsyncCallback(){
+	//				public void onSuccess(Object result){
+	//
+	//				}
+	//				public void onFailure(Throwable caught){
+	//
+	//				}
+	//			};
+	//
+	//			async.registEditEvent(logData, canvasUrl, Session.getStep(), callback);
+	//		}
+	//		else{
+	//
+	//		}
+	//
+	//	}
 
 
 	public static void registEditEvent(int preEventId, String editEvent, String eventType,
@@ -42,29 +42,31 @@ public class MyLoggerExecute {
 		int exerciseId = Session.exerciseId;
 
 		if( ( Session.getMode() ).equals("drawer") || ( Session.getMode() ).equals("login")){
-			MyLoggerServiceAsync async = (MyLoggerServiceAsync)GWT.create(MyLoggerService.class);
-			ServiceDefTarget entryPoint = (ServiceDefTarget) async;
-			String entryURL = GWT.getModuleBaseURL() + "registEditEvent";
-			entryPoint.setServiceEntryPoint(entryURL);
+			if( !(preEditEventType.equals("Check") && eventType.equals("Check") ) ){
+				MyLoggerServiceAsync async = (MyLoggerServiceAsync)GWT.create(MyLoggerService.class);
+				ServiceDefTarget entryPoint = (ServiceDefTarget) async;
+				String entryURL = GWT.getModuleBaseURL() + "registEditEvent";
+				entryPoint.setServiceEntryPoint(entryURL);
 
-			@SuppressWarnings("rawtypes")
-			AsyncCallback callback = new AsyncCallback(){
-				public void onSuccess(Object result){
+				@SuppressWarnings("rawtypes")
+				AsyncCallback callback = new AsyncCallback(){
+					public void onSuccess(Object result){
 
-				}
-				public void onFailure(Throwable caught){
-					Window.alert("Connect Error");
-				}
-			};
+					}
+					public void onFailure(Throwable caught){
+						Window.alert("Connect Error");
+					}
+				};
 
-			async.registEditEvent( studentId, exerciseId, preEventId, editEvent, eventType, targetType, targetId,
-					linkKind,  rightObjectId, leftObjectId, targetPart,  beforeEdit,
-					afterEdit, canvasUrl, umlArtifactId, callback);
+				async.registEditEvent( studentId, exerciseId, preEventId, editEvent, eventType, targetType, targetId,
+						linkKind,  rightObjectId, leftObjectId, targetPart,  beforeEdit,
+						afterEdit, canvasUrl, umlArtifactId, callback);
+			}
 		}
 		else{
 
 		}
-
+		preEditEventType = eventType;
 	}
 
 }
