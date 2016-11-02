@@ -77,11 +77,11 @@ public class RelationFieldEditor extends FieldEditor {
 		if(newContent.trim().equals("")){
 			//クリックしやすくするためスペースを入れる
 			if(this.relationshipPart == RelationLinkArtifactPart.NAME){
-				newContent = "No Name";
+				newContent = "Name";
 			}
 			else if (this.relationshipPart == RelationLinkArtifactPart.LEFT_CARDINALITY
 					||  this.relationshipPart == RelationLinkArtifactPart.RIGHT_CARDINALITY){
-				newContent = "undefined";
+				newContent = "None";
 			}
 
 			((RelationLinkArtifact) this.artifact).setPartContent(this.relationshipPart, newContent);
@@ -102,9 +102,9 @@ public class RelationFieldEditor extends FieldEditor {
 			if(oldContent.equals(newContent)){
 				//Nothing to do
 			}
-			else if((this.relationshipPart == RelationLinkArtifactPart.NAME && oldContent.equals("No Name"))
+			else if((this.relationshipPart == RelationLinkArtifactPart.NAME && oldContent.equals("Name"))
 					||( (this.relationshipPart == RelationLinkArtifactPart.LEFT_CARDINALITY
-					||  this.relationshipPart == RelationLinkArtifactPart.RIGHT_CARDINALITY) && oldContent.equals("undefined") ) ){
+					||  this.relationshipPart == RelationLinkArtifactPart.RIGHT_CARDINALITY) && oldContent.equals("None") ) ){
 				MyLoggerExecute.registEditEvent(-1, "Relation", "Create",
 						rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
 						part, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());

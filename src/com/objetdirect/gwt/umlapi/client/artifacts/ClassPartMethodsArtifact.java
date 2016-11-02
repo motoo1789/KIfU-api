@@ -140,13 +140,13 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 		} else {
 			final ClassPartMethodsFieldEditor editor = new ClassPartMethodsFieldEditor(this.canvas, this, methodToChange);
 			editor
-					.startEdition(methodToChange.toString(), (this.nodeArtifact.getLocation().getX() + OptionsManager.get("TextLeftPadding") + OptionsManager
-							.get("RectangleLeftPadding")),
-							(this.nodeArtifact.getLocation().getY() + ((ClassArtifact) this.nodeArtifact).className.getHeight()
-									+ ((ClassArtifact) this.nodeArtifact).classAttributes.getHeight()
-									+ GfxManager.getPlatform().getLocationFor(editedGfxObject).getY() + OptionsManager.get("RectangleTopPadding")),
+			.startEdition(methodToChange.toString(), (this.nodeArtifact.getLocation().getX() + OptionsManager.get("TextLeftPadding") + OptionsManager
+					.get("RectangleLeftPadding")),
+					(this.nodeArtifact.getLocation().getY() + ((ClassArtifact) this.nodeArtifact).className.getHeight()
+							+ ((ClassArtifact) this.nodeArtifact).classAttributes.getHeight()
+							+ GfxManager.getPlatform().getLocationFor(editedGfxObject).getY() + OptionsManager.get("RectangleTopPadding")),
 							this.nodeWidth - OptionsManager.get("TextRightPadding") - OptionsManager.get("TextLeftPadding")
-									- OptionsManager.get("RectangleRightPadding") - OptionsManager.get("RectangleLeftPadding"), false, true);
+							- OptionsManager.get("RectangleRightPadding") - OptionsManager.get("RectangleLeftPadding"), false, true);
 		}
 	}
 
@@ -217,15 +217,19 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 	 *            The method to be removed
 	 */
 	public void remove(final UMLClassMethod method) {
+		String defaultString="+method(parameter1 : String) : void";
 		this.methods.remove(method);
 		ClassArtifact classArtifact = (ClassArtifact) (this.getNodeArtifact() );
-		MyLoggerExecute.registEditEvent(-1, "Method", "Remove",
-				classArtifact.getClass().getName(), classArtifact.getId(), null, -1, -1,
-				null, method.toString(), "", null, UMLArtifact.getIdCount());
-		MyLoggerExecute.registEditEvent(-1, "Method", "RemoveArtifacts",
-				classArtifact.getClass().getName(), classArtifact.getId(), null, -1, -1,
-				null, method.toString(), "", this.canvas.toUrl(), UMLArtifact.getIdCount());
 
+		if(!defaultString.equals(method.toString())){
+			MyLoggerExecute.registEditEvent(-1, "Method", "Remove",
+					classArtifact.getClass().getName(), classArtifact.getId(), null, -1, -1,
+					null, method.toString(), "", null, UMLArtifact.getIdCount());
+			MyLoggerExecute.registEditEvent(-1, "Method", "RemoveArtifacts",
+					classArtifact.getClass().getName(), classArtifact.getId(), null, -1, -1,
+					null, method.toString(), "", this.canvas.toUrl(), UMLArtifact.getIdCount());
+
+		}
 
 	}
 

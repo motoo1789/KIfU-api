@@ -168,17 +168,19 @@ public abstract class FieldEditor {
 	protected void validate(final boolean isNextable) {
 		boolean isStillNextable = isNextable;
 		final String newContent = FieldEditor.editField.getText();
-		if (!newContent.equals(this.content)) {
+		System.out.println("newContent="+newContent);
+		System.out.println("this.content="+this.content);
+//		if (!newContent.equals(this.content)) {
 			isStillNextable = this.updateUMLArtifact(newContent) && isStillNextable;
-		}
+//		}
 		this.canvas.remove(FieldEditor.editField);
 		FieldEditor.editField = null;
 		GWTUMLDrawerHelper.disableBrowserEvents();
 		HotKeyManager.setInputEnabled(true);
 		//TODO うまい方法考えるまで消しとく
-//		if (isStillNextable) {
-//			this.next();
-//		}
+		if (isStillNextable) {
+			this.next();
+		}
 
 	}
 }

@@ -7,32 +7,8 @@ import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.objetdirect.gwt.umlapi.client.helpers.Session;
 
 public class MyLoggerExecute {
-	private static String preEditEventType = "";
-	//	public static void registEditEvent(String logData, String canvasUrl ){
-	//		if( ( Session.getMode() ).equals("drawer")){
-	//			MyLoggerServiceAsync async = (MyLoggerServiceAsync)GWT.create(MyLoggerService.class);
-	//			ServiceDefTarget entryPoint = (ServiceDefTarget) async;
-	//			String entryURL = GWT.getModuleBaseURL() + "registEditEvent";
-	//			entryPoint.setServiceEntryPoint(entryURL);
-	//
-	//			@SuppressWarnings("rawtypes")
-	//			AsyncCallback callback = new AsyncCallback(){
-	//				public void onSuccess(Object result){
-	//
-	//				}
-	//				public void onFailure(Throwable caught){
-	//
-	//				}
-	//			};
-	//
-	//			async.registEditEvent(logData, canvasUrl, Session.getStep(), callback);
-	//		}
-	//		else{
-	//
-	//		}
-	//
-	//	}
-
+	public static String preEditEventType = "";
+	static boolean isSendingFinished = false;
 
 	public static void registEditEvent(int preEventId, String editEvent, String eventType,
 			String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
@@ -68,5 +44,15 @@ public class MyLoggerExecute {
 		}
 		preEditEventType = eventType;
 	}
+
+	public static String getPreEditEventType() {
+		return preEditEventType;
+	}
+
+	public static void setPreEditEventType(String preEditEventType) {
+		MyLoggerExecute.preEditEventType = preEditEventType;
+	}
+
+
 
 }

@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.MenuBar;
 import com.objetdirect.gwt.umlapi.client.editors.RelationFieldEditor;
 import com.objetdirect.gwt.umlapi.client.engine.GeometryManager;
 import com.objetdirect.gwt.umlapi.client.engine.Point;
+import com.objetdirect.gwt.umlapi.client.gfx.GfxColor;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxManager;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxObject;
 import com.objetdirect.gwt.umlapi.client.helpers.MenuBarAndTitle;
@@ -513,21 +514,39 @@ public class ClassRelationLinkArtifact extends RelationLinkArtifact {
 		if (!this.relation.getName().equals("")) {
 			Log.trace("Creating name");
 			final GfxObject nameGfxObject = GfxManager.getPlatform().buildText(this.relation.getName(), this.nameAnchorPoint);
+			GfxManager.getPlatform().translate(nameGfxObject, new Point(-GfxManager.getPlatform().getTextWidthFor(nameGfxObject)*2 / 3, 0));
 			GfxManager.getPlatform().setFont(nameGfxObject, OptionsManager.getSmallFont());
-			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, nameGfxObject);
+
 			GfxManager.getPlatform().setStroke(nameGfxObject, ThemeManager.getTheme().getClassRelationBackgroundColor(), 0);
 			GfxManager.getPlatform().setFillColor(nameGfxObject, ThemeManager.getTheme().getClassRelationForegroundColor());
-			GfxManager.getPlatform().translate(nameGfxObject, new Point(-GfxManager.getPlatform().getTextWidthFor(nameGfxObject) / 2, 0));
+//			GfxManager.getPlatform().setFillColor(nameGfxObject, new GfxColor(0, 0, 255));
+
+			final GfxObject nameBox = GfxManager.getPlatform().buildRect( (int)( GfxManager.getPlatform().getTextWidthFor(nameGfxObject)*1.2), (int)( GfxManager.getPlatform().getTextHeightFor(nameGfxObject)*1.2));
+			GfxManager.getPlatform().setFillColor(nameBox, new GfxColor(250, 250, 250));
+			GfxManager.getPlatform().translate(nameBox, this.nameAnchorPoint);
+			GfxManager.getPlatform().translate(nameBox, new Point(-GfxManager.getPlatform().getTextWidthFor(nameGfxObject)*2 / 3, -(int)( GfxManager.getPlatform().getTextHeightFor(nameGfxObject)*0.2)));
+
+			//Background First
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, nameBox);
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, nameGfxObject);
+
 			RelationLinkArtifactPart.setGfxObjectTextForPart(nameGfxObject, RelationLinkArtifactPart.NAME);
 			this.gfxObjectPart.put(RelationLinkArtifactPart.NAME, nameGfxObject);
 		}
 
 		this.current_delta = 0;
 		if (!this.relation.getLeftCardinality().equals("")) {
-			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup,
-					this.createText(this.relation.getLeftCardinality(), RelationLinkArtifactPart.LEFT_CARDINALITY));
-			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup,
-					this.createText(this.relation.getLeftCardinality(), RelationLinkArtifactPart.LEFT_CARDINALITY));
+			//ここで多重度の色変えられる
+			GfxObject gfxObject = this.createText(this.relation.getLeftCardinality(), RelationLinkArtifactPart.LEFT_CARDINALITY);
+
+			final GfxObject cardinalityBox = GfxManager.getPlatform().buildRect( (int)( GfxManager.getPlatform().getTextWidthFor(gfxObject)*1.2), GfxManager.getPlatform().getTextHeightFor(gfxObject));
+			GfxManager.getPlatform().setFillColor(cardinalityBox, new GfxColor(250, 250, 250));
+			//GfxManager.getPlatform().setStrokeStyle(cardinalityBox, GfxStyle.DOT);
+			GfxManager.getPlatform().setStroke(cardinalityBox, new GfxColor(255, 255, 255), 0);
+			GfxManager.getPlatform().translate(cardinalityBox, GfxManager.getPlatform().getLocationFor(gfxObject));
+
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, cardinalityBox);
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, gfxObject);
 		}
 		if (!this.relation.getLeftConstraint().equals("")) {
 			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup,
@@ -538,8 +557,17 @@ public class ClassRelationLinkArtifact extends RelationLinkArtifact {
 		}
 		this.current_delta = 0;
 		if (!this.relation.getRightCardinality().equals("")) {
-			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup,
-					this.createText(this.relation.getRightCardinality(), RelationLinkArtifactPart.RIGHT_CARDINALITY));
+			//ここで多重度の色変えられる
+			GfxObject gfxObject = this.createText(this.relation.getRightCardinality(), RelationLinkArtifactPart.RIGHT_CARDINALITY);
+
+			final GfxObject cardinalityBox = GfxManager.getPlatform().buildRect( (int)( GfxManager.getPlatform().getTextWidthFor(gfxObject)*1.2), GfxManager.getPlatform().getTextHeightFor(gfxObject));
+			GfxManager.getPlatform().setFillColor(cardinalityBox, new GfxColor(250, 250, 250));
+			//GfxManager.getPlatform().setStrokeStyle(cardinalityBox, GfxStyle.DOT);
+			GfxManager.getPlatform().setStroke(cardinalityBox, new GfxColor(255, 255, 255), 0);
+			GfxManager.getPlatform().translate(cardinalityBox, GfxManager.getPlatform().getLocationFor(gfxObject));
+
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, cardinalityBox);
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, gfxObject);
 		}
 		if (!this.relation.getRightConstraint().equals("")) {
 			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup,
@@ -549,7 +577,7 @@ public class ClassRelationLinkArtifact extends RelationLinkArtifact {
 			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup,
 					this.createText(this.relation.getRightRole(), RelationLinkArtifactPart.RIGHT_ROLE));
 		}
-
+		//しなくてよいのでは
 		GfxManager.getPlatform().moveToBack(this.gfxObject);
 	}
 

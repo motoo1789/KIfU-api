@@ -118,7 +118,8 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 
 	@Override
 	public void edit() {
-		final UMLClassAttribute attributeToCreate = new UMLClassAttribute(UMLVisibility.PRIVATE, "String", "attribute");
+		//final UMLClassAttribute attributeToCreate = new UMLClassAttribute(UMLVisibility.PRIVATE, "String", "attribute");
+		final UMLClassAttribute attributeToCreate = new UMLClassAttribute(UMLVisibility.NONE, "", "");
 		this.attributes.add(attributeToCreate);
 		this.nodeArtifact.rebuildGfxObject();
 		this.attributeGfxObjects.put(this.lastGfxObject, attributeToCreate);
@@ -134,9 +135,9 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			final ClassPartAttributesFieldEditor editor = new ClassPartAttributesFieldEditor(this.canvas, this, attributeToChange);
 			editor.startEdition(attributeToChange.toString(), (this.nodeArtifact.getLocation().getX() + OptionsManager.get("TextLeftPadding") + OptionsManager
 					.get("RectangleLeftPadding")), (this.nodeArtifact.getLocation().getY() + ((ClassArtifact) this.nodeArtifact).className.getHeight()
-					+ GfxManager.getPlatform().getLocationFor(editedGfxObject).getY() + OptionsManager.get("RectangleTopPadding")), this.nodeWidth
-					- OptionsManager.get("TextRightPadding") - OptionsManager.get("TextLeftPadding") - OptionsManager.get("RectangleRightPadding")
-					- OptionsManager.get("RectangleLeftPadding"), false, true);
+							+ GfxManager.getPlatform().getLocationFor(editedGfxObject).getY() + OptionsManager.get("RectangleTopPadding")), this.nodeWidth
+							- OptionsManager.get("TextRightPadding") - OptionsManager.get("TextLeftPadding") - OptionsManager.get("RectangleRightPadding")
+							- OptionsManager.get("RectangleLeftPadding"), false, true);
 		}
 	}
 
@@ -205,13 +206,16 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 		this.attributes.remove(attribute);
 		ClassArtifact classArtifact = (ClassArtifact) (this.getNodeArtifact() );
 
-		MyLoggerExecute.registEditEvent(-1, "Attribute", "Remove",
-				attribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
-				null, attribute.toString(), "", null, UMLArtifact.getIdCount());
+		if(!attribute.toString().equals("")){ //初期値の空白でなければRemoveイベントを記録
 
-		MyLoggerExecute.registEditEvent(-1, "Attribute", "RemoveArtifacts",
-				attribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
-				null, attribute.toString(), "", this.canvas.toUrl(), UMLArtifact.getIdCount());
+			MyLoggerExecute.registEditEvent(-1, "Attribute", "Remove",
+					attribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
+					null, attribute.toString(), "", null, UMLArtifact.getIdCount());
+
+			MyLoggerExecute.registEditEvent(-1, "Attribute", "RemoveArtifacts",
+					attribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
+					null, attribute.toString(), "", this.canvas.toUrl(), UMLArtifact.getIdCount());
+		}
 
 	}
 

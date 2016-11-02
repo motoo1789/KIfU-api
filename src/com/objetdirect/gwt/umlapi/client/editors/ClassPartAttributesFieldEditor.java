@@ -68,8 +68,6 @@ public class ClassPartAttributesFieldEditor extends FieldEditor {
 		ClassPartAttributesArtifact cpm = (ClassPartAttributesArtifact) this.artifact;
 		ClassArtifact classArtifact = (ClassArtifact)cpm.getNodeArtifact();
 
-		UMLClassAttribute uca = new UMLClassAttribute(null, "", "");
-
 		if (newContent.trim().equals("")) {
 			((ClassPartAttributesArtifact) this.artifact).remove(this.attributeToChange);
 			((ClassPartAttributesArtifact) this.artifact).getNodeArtifact().rebuildGfxObject();
@@ -90,7 +88,7 @@ public class ClassPartAttributesFieldEditor extends FieldEditor {
 		if(oldContent.equals(newAttribute.toString())){
 			//Nothing to do
 		}
-		else if(oldContent.replaceAll("\\s", "").equals("-attribute:String")){
+		else if(oldContent.trim().equals("")){
 		MyLoggerExecute.registEditEvent(-1, "Attribute", "Create",
 				newAttribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
 				null, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
@@ -99,6 +97,7 @@ public class ClassPartAttributesFieldEditor extends FieldEditor {
 					newAttribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
 					null, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
 		}
+
 //		int preEventId, String editEvent, String eventType,
 //		String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
 //		String targetPart, String beforeEdit, String afterEdit, String canvasUrl
