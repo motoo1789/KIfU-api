@@ -18,6 +18,7 @@ package com.objetdirect.gwt.umlapi.client.editors;
 import com.objetdirect.gwt.umlapi.client.artifacts.RelationLinkArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.RelationLinkArtifact.RelationLinkArtifactPart;
 import com.objetdirect.gwt.umlapi.client.artifacts.UMLArtifact;
+import com.objetdirect.gwt.umlapi.client.helpers.DefaultText;
 import com.objetdirect.gwt.umlapi.client.helpers.UMLCanvas;
 import com.objetdirect.gwt.umlapi.client.mylogger.MyLoggerExecute;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLRelation;
@@ -75,24 +76,37 @@ public class RelationFieldEditor extends FieldEditor {
 		//MyLoggerExecute.registEditEvent("Relationship:"+rla.getId()+":"+rla.toString()+":"+rla.toString()+":"+newContent, canvas.toUrl());
 
 		if(newContent.trim().equals("")){
+			Boolean isRemoveEvent = true;
+
 			//クリックしやすくするためスペースを入れる
 			if(this.relationshipPart == RelationLinkArtifactPart.NAME){
-				newContent = "Name";
+				if(oldContent.trim().equals("")){
+					//新しい値が空で、古い値も空なら、削除イベントではない
+					isRemoveEvent = false;
+				}
+				newContent = "";
 			}
 			else if (this.relationshipPart == RelationLinkArtifactPart.LEFT_CARDINALITY
 					||  this.relationshipPart == RelationLinkArtifactPart.RIGHT_CARDINALITY){
-				newContent = "None";
+				if(oldContent.trim().equals( DefaultText.RELATION_CARDINALITY.getMessage() )){
+					//新しい値が空で、古い値がデフォルト文字列なら、削除イベントではない
+					isRemoveEvent = false;
+				}
+				newContent = DefaultText.RELATION_CARDINALITY.getMessage();
 			}
 
 			((RelationLinkArtifact) this.artifact).setPartContent(this.relationshipPart, newContent);
 			this.artifact.rebuildGfxObject();
 
-			MyLoggerExecute.registEditEvent(-1, "Relation", "Remove",
-					rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
-					part, oldContent, newContent, null, UMLArtifact.getIdCount());
-			MyLoggerExecute.registEditEvent(-1, "Relation", "RemoveArtifacts",
-					rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
-					part, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
+			//もし削除イベントなら、削除イベントを記録する
+			if(isRemoveEvent){
+				MyLoggerExecute.registEditEvent(-1, "Relation", "Remove",
+						rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
+						part, oldContent, newContent, null, UMLArtifact.getIdCount());
+				MyLoggerExecute.registEditEvent(-1, "Relation", "RemoveArtifacts",
+						rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
+						part, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
+			}
 		}
 		else{//if(newContent.trim().equals("")){
 
@@ -102,9 +116,9 @@ public class RelationFieldEditor extends FieldEditor {
 			if(oldContent.equals(newContent)){
 				//Nothing to do
 			}
-			else if((this.relationshipPart == RelationLinkArtifactPart.NAME && oldContent.equals("Name"))
+			else if((this.relationshipPart == RelationLinkArtifactPart.NAME && ( oldContent.equals("")||oldContent.equals(DefaultText.RELATION_NAME.getMessage()) ))
 					||( (this.relationshipPart == RelationLinkArtifactPart.LEFT_CARDINALITY
-					||  this.relationshipPart == RelationLinkArtifactPart.RIGHT_CARDINALITY) && oldContent.equals("None") ) ){
+					||  this.relationshipPart == RelationLinkArtifactPart.RIGHT_CARDINALITY) && oldContent.equals(DefaultText.RELATION_CARDINALITY.getMessage()) ) ){
 				MyLoggerExecute.registEditEvent(-1, "Relation", "Create",
 						rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
 						part, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
@@ -115,9 +129,9 @@ public class RelationFieldEditor extends FieldEditor {
 			}
 
 		}
-//		int preEventId, String editEvent, String eventType,
-//		String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
-//		String targetPart, String beforeEdit, String afterEdit, String canvasUrl
+		//		int preEventId, String editEvent, String eventType,
+		//		String targetType, int targetId, String linkKind, int rightObjectId, int leftObjectId,
+		//		String targetPart, String beforeEdit, String afterEdit, String canvasUrl
 
 
 		return false;

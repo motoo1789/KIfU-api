@@ -93,6 +93,11 @@ public enum TextResource {
 	}
 
 	public String getMessage() {
-		return japanese;
+		if(Session.language.equals("jp")){
+			return japanese;
+		}
+		else{
+			return english;
+		}
 	}
 }

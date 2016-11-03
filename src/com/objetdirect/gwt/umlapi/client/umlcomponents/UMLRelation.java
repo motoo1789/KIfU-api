@@ -16,6 +16,7 @@ package com.objetdirect.gwt.umlapi.client.umlcomponents;
 
 import com.objetdirect.gwt.umlapi.client.artifacts.LinkArtifact.LinkAdornment;
 import com.objetdirect.gwt.umlapi.client.artifacts.LinkArtifact.LinkStyle;
+import com.objetdirect.gwt.umlapi.client.helpers.DefaultText;
 
 /**
  * This class represent an uml relation between two {@link UMLClass}es
@@ -52,7 +53,7 @@ public class UMLRelation extends UMLLink {
 		this.rightConstraint = "";
 		this.leftRole = "";
 		this.rightRole = "";
-		this.name = "No Name";
+		this.name =DefaultText.RELATION_NAME.getMessage();
 	}
 
 	/**

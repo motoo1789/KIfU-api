@@ -27,6 +27,7 @@ import com.objetdirect.gwt.umlapi.client.engine.Point;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxColor;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxManager;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxObject;
+import com.objetdirect.gwt.umlapi.client.helpers.DefaultText;
 import com.objetdirect.gwt.umlapi.client.helpers.MenuBarAndTitle;
 import com.objetdirect.gwt.umlapi.client.helpers.OptionsManager;
 import com.objetdirect.gwt.umlapi.client.helpers.ThemeManager;
@@ -100,14 +101,16 @@ public class ClassRelationLinkArtifact extends RelationLinkArtifact {
 			case NAME:
 				final String name = part.getText(this.relation);
 				if ((name == null) || name.equals("")) {
-					defaultText = this.leftClassArtifact.getName() + "-" + this.rightClassArtifact.getName();
+					//defaultText = this.leftClassArtifact.getName() + "-" + this.rightClassArtifact.getName();
+					//defaultText = DefaultText.RELATION_NAME.getMessage();
+					defaultText = "";
 				} else {
 					defaultText = name;
 				}
 				break;
 			case LEFT_CARDINALITY:
 			case RIGHT_CARDINALITY:
-				defaultText = "0..*";
+				defaultText = DefaultText.RELATION_CARDINALITY.getMessage();
 				break;
 			case LEFT_CONSTRAINT:
 			case RIGHT_CONSTRAINT:
@@ -511,7 +514,19 @@ public class ClassRelationLinkArtifact extends RelationLinkArtifact {
 		// Making the text group :
 		this.textVirtualGroup = GfxManager.getPlatform().buildVirtualGroup();
 		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.textVirtualGroup);
-		if (!this.relation.getName().equals("")) {
+
+		if (this.relation.getName().equals("")) {
+			final GfxObject nameGfxObject = GfxManager.getPlatform().buildText(this.relation.getName(), this.nameAnchorPoint);
+			GfxManager.getPlatform().translate(nameGfxObject, new Point(-GfxManager.getPlatform().getTextWidthFor(nameGfxObject)*2 / 3, 0));
+			GfxManager.getPlatform().setFont(nameGfxObject, OptionsManager.getSmallFont());
+
+			GfxManager.getPlatform().setStroke(nameGfxObject, ThemeManager.getTheme().getClassRelationBackgroundColor(), 0);
+			GfxManager.getPlatform().setFillColor(nameGfxObject, ThemeManager.getTheme().getClassRelationForegroundColor());
+
+			RelationLinkArtifactPart.setGfxObjectTextForPart(nameGfxObject, RelationLinkArtifactPart.NAME);
+			this.gfxObjectPart.put(RelationLinkArtifactPart.NAME, nameGfxObject);
+		}
+		else{
 			Log.trace("Creating name");
 			final GfxObject nameGfxObject = GfxManager.getPlatform().buildText(this.relation.getName(), this.nameAnchorPoint);
 			GfxManager.getPlatform().translate(nameGfxObject, new Point(-GfxManager.getPlatform().getTextWidthFor(nameGfxObject)*2 / 3, 0));

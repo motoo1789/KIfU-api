@@ -7,6 +7,7 @@ import static com.objetdirect.gwt.umlapi.client.helpers.TextResource.*;
 
 import com.objetdirect.gwt.umlapi.client.artifacts.LinkArtifact.LinkAdornment;
 import com.objetdirect.gwt.umlapi.client.artifacts.LinkArtifact.LinkStyle;
+import com.objetdirect.gwt.umlapi.client.helpers.DefaultText;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLDiagram.Type;
 
 /**
@@ -26,7 +27,7 @@ public abstract class UMLLink {
 		 * Simple relation
 		 */
 		//Type.ANY とかMISSUSECASEとかを追加
-		SIMPLE_RELATION("SimpleRelation", RELATIONSHIP.getMessage(), LinkAdornment.NONE, LinkAdornment.NONE, "undefined", "undefined", LinkStyle.SOLID, Type.SUPER_HYBRID),
+		SIMPLE_RELATION("SimpleRelation", RELATIONSHIP.getMessage(), LinkAdornment.NONE, LinkAdornment.NONE, DefaultText.RELATION_CARDINALITY.getMessage(), DefaultText.RELATION_CARDINALITY.getMessage(), LinkStyle.SOLID, Type.SUPER_HYBRID),
 
 		ASSOCIATION_HYBRID("Association", ASSOSIATION.getMessage(), LinkAdornment.WIRE_ARROW, LinkAdornment.NONE, "", "", LinkStyle.SOLID, Type.SUPER_HYBRID),
 		/**

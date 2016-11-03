@@ -22,6 +22,7 @@ import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLDiagram;
  */
 public class Session {
 	public static UMLCanvas	activeCanvas =null;
+	public static String language = "jp";
 	public static String	mode = "none";
 	public static String step = null;
 	public static int preEditEventID;
