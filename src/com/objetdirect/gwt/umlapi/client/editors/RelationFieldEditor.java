@@ -98,6 +98,7 @@ public class RelationFieldEditor extends FieldEditor {
 			((RelationLinkArtifact) this.artifact).setPartContent(this.relationshipPart, newContent);
 			this.artifact.rebuildGfxObject();
 
+			//TO FIX RelationPartをログに記録する
 			//もし削除イベントなら、削除イベントを記録する
 			if(isRemoveEvent){
 				MyLoggerExecute.registEditEvent(-1, "Relation", "Remove",
@@ -116,9 +117,11 @@ public class RelationFieldEditor extends FieldEditor {
 			if(oldContent.equals(newContent)){
 				//Nothing to do
 			}
+
 			else if((this.relationshipPart == RelationLinkArtifactPart.NAME && ( oldContent.equals("")||oldContent.equals(DefaultText.RELATION_NAME.getMessage()) ))
 					||( (this.relationshipPart == RelationLinkArtifactPart.LEFT_CARDINALITY
 					||  this.relationshipPart == RelationLinkArtifactPart.RIGHT_CARDINALITY) && oldContent.equals(DefaultText.RELATION_CARDINALITY.getMessage()) ) ){
+				//TO FIX RelationPartをログに記録する
 				MyLoggerExecute.registEditEvent(-1, "Relation", "Create",
 						rla.getClass().getName(), rla.getId(), null, rla.getLeftUMLArtifact().getId(), rla.getRightUMLArtifact().getId(),
 						part, oldContent, newContent, this.canvas.toUrl(), UMLArtifact.getIdCount());
