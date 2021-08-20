@@ -15,19 +15,21 @@ public class DriverAccessor {
 	private final static String DRIVER_NAME="com.mysql.jdbc.Driver";
 
 
-	private final static String USER_NAME="takafumi";
+	//private final static String USER_NAME="takafumi";
+	private final static String MAKE_YAMAZAKI_USER_NAME="root";
 
 
 	//private final static String PASSWORD="";
 	//private final static String PASSWORD="mysqlroot";
-	private final static String PASSWORD="takafumi";
+	//private final static String PASSWORD="takafumi";
+	private final static String MAKE_YAMAZAKI_PASSWORD_="root";
 
 
 
 	public Connection createConnection(){
 	try{
 		Class.forName(DRIVER_NAME);
-		Connection con=DriverManager.getConnection(DRIVER_URL,USER_NAME,PASSWORD);
+		Connection con=DriverManager.getConnection(DRIVER_URL,MAKE_YAMAZAKI_USER_NAME,MAKE_YAMAZAKI_PASSWORD_);
 		return con;
 		}catch(ClassNotFoundException e){
 			System.out.println("Can't Find JDBC Driver.\n");

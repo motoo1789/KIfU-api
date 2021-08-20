@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.objetdirect.gwt.umlapi.client.editors.ClassPartAttributesFieldEditor;
+import com.objetdirect.gwt.umlapi.client.editors.ClassPartAttributesFieldEditor_Yamazaki;
 import com.objetdirect.gwt.umlapi.client.engine.Point;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxColor;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxManager;
@@ -15,6 +16,7 @@ import com.objetdirect.gwt.umlapi.client.helpers.GWTUMLDrawerHelper;
 import com.objetdirect.gwt.umlapi.client.helpers.MenuBarAndTitle;
 import com.objetdirect.gwt.umlapi.client.helpers.OptionsManager;
 import com.objetdirect.gwt.umlapi.client.helpers.ThemeManager;
+import com.objetdirect.gwt.umlapi.client.mylogger.MyLoggerExecute;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLAttributeName_Yamazaki;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLClassAttribute;
 
@@ -104,6 +106,32 @@ public class ClassPartAttributesNameArtifact_Yamazaki extends NodePartArtifact  
 					- OptionsManager.get("RectangleLeftPadding"), false, true);
 		}
 	}
+
+	/**
+	 * Remove an attribute to the current attribute list. The graphical object must be rebuilt to reflect the changes
+	 *
+	 * @param attribute
+	 *            The attribute to be removed
+	 */
+	public void remove(final UMLAttributeName_Yamazaki attribute) {
+		// Listを持ってるわけじゃないからどうしようか
+		attributesName = new UMLAttributeName_Yamazaki();
+		//this.attributes.remove(attribute);
+		ClassArtifactUMLDS_Yamazaki classArtifact = (ClassArtifactUMLDS_Yamazaki) (this.getNodeArtifact() );
+
+		if(!attribute.toString().equals("")){ //初期値の空白でなければRemoveイベントを記録
+
+			MyLoggerExecute.registEditEvent(-1, "Attribute", "Remove",
+					attribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
+					null, attribute.toString(), "", null, UMLArtifact.getIdCount());
+
+			MyLoggerExecute.registEditEvent(-1, "Attribute", "RemoveArtifacts",
+					attribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
+					null, attribute.toString(), "", this.canvas.toUrl(), UMLArtifact.getIdCount());
+		}
+
+	}
+
 
 	@Override
 	void setNodeWidth(int width) {

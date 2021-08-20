@@ -71,4 +71,14 @@ public class ClassPartAttributesArtifact_Yamazaki extends NodePartArtifact {
 		// TODO 自動生成されたメソッド・スタブ
 
 	}
+
+	public List<UMLClassAttribute_Yamazaki> getList() {
+		// TODO 自動生成されたメソッド・スタブ
+		return attributes;
+	}
+
+	public void add(UMLClassAttribute_Yamazaki attribute) {
+		// TODO 自動生成されたメソッド・スタブ
+		attributes.add(attribute);
+	}
 }
