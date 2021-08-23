@@ -120,7 +120,7 @@ public abstract class FieldEditor {
 			FieldEditor.editField.setHeight(this.height + "px");
 		}
 		DOM.setStyleAttribute(FieldEditor.editField.getElement(), "backgroundColor", ThemeManager.getTheme().getDefaultBackgroundColor().toString());
-		DOM.setStyleAttribute(FieldEditor.editField.getElement(), "color", ThemeManager.getTheme().getDefaultForegroundColor().toString());
+		DOM.setStyleAttribute(FieldEditor.editField.getElement(), "color", GfxColor.AQUA.toString());
 		DOM.setStyleAttribute(FieldEditor.editField.getElement(), "selection", ThemeManager.getTheme().getDefaultBackgroundColor().toString()); // CSS 3 :'(
 		FieldEditor.editField.addFocusHandler(new FocusHandler() {
 			public void onFocus(final FocusEvent event) {
