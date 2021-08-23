@@ -74,7 +74,7 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 		}
 		this.nameRect = GfxManager.getPlatform().buildRect(this.nodeWidth, this.height);
 		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.nameRect);
-		GfxManager.getPlatform().setFillColor(this.nameRect, GfxColor.AQUA);//ThemeManager.getTheme().getClassBackgroundColor()
+		GfxManager.getPlatform().setFillColor(this.nameRect,ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
 		GfxManager.getPlatform().setStroke(this.nameRect, ThemeManager.getTheme().getClassForegroundColor(), 1);
 
 		// Centering name class :
@@ -106,7 +106,7 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, this.stereotypeText);
 			GfxManager.getPlatform().setFont(this.stereotypeText, OptionsManager.getFont());
 			GfxManager.getPlatform().setStroke(this.stereotypeText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
-			GfxManager.getPlatform().setFillColor(this.stereotypeText, GfxColor.AQUA);//ThemeManager.getTheme().getClassBackgroundColor()
+			GfxManager.getPlatform().setFillColor(this.stereotypeText, ThemeManager.getTheme().getClassForegroundColor());//ThemeManager.getTheme().getClassForegroundColor()
 			this.width = GfxManager.getPlatform().getTextWidthFor(this.stereotypeText);
 			this.height = GfxManager.getPlatform().getTextHeightFor(this.stereotypeText);
 			this.width += OptionsManager.get("TextRightPadding") + OptionsManager.get("TextLeftPadding");
@@ -117,7 +117,7 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 		GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, this.nameText);
 		GfxManager.getPlatform().setFont(this.nameText, OptionsManager.getFont());
 		GfxManager.getPlatform().setStroke(this.nameText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
-		GfxManager.getPlatform().setFillColor(this.nameText, GfxColor.AQUA);//ThemeManager.getTheme().getClassBackgroundColor()
+		GfxManager.getPlatform().setFillColor(this.nameText, ThemeManager.getTheme().getClassForegroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
 		final int thisNameWidth = GfxManager.getPlatform().getTextWidthFor(this.nameText) + OptionsManager.get("TextRightPadding")
 				+ OptionsManager.get("TextLeftPadding");
 		this.width = thisNameWidth > this.width ? thisNameWidth : this.width;

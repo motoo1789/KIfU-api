@@ -11,6 +11,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib"/>
 	<classpathentry kind="con" path="com.gwtplugins.gwt.eclipse.core.GWT_CONTAINER"/>
-	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-dnd-r890.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
