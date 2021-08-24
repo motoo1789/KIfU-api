@@ -80,16 +80,15 @@ abstract class IncubatorGfxObject {
 
 	public void setAlpha(final float alpha) {
 		this.fillColor = new Color(this.redFill, this.blueFill, this.greenFill, alpha);
-		this.strokeColor = new Color(this.redStroke, this.blueStroke, this.greenStroke, alpha);
-		//this.strokeColor = new Color(255, 0, 0, alpha);
+		//this.strokeColor = new Color(this.redStroke, this.blueStroke, this.greenStroke, alpha);
+		this.strokeColor = new Color(255, 0, 0, alpha);
 	}
 
 	public void setFillColor(final GfxColor gfxColor) {
 		this.redFill = gfxColor.getRed();
 		this.blueFill = gfxColor.getBlue();
 		this.greenFill = gfxColor.getGreen();
-		//this.fillColor = new Color(255, 0, 0, gfxColor.getAlpha());
-		this.fillColor = new Color(this.redFill, this.blueFill, this.greenFill, gfxColor.getAlpha());
+		this.fillColor = new Color(255, 0, 0, gfxColor.getAlpha());
 	}
 
 	/**
@@ -104,8 +103,7 @@ abstract class IncubatorGfxObject {
 		this.redStroke = gfxColor.getRed();
 		this.blueStroke = gfxColor.getBlue();
 		this.greenStroke = gfxColor.getGreen();
-		this.strokeColor = new Color(this.redStroke, this.blueStroke, this.greenStroke, gfxColor.getAlpha());
-		//this.strokeColor = new Color(255, 0, 0, gfxColor.getAlpha());
+		this.strokeColor = new Color(255, 0, 0, gfxColor.getAlpha());
 	}
 
 	public void setStrokeWidth(final int width) {

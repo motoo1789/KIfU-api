@@ -17,7 +17,6 @@ package com.objetdirect.gwt.umlapi.client.artifacts;
 import static com.objetdirect.gwt.umlapi.client.helpers.TextResource.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,9 +50,6 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 	private final List<UMLClassAttribute>			attributes;
 	private GfxObject								lastGfxObject;
 
-	// Yamazaki add
-	private Map<UMLClassAttribute, List<GfxObject>> methodVNT;
-
 	/**
 	 * Constructor of ClassPartAttributesArtifact It initializes the attribute list
 	 *
@@ -62,7 +58,6 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 		super();
 		this.attributes = new ArrayList<UMLClassAttribute>();
 		this.attributeGfxObjects = new LinkedHashMap<GfxObject, UMLClassAttribute>();
-		this.methodVNT = new HashMap<UMLClassAttribute,List<GfxObject>>();
 		this.height = 0;
 		this.width = 0;
 	}
@@ -84,8 +79,8 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 		}
 		this.attributeRect = GfxManager.getPlatform().buildRect(this.nodeWidth, this.height);
 		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.attributeRect);
-		GfxManager.getPlatform().setFillColor(this.attributeRect, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
-		GfxManager.getPlatform().setStroke(this.attributeRect,GfxColor.RED, 1);//ThemeManager.getTheme().getClassForegroundColor()
+		GfxManager.getPlatform().setFillColor(this.attributeRect, GfxColor.AQUA);//ThemeManager.getTheme().getClassBackgroundColor()
+		GfxManager.getPlatform().setStroke(this.attributeRect, GfxColor.RED, 1);//ThemeManager.getTheme().getClassForegroundColor()
 		GfxManager.getPlatform().translate(this.textVirtualGroup,
 				new Point(OptionsManager.get("RectangleLeftPadding"), OptionsManager.get("RectangleTopPadding")));
 		GfxManager.getPlatform().moveToFront(this.textVirtualGroup);
@@ -105,7 +100,7 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, attributeText);
 			GfxManager.getPlatform().setFont(attributeText, OptionsManager.getSmallFont());
 			GfxManager.getPlatform().setStroke(attributeText, GfxColor.RED, 1);//ThemeManager.getTheme().getClassForegroundColor()
-			GfxManager.getPlatform().setFillColor(attributeText, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
+			GfxManager.getPlatform().setFillColor(attributeText, GfxColor.AQUA);//ThemeManager.getTheme().getClassBackgroundColor()
 			int thisAttributeWidth = GfxManager.getPlatform().getTextWidthFor(attributeText);
 			int thisAttributeHeight = GfxManager.getPlatform().getTextHeightFor(attributeText);
 			thisAttributeWidth += OptionsManager.get("TextRightPadding") + OptionsManager.get("TextLeftPadding");
@@ -176,8 +171,8 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 		final GfxObject vg = GfxManager.getPlatform().buildVirtualGroup();
 		final GfxObject rect = GfxManager.getPlatform().buildRect(this.nodeWidth, this.getHeight());
 		GfxManager.getPlatform().setStrokeStyle(rect, GfxStyle.DASH);
-		GfxManager.getPlatform().setStroke(rect,  ThemeManager.getTheme().getClassForegroundColor(), 1);//ThemeManager.getTheme().getClassForegroundColor()
-		GfxManager.getPlatform().setFillColor(rect, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
+		GfxManager.getPlatform().setStroke(rect,  GfxColor.RED, 1);//ThemeManager.getTheme().getClassForegroundColor()
+		GfxManager.getPlatform().setFillColor(rect, GfxColor.AQUA);//ThemeManager.getTheme().getClassBackgroundColor()
 		GfxManager.getPlatform().addToVirtualGroup(vg, rect);
 		return vg;
 	}
@@ -213,6 +208,7 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 		ClassArtifact classArtifact = (ClassArtifact) (this.getNodeArtifact() );
 
 		if(!attribute.toString().equals("")){ //初期値の空白でなければRemoveイベントを記録
+
 			MyLoggerExecute.registEditEvent(-1, "Attribute", "Remove",
 					attribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
 					null, attribute.toString(), "", null, UMLArtifact.getIdCount());

@@ -27,7 +27,6 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.objetdirect.gwt.umlapi.client.editors.ClassPartMethodsFieldEditor;
 import com.objetdirect.gwt.umlapi.client.engine.Point;
-import com.objetdirect.gwt.umlapi.client.gfx.GfxColor;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxManager;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxObject;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxStyle;
@@ -84,7 +83,7 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 		}
 		this.methodRect = GfxManager.getPlatform().buildRect(this.nodeWidth, this.height);
 		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.methodRect);
-		GfxManager.getPlatform().setFillColor(this.methodRect, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
+		GfxManager.getPlatform().setFillColor(this.methodRect, ThemeManager.getTheme().getClassBackgroundColor());
 		GfxManager.getPlatform().setStroke(this.methodRect, ThemeManager.getTheme().getClassForegroundColor(), 1);
 		GfxManager.getPlatform().translate(this.textVirtualGroup,
 				new Point(OptionsManager.get("RectangleLeftPadding"), OptionsManager.get("RectangleTopPadding")));
@@ -105,8 +104,8 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, methodText);
 			GfxManager.getPlatform().setFont(methodText, OptionsManager.getSmallFont());
 
-			GfxManager.getPlatform().setStroke(methodText, ThemeManager.getTheme().getClassBackgroundColor(), 0);//ThemeManager.getTheme().getClassBackgroundColor()
-			GfxManager.getPlatform().setFillColor(methodText, ThemeManager.getTheme().getClassForegroundColor());//ThemeManager.getTheme().getClassForegroundColor()
+			GfxManager.getPlatform().setStroke(methodText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
+			GfxManager.getPlatform().setFillColor(methodText, ThemeManager.getTheme().getClassForegroundColor());
 			int thisMethodWidth = GfxManager.getPlatform().getTextWidthFor(methodText);
 			int thisMethodHeight = GfxManager.getPlatform().getTextHeightFor(methodText);
 			thisMethodWidth += OptionsManager.get("TextRightPadding") + OptionsManager.get("TextLeftPadding");

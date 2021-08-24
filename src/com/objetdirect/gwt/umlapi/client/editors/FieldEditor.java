@@ -111,6 +111,7 @@ public abstract class FieldEditor {
 //		if(y + 20  > this.canvas.getHeight()) { //FIXME put a real height
 //			return;
 //		}
+
 		FieldEditor.editField = this.isMultiLine ? new TextArea() : new TextBox();
 		FieldEditor.editField.setText(text);
 		FieldEditor.editField.setStylePrimaryName("editor" + (isSmallFont ? "-small" : "") + "-field" + (this.isMultiLine ? "-multiline" : ""));
@@ -119,7 +120,7 @@ public abstract class FieldEditor {
 			FieldEditor.editField.setHeight(this.height + "px");
 		}
 		DOM.setStyleAttribute(FieldEditor.editField.getElement(), "backgroundColor", ThemeManager.getTheme().getDefaultBackgroundColor().toString());
-		DOM.setStyleAttribute(FieldEditor.editField.getElement(), "color", ThemeManager.getTheme().getDefaultForegroundColor().toString());
+		DOM.setStyleAttribute(FieldEditor.editField.getElement(), "color", GfxColor.AQUA.toString());
 		DOM.setStyleAttribute(FieldEditor.editField.getElement(), "selection", ThemeManager.getTheme().getDefaultBackgroundColor().toString()); // CSS 3 :'(
 		FieldEditor.editField.addFocusHandler(new FocusHandler() {
 			public void onFocus(final FocusEvent event) {
