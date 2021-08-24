@@ -124,6 +124,16 @@ public class UMLClassAttribute {
 	}
 
 	/**
+	 * add Yamazaki Getter for the visibility String
+	 *
+	 * @return visibility String
+	 */
+	public String getVisibilitytoString()
+	{
+		return this.visibility.toString();
+	}
+
+	/**
 	 * Get the validated state of the attribute
 	 *
 	 * @return <ul>
