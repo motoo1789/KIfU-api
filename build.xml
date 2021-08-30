@@ -2,7 +2,7 @@
 <project name="GWTUMLAPI" default="dist" basedir=".">
   <!-- Configure path to GWT SDK -->
   <!--<property name="gwt.sdk" location="../tools/gwt/trunk/build/staging/gwt-linux-0.0.0" /> -->
-  <property name="gwt.sdk" location="C:\library\gwt-2.5.0" />
+  <property name="gwt.sdk" location="C:\library\gwt-2.5.1" />
 
   <path id="project.class.path">
     <pathelement location="war/WEB-INF/classes"/>

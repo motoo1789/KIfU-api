@@ -74,7 +74,11 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 		}
 		this.nameRect = GfxManager.getPlatform().buildRect(this.nodeWidth, this.height);
 		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.nameRect);
+<<<<<<< HEAD
 		GfxManager.getPlatform().setFillColor(this.nameRect, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
+=======
+		GfxManager.getPlatform().setFillColor(this.nameRect,ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
+>>>>>>> branch 'yamazaki-umlds-api' of https://ferry.kbselab.com/gitea/2218012/api.git
 		GfxManager.getPlatform().setStroke(this.nameRect, ThemeManager.getTheme().getClassForegroundColor(), 1);
 
 		// Centering name class :
@@ -106,7 +110,11 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, this.stereotypeText);
 			GfxManager.getPlatform().setFont(this.stereotypeText, OptionsManager.getFont());
 			GfxManager.getPlatform().setStroke(this.stereotypeText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
+<<<<<<< HEAD
 			GfxManager.getPlatform().setFillColor(this.stereotypeText, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
+=======
+			GfxManager.getPlatform().setFillColor(this.stereotypeText, ThemeManager.getTheme().getClassForegroundColor());//ThemeManager.getTheme().getClassForegroundColor()
+>>>>>>> branch 'yamazaki-umlds-api' of https://ferry.kbselab.com/gitea/2218012/api.git
 			this.width = GfxManager.getPlatform().getTextWidthFor(this.stereotypeText);
 			this.height = GfxManager.getPlatform().getTextHeightFor(this.stereotypeText);
 			this.width += OptionsManager.get("TextRightPadding") + OptionsManager.get("TextLeftPadding");

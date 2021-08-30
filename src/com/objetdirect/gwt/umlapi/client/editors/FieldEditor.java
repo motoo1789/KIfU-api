@@ -111,7 +111,6 @@ public abstract class FieldEditor {
 //		if(y + 20  > this.canvas.getHeight()) { //FIXME put a real height
 //			return;
 //		}
-
 		FieldEditor.editField = this.isMultiLine ? new TextArea() : new TextBox();
 		FieldEditor.editField.setText(text);
 		FieldEditor.editField.setStylePrimaryName("editor" + (isSmallFont ? "-small" : "") + "-field" + (this.isMultiLine ? "-multiline" : ""));
