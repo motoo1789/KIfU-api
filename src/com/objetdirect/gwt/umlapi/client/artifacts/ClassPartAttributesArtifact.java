@@ -131,23 +131,23 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			attributeWidth = attributeWidth + GfxManager.getPlatform().getTextWidthFor(type);
 			int typeWidth = GfxManager.getPlatform().getTextWidthFor(type);
 
-			Window.alert(String.valueOf(attributeWidth) + " かしか" + String.valueOf(visibilityWidth) + " なまえ" + String.valueOf(nameWidth) + " たいぷ" + String.valueOf(typeWidth));
+			//Window.alert(String.valueOf(attributeWidth) + " かしか" + String.valueOf(visibilityWidth) + " なまえ" + String.valueOf(nameWidth) + " たいぷ" + String.valueOf(typeWidth));
 //			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, visibility);
 //			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, name);
 //			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, type);
 
-//			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, visibility);
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, visibility);
 			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, name);
-//			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, type);
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, type);
 //
-			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, vmtGroup);
+//			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, vmtGroup);
 //
 //			System.out.println("yousononagasa" + thisVisibilityWidth + " " + thisNameWidth + " " + thisTypeWidth);
 
 
 
-//			int thisAttributeWidth = visibilityWidth + nameWidth + typeWidth;
-//			int thisAttributeHeight = GfxManager.getPlatform().getTextHeightFor(vmtGroup);
+			int thisAttributeWidth = visibilityWidth + nameWidth + typeWidth;
+			int thisAttributeHeight = GfxManager.getPlatform().getTextHeightFor(name);
 //			thisAttributeWidth += OptionsManager.get("TextRightPadding") + OptionsManager.get("TextLeftPadding");
 //			//thisAttributeWidth += OptionsManager.get("TextLeftPadding");
 //			thisAttributeHeight += OptionsManager.get("TextTopPadding") + OptionsManager.get("TextBottomPadding");
@@ -157,12 +157,12 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 //			this.lastGfxObject = name;
 
 			/////////////////////
-			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, name);
+			//GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, name);
 //			GfxManager.getPlatform().setFont(attributeText, OptionsManager.getSmallFont());
 //			GfxManager.getPlatform().setStroke(attributeText, GfxColor.RED, 1); //ThemeManager.getTheme().getClassBackgroundColor()
 //			GfxManager.getPlatform().setFillColor(attributeText, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
-			int thisAttributeWidth = GfxManager.getPlatform().getTextWidthFor(name);
-			int thisAttributeHeight = GfxManager.getPlatform().getTextHeightFor(name);
+//			int thisAttributeWidth = GfxManager.getPlatform().getTextWidthFor(textVirtualGroup);
+//			int thisAttributeHeight = GfxManager.getPlatform().getTextHeightFor(textVirtualGroup);
 			thisAttributeWidth += OptionsManager.get("TextRightPadding") + OptionsManager.get("TextLeftPadding");
 			//thisAttributeWidth += OptionsManager.get("TextLeftPadding");
 			thisAttributeHeight += OptionsManager.get("TextTopPadding") + OptionsManager.get("TextBottomPadding");
@@ -171,6 +171,7 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			this.attributeGfxObjects.put(name, attribute);
 			this.lastGfxObject = name;
 
+			//大元
 //			final GfxObject attributeText = GfxManager.getPlatform().buildText(attribute.toString(),
 //					new Point(OptionsManager.get("TextLeftPadding"), OptionsManager.get("TextTopPadding") + this.height));
 //			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, attributeText);
