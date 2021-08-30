@@ -25,6 +25,7 @@ import java.util.Map.Entry;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.objetdirect.gwt.umlapi.client.editors.ClassPartAttributesFieldEditor;
 import com.objetdirect.gwt.umlapi.client.engine.Point;
@@ -52,7 +53,10 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 	private GfxObject								lastGfxObject;
 
 	// Yamazaki add
-	private Map<UMLClassAttribute, List<GfxObject>> methodVNT;
+	private Map<UMLClassAttribute, GfxObject> attributesVMap;
+	private Map<UMLClassAttribute, GfxObject> attributesNMap;
+	private Map<UMLClassAttribute, GfxObject> attributesTMap;
+
 
 	/**
 	 * Constructor of ClassPartAttributesArtifact It initializes the attribute list
@@ -62,9 +66,14 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 		super();
 		this.attributes = new ArrayList<UMLClassAttribute>();
 		this.attributeGfxObjects = new LinkedHashMap<GfxObject, UMLClassAttribute>();
-		this.methodVNT = new HashMap<UMLClassAttribute,List<GfxObject>>();
+
 		this.height = 0;
 		this.width = 0;
+
+		// add Yamazaki
+		this.attributesVMap = new HashMap<UMLClassAttribute,GfxObject>();
+		this.attributesNMap = new HashMap<UMLClassAttribute,GfxObject>();
+		this.attributesTMap = new HashMap<UMLClassAttribute,GfxObject>();
 	}
 
 	/**
@@ -84,8 +93,8 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 		}
 		this.attributeRect = GfxManager.getPlatform().buildRect(this.nodeWidth, this.height);
 		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.attributeRect);
-		GfxManager.getPlatform().setFillColor(this.attributeRect, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
-		GfxManager.getPlatform().setStroke(this.attributeRect,GfxColor.RED, 1);//ThemeManager.getTheme().getClassForegroundColor()
+		GfxManager.getPlatform().setFillColor(this.attributeRect, ThemeManager.getTheme().getClassBackgroundColor());
+		GfxManager.getPlatform().setStroke(this.attributeRect, ThemeManager.getTheme().getClassForegroundColor(), 1); //ThemeManager.getTheme().getClassForegroundColor()
 		GfxManager.getPlatform().translate(this.textVirtualGroup,
 				new Point(OptionsManager.get("RectangleLeftPadding"), OptionsManager.get("RectangleTopPadding")));
 		GfxManager.getPlatform().moveToFront(this.textVirtualGroup);
@@ -100,27 +109,108 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.textVirtualGroup);
 
 		for (final UMLClassAttribute attribute : this.attributes) {
-			final GfxObject attributeText = GfxManager.getPlatform().buildText(attribute.toString(),
+			int attributeWidth = 0;
+			int attributeheight = 0;
+			// add Yamazaki
+			GfxObject vmtGroup = GfxManager.getPlatform().buildVirtualGroup();
+			GfxObject visibility = GfxManager.getPlatform().buildText(attribute.getVisibility().toString(),
 					new Point(OptionsManager.get("TextLeftPadding"), OptionsManager.get("TextTopPadding") + this.height));
-			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, attributeText);
-			GfxManager.getPlatform().setFont(attributeText, OptionsManager.getSmallFont());
-			GfxManager.getPlatform().setStroke(attributeText, GfxColor.RED, 1);//ThemeManager.getTheme().getClassForegroundColor()
-			GfxManager.getPlatform().setFillColor(attributeText, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
-			int thisAttributeWidth = GfxManager.getPlatform().getTextWidthFor(attributeText);
-			int thisAttributeHeight = GfxManager.getPlatform().getTextHeightFor(attributeText);
+			setStroke_BLACK(visibility);
+			attributeWidth = GfxManager.getPlatform().getTextWidthFor(visibility);
+			int visibilityWidth = GfxManager.getPlatform().getTextWidthFor(visibility);
+
+			GfxObject name = GfxManager.getPlatform().buildText(attribute.getName(),
+					new Point(OptionsManager.get("TextLeftPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
+			setStroke_RED(name);
+			attributeWidth = attributeWidth + GfxManager.getPlatform().getTextWidthFor(name);
+			int nameWidth = GfxManager.getPlatform().getTextWidthFor(name);
+
+			GfxObject type = GfxManager.getPlatform().buildText(attribute.getType(),
+					new Point(OptionsManager.get("TextLeftPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
+			setStroke_BLACK(type);
+			attributeWidth = attributeWidth + GfxManager.getPlatform().getTextWidthFor(type);
+			int typeWidth = GfxManager.getPlatform().getTextWidthFor(type);
+
+			Window.alert(String.valueOf(attributeWidth) + " かしか" + String.valueOf(visibilityWidth) + " なまえ" + String.valueOf(nameWidth) + " たいぷ" + String.valueOf(typeWidth));
+//			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, visibility);
+//			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, name);
+//			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, type);
+
+//			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, visibility);
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, name);
+//			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, type);
+//
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, vmtGroup);
+//
+//			System.out.println("yousononagasa" + thisVisibilityWidth + " " + thisNameWidth + " " + thisTypeWidth);
+
+
+
+//			int thisAttributeWidth = visibilityWidth + nameWidth + typeWidth;
+//			int thisAttributeHeight = GfxManager.getPlatform().getTextHeightFor(vmtGroup);
+//			thisAttributeWidth += OptionsManager.get("TextRightPadding") + OptionsManager.get("TextLeftPadding");
+//			//thisAttributeWidth += OptionsManager.get("TextLeftPadding");
+//			thisAttributeHeight += OptionsManager.get("TextTopPadding") + OptionsManager.get("TextBottomPadding");
+//			this.width = thisAttributeWidth > this.width ? thisAttributeWidth : this.width;
+//			this.height += thisAttributeHeight;
+//			this.attributeGfxObjects.put(name, attribute);
+//			this.lastGfxObject = name;
+
+			/////////////////////
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, name);
+//			GfxManager.getPlatform().setFont(attributeText, OptionsManager.getSmallFont());
+//			GfxManager.getPlatform().setStroke(attributeText, GfxColor.RED, 1); //ThemeManager.getTheme().getClassBackgroundColor()
+//			GfxManager.getPlatform().setFillColor(attributeText, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
+			int thisAttributeWidth = GfxManager.getPlatform().getTextWidthFor(name);
+			int thisAttributeHeight = GfxManager.getPlatform().getTextHeightFor(name);
 			thisAttributeWidth += OptionsManager.get("TextRightPadding") + OptionsManager.get("TextLeftPadding");
 			//thisAttributeWidth += OptionsManager.get("TextLeftPadding");
 			thisAttributeHeight += OptionsManager.get("TextTopPadding") + OptionsManager.get("TextBottomPadding");
 			this.width = thisAttributeWidth > this.width ? thisAttributeWidth : this.width;
 			this.height += thisAttributeHeight;
-			this.attributeGfxObjects.put(attributeText, attribute);
-			this.lastGfxObject = attributeText;
+			this.attributeGfxObjects.put(name, attribute);
+			this.lastGfxObject = name;
+
+//			final GfxObject attributeText = GfxManager.getPlatform().buildText(attribute.toString(),
+//					new Point(OptionsManager.get("TextLeftPadding"), OptionsManager.get("TextTopPadding") + this.height));
+//			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, attributeText);
+//			GfxManager.getPlatform().setFont(attributeText, OptionsManager.getSmallFont());
+//			GfxManager.getPlatform().setStroke(attributeText, GfxColor.RED, 1); //ThemeManager.getTheme().getClassBackgroundColor()
+//			GfxManager.getPlatform().setFillColor(attributeText, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
+//			int thisAttributeWidth = GfxManager.getPlatform().getTextWidthFor(attributeText);
+//			int thisAttributeHeight = GfxManager.getPlatform().getTextHeightFor(attributeText);
+//			thisAttributeWidth += OptionsManager.get("TextRightPadding") + OptionsManager.get("TextLeftPadding");
+//			//thisAttributeWidth += OptionsManager.get("TextLeftPadding");
+//			thisAttributeHeight += OptionsManager.get("TextTopPadding") + OptionsManager.get("TextBottomPadding");
+//			this.width = thisAttributeWidth > this.width ? thisAttributeWidth : this.width;
+//			this.height += thisAttributeHeight;
+//			this.attributeGfxObjects.put(attributeText, attribute);
+//			this.lastGfxObject = attributeText;
+
 		}
 		this.width += OptionsManager.get("RectangleRightPadding") + OptionsManager.get("RectangleLeftPadding");
 		this.height += OptionsManager.get("RectangleTopPadding") + OptionsManager.get("RectangleBottomPadding");
 
 		Log.trace("WxH for " + GWTUMLDrawerHelper.getShortName(this) + "is now " + this.width + "x" + this.height);
 	}
+
+	// add Yamazaki
+
+	private void setStroke_BLACK(GfxObject element)
+	{
+		GfxManager.getPlatform().setFont(element, OptionsManager.getSmallFont());
+		GfxManager.getPlatform().setStroke(element, ThemeManager.getTheme().getClassForegroundColor(), 0); //ThemeManager.getTheme().getClassBackgroundColor()
+		GfxManager.getPlatform().setFillColor(element, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
+	}
+
+	private void setStroke_RED(GfxObject element)
+	{
+		GfxManager.getPlatform().setFont(element, OptionsManager.getSmallFont());
+		GfxManager.getPlatform().setStroke(element, GfxColor.RED, 1); //ThemeManager.getTheme().getClassBackgroundColor()
+
+		GfxManager.getPlatform().setFillColor(element, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
+	}
+	//
 
 	@Override
 	public void edit() {
@@ -176,8 +266,9 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 		final GfxObject vg = GfxManager.getPlatform().buildVirtualGroup();
 		final GfxObject rect = GfxManager.getPlatform().buildRect(this.nodeWidth, this.getHeight());
 		GfxManager.getPlatform().setStrokeStyle(rect, GfxStyle.DASH);
-		GfxManager.getPlatform().setStroke(rect,  ThemeManager.getTheme().getClassForegroundColor(), 1);//ThemeManager.getTheme().getClassForegroundColor()
-		GfxManager.getPlatform().setFillColor(rect, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
+		GfxManager.getPlatform().setStroke(rect, ThemeManager.getTheme().getClassHighlightedForegroundColor(), 1); //ThemeManager.getTheme().getClassHighlightedForegroundColor()
+
+		GfxManager.getPlatform().setFillColor(rect, ThemeManager.getTheme().getClassBackgroundColor());
 		GfxManager.getPlatform().addToVirtualGroup(vg, rect);
 		return vg;
 	}
@@ -213,7 +304,6 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 		ClassArtifact classArtifact = (ClassArtifact) (this.getNodeArtifact() );
 
 		if(!attribute.toString().equals("")){ //初期値の空白でなければRemoveイベントを記録
-
 			MyLoggerExecute.registEditEvent(-1, "Attribute", "Remove",
 					attribute.getClass().getName(), classArtifact.getId(), null, -1, -1,
 					null, attribute.toString(), "", null, UMLArtifact.getIdCount());
@@ -281,5 +371,6 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			}
 		};
 	}
+
 
 }
