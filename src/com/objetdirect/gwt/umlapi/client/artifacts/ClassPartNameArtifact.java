@@ -74,11 +74,7 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 		}
 		this.nameRect = GfxManager.getPlatform().buildRect(this.nodeWidth, this.height);
 		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.nameRect);
-<<<<<<< HEAD
 		GfxManager.getPlatform().setFillColor(this.nameRect, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
-=======
-		GfxManager.getPlatform().setFillColor(this.nameRect,ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
->>>>>>> branch 'yamazaki-umlds-api' of https://ferry.kbselab.com/gitea/2218012/api.git
 		GfxManager.getPlatform().setStroke(this.nameRect, ThemeManager.getTheme().getClassForegroundColor(), 1);
 
 		// Centering name class :
@@ -108,13 +104,11 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 			this.stereotypeText = GfxManager.getPlatform().buildText(this.stereotype,
 					new Point(OptionsManager.get("TextLeftPadding"), OptionsManager.get("TextTopPadding")));
 			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, this.stereotypeText);
-			GfxManager.getPlatform().setFont(this.stereotypeText, OptionsManager.getFont());
-			GfxManager.getPlatform().setStroke(this.stereotypeText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
-<<<<<<< HEAD
-			GfxManager.getPlatform().setFillColor(this.stereotypeText, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
-=======
-			GfxManager.getPlatform().setFillColor(this.stereotypeText, ThemeManager.getTheme().getClassForegroundColor());//ThemeManager.getTheme().getClassForegroundColor()
->>>>>>> branch 'yamazaki-umlds-api' of https://ferry.kbselab.com/gitea/2218012/api.git
+//			GfxManager.getPlatform().setFont(this.stereotypeText, OptionsManager.getFont());
+//			GfxManager.getPlatform().setStroke(this.stereotypeText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
+//			GfxManager.getPlatform().setFillColor(this.stereotypeText, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
+			setStroke_BLACK(stereotypeText);
+
 			this.width = GfxManager.getPlatform().getTextWidthFor(this.stereotypeText);
 			this.height = GfxManager.getPlatform().getTextHeightFor(this.stereotypeText);
 			this.width += OptionsManager.get("TextRightPadding") + OptionsManager.get("TextLeftPadding");
@@ -123,9 +117,10 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 		this.nameText = GfxManager.getPlatform().buildText(this.uMLclass.getName(),
 				new Point(OptionsManager.get("TextLeftPadding"), OptionsManager.get("TextTopPadding") + this.height));
 		GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, this.nameText);
-		GfxManager.getPlatform().setFont(this.nameText, OptionsManager.getFont());
-		GfxManager.getPlatform().setStroke(this.nameText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
-		GfxManager.getPlatform().setFillColor(this.nameText, ThemeManager.getTheme().getClassForegroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
+//		GfxManager.getPlatform().setFont(this.nameText, OptionsManager.getFont());
+//		GfxManager.getPlatform().setStroke(this.nameText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
+//		GfxManager.getPlatform().setFillColor(this.nameText, ThemeManager.getTheme().getClassForegroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
+		setStroke_RED(nameText);
 		final int thisNameWidth = GfxManager.getPlatform().getTextWidthFor(this.nameText) + OptionsManager.get("TextRightPadding")
 				+ OptionsManager.get("TextLeftPadding");
 		this.width = thisNameWidth > this.width ? thisNameWidth : this.width;

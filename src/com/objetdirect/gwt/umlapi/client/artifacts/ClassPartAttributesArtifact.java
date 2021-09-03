@@ -132,44 +132,26 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			int typeWidth = GfxManager.getPlatform().getTextWidthFor(type);
 
 			//Window.alert(String.valueOf(attributeWidth) + " かしか" + String.valueOf(visibilityWidth) + " なまえ" + String.valueOf(nameWidth) + " たいぷ" + String.valueOf(typeWidth));
-//			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, visibility);
-//			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, name);
-//			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, type);
+			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, visibility);
+			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, name);
+			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, type);
 
-			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, visibility);
-			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, name);
-			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, type);
-//
-//			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, vmtGroup);
-//
-//			System.out.println("yousononagasa" + thisVisibilityWidth + " " + thisNameWidth + " " + thisTypeWidth);
+//			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, visibility);
+//			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, name);
+//			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, type);
 
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, vmtGroup);
 
-
-			int thisAttributeWidth = visibilityWidth + nameWidth + typeWidth;
+			int thisAttributeWidth = attributeWidth;
 			int thisAttributeHeight = GfxManager.getPlatform().getTextHeightFor(name);
-//			thisAttributeWidth += OptionsManager.get("TextRightPadding") + OptionsManager.get("TextLeftPadding");
-//			//thisAttributeWidth += OptionsManager.get("TextLeftPadding");
-//			thisAttributeHeight += OptionsManager.get("TextTopPadding") + OptionsManager.get("TextBottomPadding");
-//			this.width = thisAttributeWidth > this.width ? thisAttributeWidth : this.width;
-//			this.height += thisAttributeHeight;
-//			this.attributeGfxObjects.put(name, attribute);
-//			this.lastGfxObject = name;
 
 			/////////////////////
-			//GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, name);
-//			GfxManager.getPlatform().setFont(attributeText, OptionsManager.getSmallFont());
-//			GfxManager.getPlatform().setStroke(attributeText, GfxColor.RED, 1); //ThemeManager.getTheme().getClassBackgroundColor()
-//			GfxManager.getPlatform().setFillColor(attributeText, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
-//			int thisAttributeWidth = GfxManager.getPlatform().getTextWidthFor(textVirtualGroup);
-//			int thisAttributeHeight = GfxManager.getPlatform().getTextHeightFor(textVirtualGroup);
 			thisAttributeWidth += OptionsManager.get("TextRightPadding") + OptionsManager.get("TextLeftPadding");
-			//thisAttributeWidth += OptionsManager.get("TextLeftPadding");
 			thisAttributeHeight += OptionsManager.get("TextTopPadding") + OptionsManager.get("TextBottomPadding");
 			this.width = thisAttributeWidth > this.width ? thisAttributeWidth : this.width;
 			this.height += thisAttributeHeight;
-			this.attributeGfxObjects.put(name, attribute);
-			this.lastGfxObject = name;
+			this.attributeGfxObjects.put(vmtGroup, attribute);
+			this.lastGfxObject = vmtGroup;
 
 			//大元
 //			final GfxObject attributeText = GfxManager.getPlatform().buildText(attribute.toString(),
@@ -195,23 +177,7 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 		Log.trace("WxH for " + GWTUMLDrawerHelper.getShortName(this) + "is now " + this.width + "x" + this.height);
 	}
 
-	// add Yamazaki
 
-	private void setStroke_BLACK(GfxObject element)
-	{
-		GfxManager.getPlatform().setFont(element, OptionsManager.getSmallFont());
-		GfxManager.getPlatform().setStroke(element, ThemeManager.getTheme().getClassForegroundColor(), 0); //ThemeManager.getTheme().getClassBackgroundColor()
-		GfxManager.getPlatform().setFillColor(element, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
-	}
-
-	private void setStroke_RED(GfxObject element)
-	{
-		GfxManager.getPlatform().setFont(element, OptionsManager.getSmallFont());
-		GfxManager.getPlatform().setStroke(element, GfxColor.RED, 1); //ThemeManager.getTheme().getClassBackgroundColor()
-
-		GfxManager.getPlatform().setFillColor(element, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
-	}
-	//
 
 	@Override
 	public void edit() {
