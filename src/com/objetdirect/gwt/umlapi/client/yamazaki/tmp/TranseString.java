@@ -1,4 +1,4 @@
-package com.objetdirect.gwt.umlapi.client.yamazaki.elements;
+package com.objetdirect.gwt.umlapi.client.yamazaki.tmp;
 
 public class TranseString {
 
