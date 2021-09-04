@@ -1,4 +1,4 @@
-package com.objetdirect.gwt.umlapi.client.yamazaki.tmp;
+package com.objetdirect.gwt.umlapi.client.yamazaki.elements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
