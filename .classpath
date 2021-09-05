@@ -11,5 +11,10 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="war/WEB-INF/lib"/>
 	<classpathentry kind="con" path="com.gwtplugins.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/appengine-api-1.0-sdk-1.9.19.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/HikariCP-3.4.1.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/mysql-connector-java-5.1.47-bin.jar"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/gwt-servlet.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
