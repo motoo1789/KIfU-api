@@ -54,6 +54,8 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 
 	// Yamazaki add
 	private Map<String, GfxObject> attributesVMap;
+	private Map<String, GfxObject> attributesNMap;
+	private Map<String, GfxObject> attributesTMap;
 
 //	private Map<UMLClassAttribute, GfxObject> attributesVMap;
 //	private Map<UMLClassAttribute, GfxObject> attributesNMap;
@@ -74,6 +76,9 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 
 		// add Yamazaki
 		this.attributesVMap = new HashMap<String,GfxObject>();
+		this.attributesNMap = new HashMap<String,GfxObject>();
+		this.attributesTMap = new HashMap<String,GfxObject>();
+//		this.attributesVMap = new HashMap<String,GfxObject>();
 //		this.attributesVMap = new HashMap<UMLClassAttribute,GfxObject>();
 //		this.attributesNMap = new HashMap<UMLClassAttribute,GfxObject>();
 //		this.attributesTMap = new HashMap<UMLClassAttribute,GfxObject>();
@@ -113,38 +118,35 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 
 		for (final UMLClassAttribute attribute : this.attributes) {
 			int attributeWidth = 0;
-			int attributeheight = 0;
+
 			// add Yamazaki
+			//修飾子
 			GfxObject vmtGroup = GfxManager.getPlatform().buildVirtualGroup();
 			GfxObject visibility = GfxManager.getPlatform().buildText(attribute.getVisibility().toString(),
 					new Point(OptionsManager.get("TextLeftPadding"), OptionsManager.get("TextTopPadding") + this.height));
-
-			//Mapに入れる
-			String keyGfxObject = "";
-			attributesVMap.put(keyGfxObject, visibility);
+			attributesVMap.put(attribute.toString(), visibility);
 			attributeWidth = GfxManager.getPlatform().getTextWidthFor(visibility);
 			int visibilityWidth = GfxManager.getPlatform().getTextWidthFor(visibility);
 
+			//　名前
 			GfxObject name = GfxManager.getPlatform().buildText(attribute.getName(),
 					new Point(OptionsManager.get("TextLeftPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
 
+			attributesNMap.put(attribute.toString(), name);
 			attributeWidth = attributeWidth + GfxManager.getPlatform().getTextWidthFor(name);
 			int nameWidth = GfxManager.getPlatform().getTextWidthFor(name);
 
+			// 型
 			GfxObject type = GfxManager.getPlatform().buildText(attribute.getType(),
 					new Point(OptionsManager.get("TextLeftPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
-
+			attributesTMap.put(attribute.toString(), type);
 			attributeWidth = attributeWidth + GfxManager.getPlatform().getTextWidthFor(type);
 			int typeWidth = GfxManager.getPlatform().getTextWidthFor(type);
 
-			//Window.alert(String.valueOf(attributeWidth) + " かしか" + String.valueOf(visibilityWidth) + " なまえ" + String.valueOf(nameWidth) + " たいぷ" + String.valueOf(typeWidth));
 			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, visibility);
 			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, name);
 			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, type);
 
-//			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, visibility);
-//			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, name);
-//			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, type);
 
 			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, vmtGroup);
 

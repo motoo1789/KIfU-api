@@ -2163,8 +2163,13 @@ public class UMLCanvas extends AbsolutePanel {
 		for(GfxObject gfxobject : objects.keySet())
 		{
 			ClassArtifact artifact = (ClassArtifact) objects.get(gfxobject);
-			Window.alert(artifact.toURL());
+			//Window.alert(artifact.toURL());
 			System.out.println(artifact.toString());
+			for(UMLClassAttribute attribute : artifact.getAttributes())
+			{
+				Window.alert(attribute.toString());
+				System.out.println(attribute.toString());
+			}
 		}
 	}
 
