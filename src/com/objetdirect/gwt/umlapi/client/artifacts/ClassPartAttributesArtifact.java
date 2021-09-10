@@ -53,9 +53,11 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 	private GfxObject								lastGfxObject;
 
 	// Yamazaki add
-	private Map<UMLClassAttribute, GfxObject> attributesVMap;
-	private Map<UMLClassAttribute, GfxObject> attributesNMap;
-	private Map<UMLClassAttribute, GfxObject> attributesTMap;
+	private Map<String, GfxObject> attributesVMap;
+
+//	private Map<UMLClassAttribute, GfxObject> attributesVMap;
+//	private Map<UMLClassAttribute, GfxObject> attributesNMap;
+//	private Map<UMLClassAttribute, GfxObject> attributesTMap;
 
 
 	/**
@@ -71,9 +73,10 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 		this.width = 0;
 
 		// add Yamazaki
-		this.attributesVMap = new HashMap<UMLClassAttribute,GfxObject>();
-		this.attributesNMap = new HashMap<UMLClassAttribute,GfxObject>();
-		this.attributesTMap = new HashMap<UMLClassAttribute,GfxObject>();
+		this.attributesVMap = new HashMap<String,GfxObject>();
+//		this.attributesVMap = new HashMap<UMLClassAttribute,GfxObject>();
+//		this.attributesNMap = new HashMap<UMLClassAttribute,GfxObject>();
+//		this.attributesTMap = new HashMap<UMLClassAttribute,GfxObject>();
 	}
 
 	/**
@@ -115,19 +118,22 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			GfxObject vmtGroup = GfxManager.getPlatform().buildVirtualGroup();
 			GfxObject visibility = GfxManager.getPlatform().buildText(attribute.getVisibility().toString(),
 					new Point(OptionsManager.get("TextLeftPadding"), OptionsManager.get("TextTopPadding") + this.height));
-			setStroke_BLACK(visibility);
+
+			//Mapに入れる
+			String keyGfxObject = "";
+			attributesVMap.put(keyGfxObject, visibility);
 			attributeWidth = GfxManager.getPlatform().getTextWidthFor(visibility);
 			int visibilityWidth = GfxManager.getPlatform().getTextWidthFor(visibility);
 
 			GfxObject name = GfxManager.getPlatform().buildText(attribute.getName(),
 					new Point(OptionsManager.get("TextLeftPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
-			setStroke_RED(name);
+
 			attributeWidth = attributeWidth + GfxManager.getPlatform().getTextWidthFor(name);
 			int nameWidth = GfxManager.getPlatform().getTextWidthFor(name);
 
 			GfxObject type = GfxManager.getPlatform().buildText(attribute.getType(),
 					new Point(OptionsManager.get("TextLeftPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
-			setStroke_BLACK(type);
+
 			attributeWidth = attributeWidth + GfxManager.getPlatform().getTextWidthFor(type);
 			int typeWidth = GfxManager.getPlatform().getTextWidthFor(type);
 

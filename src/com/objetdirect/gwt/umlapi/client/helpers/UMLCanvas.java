@@ -25,6 +25,7 @@ import java.util.Set;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -320,6 +321,8 @@ public class UMLCanvas extends AbsolutePanel {
 	public void addUMLEventListener(final GWTUMLEventListener uMLEventListener) {
 		this.uMLEventListenerList.add(uMLEventListener);
 	}
+
+
 
 	/**
 	 * Remove the direction arrows from the canvas
@@ -2152,6 +2155,17 @@ public class UMLCanvas extends AbsolutePanel {
 	public void setSize(int height, int width){
 		this.height = height;
 		this.width = width;
+	}
+
+	// add Yamazaki
+	public void addYamazakiDiffStart()
+	{
+		for(GfxObject gfxobject : objects.keySet())
+		{
+			ClassArtifact artifact = (ClassArtifact) objects.get(gfxobject);
+			Window.alert(artifact.toURL());
+			System.out.println(artifact.toString());
+		}
 	}
 
 }
