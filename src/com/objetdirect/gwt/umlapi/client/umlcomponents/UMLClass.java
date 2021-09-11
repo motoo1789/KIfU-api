@@ -1,15 +1,15 @@
 /*
  * This file is part of the GWTUML project and was written by Mounier Florian <mounier-dot-florian.at.gmail'dot'com> for Objet Direct
  * <http://wwww.objetdirect.com>
- * 
+ *
  * Copyright © 2009 Objet Direct Contact: gwtuml@googlegroups.com
- * 
+ *
  * GWTUML is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later version.
- * 
+ *
  * GWTUML is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License along with GWTUML. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.objetdirect.gwt.umlapi.client.umlcomponents;
@@ -23,17 +23,17 @@ import com.objetdirect.gwt.umlapi.client.analyser.LexicalAnalyzer.LexicalFlag;
 
 /**
  * This class represents a class uml component
- * 
+ *
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
- * 
+ *
  */
-public class UMLClass extends UMLNode {
+public class UMLClass extends UMLNode implements IGetDiffString {
 	/**
 	 * Parse a name or a stereotype from a {@link String}
-	 * 
+	 *
 	 * @param stringToParse
 	 *            The string containing a name or a stereotype
-	 * 
+	 *
 	 * @return The new parsed name or stereotype or an empty one if there was a problem
 	 */
 	public static String parseNameOrStereotype(final String stringToParse) {
@@ -60,7 +60,7 @@ public class UMLClass extends UMLNode {
 
 	/**
 	 * Constructor of {@link UMLClass}
-	 * 
+	 *
 	 * @param name
 	 */
 	public UMLClass(final String name) {
@@ -70,7 +70,7 @@ public class UMLClass extends UMLNode {
 
 	/**
 	 * Getter for the attributes
-	 * 
+	 *
 	 * @return the attributes
 	 */
 	public final ArrayList<UMLClassAttribute> getAttributes() {
@@ -79,7 +79,7 @@ public class UMLClass extends UMLNode {
 
 	/**
 	 * Getter for the methods
-	 * 
+	 *
 	 * @return the methods
 	 */
 	public final ArrayList<UMLClassMethod> getMethods() {
@@ -88,7 +88,7 @@ public class UMLClass extends UMLNode {
 
 	/**
 	 * Getter for the name
-	 * 
+	 *
 	 * @return the name
 	 */
 	public final String getName() {
@@ -97,7 +97,7 @@ public class UMLClass extends UMLNode {
 
 	/**
 	 * Getter for the stereotype
-	 * 
+	 *
 	 * @return the stereotype
 	 */
 	public final String getStereotype() {
@@ -106,7 +106,7 @@ public class UMLClass extends UMLNode {
 
 	/**
 	 * Setter for the attributes
-	 * 
+	 *
 	 * @param attributes
 	 *            the attributes to set
 	 */
@@ -116,7 +116,7 @@ public class UMLClass extends UMLNode {
 
 	/**
 	 * Setter for the methods
-	 * 
+	 *
 	 * @param methods
 	 *            the methods to set
 	 */
@@ -126,7 +126,7 @@ public class UMLClass extends UMLNode {
 
 	/**
 	 * Setter for the name
-	 * 
+	 *
 	 * @param name
 	 *            the name to set
 	 */
@@ -136,7 +136,7 @@ public class UMLClass extends UMLNode {
 
 	/**
 	 * Setter for the stereotype
-	 * 
+	 *
 	 * @param stereotype
 	 *            the stereotype to set
 	 */
@@ -146,12 +146,30 @@ public class UMLClass extends UMLNode {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		return this.name;
+	}
+
+	@Override
+	public String getDiffVisibilityKey() {
+		// TODO 自動生成されたメソッド・スタブ
+		return "KIfUのクラス図に修飾子はない";
+	}
+
+	@Override
+	public String getDiffNameKey() {
+		// TODO 自動生成されたメソッド・スタブ
+		return name;
+	}
+
+	@Override
+	public String getDiffTypeKey() {
+		// TODO 自動生成されたメソッド・スタブ
+		return stereotype;
 	}
 }

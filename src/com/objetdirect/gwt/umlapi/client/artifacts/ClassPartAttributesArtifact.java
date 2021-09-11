@@ -124,7 +124,7 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			GfxObject vmtGroup = GfxManager.getPlatform().buildVirtualGroup();
 			GfxObject visibility = GfxManager.getPlatform().buildText(attribute.getVisibility().toString(),
 					new Point(OptionsManager.get("TextLeftPadding"), OptionsManager.get("TextTopPadding") + this.height));
-			attributesVMap.put(attribute.toString(), visibility);
+			attributesVMap.put(attribute.getDiffVisibilityKey(), visibility);
 			attributeWidth = GfxManager.getPlatform().getTextWidthFor(visibility);
 			int visibilityWidth = GfxManager.getPlatform().getTextWidthFor(visibility);
 
@@ -132,14 +132,14 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			GfxObject name = GfxManager.getPlatform().buildText(attribute.getName(),
 					new Point(OptionsManager.get("TextLeftPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
 
-			attributesNMap.put(attribute.toString(), name);
+			attributesNMap.put(attribute.getDiffNameKey(), name);
 			attributeWidth = attributeWidth + GfxManager.getPlatform().getTextWidthFor(name);
 			int nameWidth = GfxManager.getPlatform().getTextWidthFor(name);
 
 			// 型
 			GfxObject type = GfxManager.getPlatform().buildText(attribute.getType(),
 					new Point(OptionsManager.get("TextLeftPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
-			attributesTMap.put(attribute.toString(), type);
+			attributesTMap.put(attribute.getDiffTypeKey(), type);
 			attributeWidth = attributeWidth + GfxManager.getPlatform().getTextWidthFor(type);
 			int typeWidth = GfxManager.getPlatform().getTextWidthFor(type);
 
@@ -347,5 +347,21 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 		};
 	}
 
+	public void visibilityStroketoRED(String key)
+	{
+		if(attributesVMap.containsKey(key))
+			super.setStroke_RED(attributesVMap.get(key));
+	}
 
+	public void nameStroketoRED(String key)
+	{
+		if(attributesNMap.containsKey(key))
+			super.setStroke_RED(attributesNMap.get(key));
+	}
+
+	public void typeStroketoRED(String key)
+	{
+		if(attributesTMap.containsKey(key))
+			super.setStroke_RED(attributesTMap.get(key));
+	}
 }

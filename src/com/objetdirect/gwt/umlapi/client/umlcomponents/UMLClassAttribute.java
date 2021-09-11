@@ -25,7 +25,7 @@ import com.objetdirect.gwt.umlapi.client.analyser.LexicalAnalyzer.LexicalFlag;
  * @author Henri Darmet
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
  */
-public class UMLClassAttribute {
+public class UMLClassAttribute implements IGetDiffString {
 
 	/**
 	 * Parse an attribute from a {@link String}
@@ -205,5 +205,23 @@ public class UMLClassAttribute {
 			f.append(this.type);
 		}
 		return f.toString();
+	}
+
+	@Override
+	public String getDiffVisibilityKey() {
+		// TODO 自動生成されたメソッド・スタブ
+		return name + ";" + this.getVisibilitytoString();
+	}
+
+	@Override
+	public String getDiffNameKey() {
+		// TODO 自動生成されたメソッド・スタブ
+		return name;
+	}
+
+	@Override
+	public String getDiffTypeKey() {
+		// TODO 自動生成されたメソッド・スタブ
+		return name + ";" + type;
 	}
 }

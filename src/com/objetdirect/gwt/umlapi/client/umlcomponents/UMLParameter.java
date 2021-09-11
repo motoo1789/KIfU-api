@@ -1,26 +1,26 @@
 /*
  * This file is part of the GWTUML project and was written by Mounier Florian <mounier-dot-florian.at.gmail'dot'com> for Objet Direct
  * <http://wwww.objetdirect.com>
- * 
+ *
  * Copyright © 2009 Objet Direct Contact: gwtuml@googlegroups.com
- * 
+ *
  * GWTUML is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later version.
- * 
+ *
  * GWTUML is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License along with GWTUML. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.objetdirect.gwt.umlapi.client.umlcomponents;
 
 /**
  * This class represent a parameter of a method
- * 
+ *
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
  * @author Henri Darmet
  */
-public class UMLParameter {
+public class UMLParameter implements IGetDiffString {
 
 	private String	name;
 
@@ -28,7 +28,7 @@ public class UMLParameter {
 
 	/**
 	 * Constructor of the parameter
-	 * 
+	 *
 	 * @param type
 	 *            Type of the parameter
 	 * @param name
@@ -42,9 +42,9 @@ public class UMLParameter {
 
 	/**
 	 * Getter for the name
-	 * 
+	 *
 	 * @return the name
-	 * 
+	 *
 	 */
 	public String getName() {
 		return this.name;
@@ -52,9 +52,9 @@ public class UMLParameter {
 
 	/**
 	 * Getter for the type
-	 * 
+	 *
 	 * @return the type
-	 * 
+	 *
 	 */
 	public String getType() {
 		return this.type;
@@ -62,10 +62,10 @@ public class UMLParameter {
 
 	/**
 	 * Setter for the name
-	 * 
+	 *
 	 * @param name
 	 *            to be set
-	 * 
+	 *
 	 */
 	public void setName(final String name) {
 		this.name = name;
@@ -73,10 +73,10 @@ public class UMLParameter {
 
 	/**
 	 * Setter for the type
-	 * 
+	 *
 	 * @param type
 	 *            to be set
-	 * 
+	 *
 	 */
 	public void setType(final String type) {
 		this.type = type;
@@ -84,7 +84,7 @@ public class UMLParameter {
 
 	/**
 	 * Format a string from parameter name and type
-	 * 
+	 *
 	 * @return the UML formatted string for parameter name and type
 	 * @see java.lang.Object#toString()
 	 */
@@ -97,5 +97,23 @@ public class UMLParameter {
 			f.append(this.type);
 		}
 		return f.toString();
+	}
+
+	@Override
+	public String getDiffVisibilityKey() {
+		// TODO 自動生成されたメソッド・スタブ
+		return "パラメータに修飾子はない";
+	}
+
+	@Override
+	public String getDiffNameKey() {
+		// TODO 自動生成されたメソッド・スタブ
+		return name;
+	}
+
+	@Override
+	public String getDiffTypeKey() {
+		// TODO 自動生成されたメソッド・スタブ
+		return name + ";" + type;
 	}
 }
