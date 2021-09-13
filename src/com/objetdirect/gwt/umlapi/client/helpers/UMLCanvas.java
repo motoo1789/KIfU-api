@@ -14,6 +14,7 @@
  */
 package com.objetdirect.gwt.umlapi.client.helpers;
 
+import java.awt.List;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -83,8 +84,10 @@ import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLMisActor;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLMisUseCase;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLObject;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLObjectAttribute;
+import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLParameter;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLSecurityUseCase;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLUseCase;
+import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLVisibility;
 
 /**
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
@@ -204,6 +207,10 @@ public class UMLCanvas extends AbsolutePanel {
 	private Point											totalDragShift					= Point.getOrigin();
 	private GfxObject										arrowsVirtualGroup;
 	private Point	copyMousePosition;
+
+	// add Yamazaki
+	private final String SURPLUS = "余剰";
+	private final String NOTHAS = "欠損";
 
 	/**
 	 * Constructor of an {@link UMLCanvas} with default size
@@ -372,7 +379,7 @@ public class UMLCanvas extends AbsolutePanel {
 
 			for (final String artifactWithParameters : diagramArtifacts) {
 				if (!artifactWithParameters.equals("")) {
-					final String[] artifactAndParameters = artifactWithParameters.split("\\$");
+					final String[] artifactAndParameters = artifactWithParameters.split("\\&");
 					if (artifactAndParameters.length > 1) {
 						final String[] artifactAndId = artifactAndParameters[0].split("]");
 						final String[] parameters = artifactAndParameters[1].split("!", -1);
@@ -2158,19 +2165,204 @@ public class UMLCanvas extends AbsolutePanel {
 	}
 
 	// add Yamazaki
-	public void addYamazakiDiffStart()
+	public void addYamazakiDiffSurplus(Map<String,String> diffMap)
 	{
+		Map<String,String> classDiff  = new HashMap<String,String>();
+		Map<String,String> fieldDiff  = new HashMap<String,String>();
+		Map<String,String> methodDiff  = new HashMap<String,String>();
+		Map<String,String> paraDiff  = new HashMap<String,String>();
+
+		// Mapの整理
+		for(String diffkey : diffMap.keySet())
+		{
+			if(diffMap.get(diffkey).equals(this.SURPLUS))
+			{
+				if(diffkey.contains("!")) 		// フィールド
+				{
+					fieldDiff.put(diffkey,diffMap.get(diffkey));
+				}
+				else if(diffkey.contains("%")) 	// パラメータ
+				{
+					paraDiff.put(diffkey,diffMap.get(diffkey));
+				}
+				else if(diffkey.contains("&")) 	//　メソッド
+				{
+					methodDiff.put(diffkey,diffMap.get(diffkey));
+				}
+				else 							// クラス名
+				{
+					classDiff.put(diffkey,diffMap.get(diffkey));
+				}
+			}
+
+		}
+
 		for(GfxObject gfxobject : objects.keySet())
 		{
 			ClassArtifact artifact = (ClassArtifact) objects.get(gfxobject);
 			//Window.alert(artifact.toURL());
-			System.out.println(artifact.toString());
-			for(UMLClassAttribute attribute : artifact.getAttributes())
+
+
+			// クラス
+			UMLClass umlclass = artifact.getUMLClass();
+			if(!classDiff.isEmpty())
 			{
-				Window.alert(attribute.toString());
-				System.out.println(attribute.toString());
+				for(String classDiffKey : classDiff.keySet())
+				{
+					String[] splitDiffClassKey = classDiffKey.split(";");
+					umlclass.nameStroketoRED(splitDiffClassKey[splitDiffClassKey.length - 1]);
+					umlclass.typeStroketoRED(splitDiffClassKey[splitDiffClassKey.length - 1]);
+				}
+			}
+
+			// フィールド
+			if(!fieldDiff.isEmpty())
+			{
+				for(UMLClassAttribute attribute : artifact.getAttributes())
+				{
+//					Window.alert(attribute.toString());
+//					System.out.println(attribute.toString());
+					for(String fieldDiffKey : fieldDiff.keySet())
+					{
+						String[] splitDiffAttributeClassname= fieldDiffKey.split("!");
+						String classname = splitDiffAttributeClassname[0];
+						if(umlclass.getName().equals(classname))
+							// 差分検知したものと今見ているKIfUのクラス図でクラス名が一致してたらその中のフィールドをみる
+							attribute.setStrokeRED(splitDiffAttributeClassname[splitDiffAttributeClassname.length - 1]);
+
+					}
+				}
+			}
+
+			// メソッド
+			if(!methodDiff.isEmpty())
+			{
+				for(UMLClassMethod method : artifact.getMethods())
+				{
+					for(String methodDiffKey : methodDiff.keySet())
+					{
+						String[] splitDiffMethodKey = methodDiffKey.split("&");
+						String classname = splitDiffMethodKey[0];
+
+						if(umlclass.getName().equals(classname))
+						{
+
+							method.setStrokeRED(splitDiffMethodKey[splitDiffMethodKey.length - 1]);
+
+							if(!paraDiff.isEmpty())
+							{
+								for(UMLParameter para : method.getParameters())
+								{
+									for(String paraDiffKey : paraDiff.keySet())
+									{
+										String[] splitDiffParaKey = paraDiffKey.split("%");
+										para.nameStroketoRED(splitDiffParaKey[splitDiffParaKey.length - 1]);
+										para.typeStroketoRED(splitDiffParaKey[splitDiffParaKey.length - 1]);
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
 
+	public void addYamazakiDiffNotHas(Map<String,String> diffMap)
+	{
+		Map<String,String> classDiff  = new HashMap<String,String>();
+		Map<String,String> fieldDiff  = new HashMap<String,String>();
+		Map<String,String> methodDiff  = new HashMap<String,String>();
+		Map<String,String> paraDiff  = new HashMap<String,String>();
+
+		// Mapの整理
+		for(String diffkey : diffMap.keySet())
+		{
+			if(diffMap.get(diffkey).equals(this.NOTHAS))
+			{
+				if(diffkey.contains("!")) 		// フィールド
+				{
+					fieldDiff.put(diffkey,diffMap.get(diffkey));
+				}
+				else if(diffkey.contains("%")) 	// パラメータ
+				{
+					paraDiff.put(diffkey,diffMap.get(diffkey));
+				}
+				else if(diffkey.contains("&")) 	//　メソッド
+				{
+					methodDiff.put(diffkey,diffMap.get(diffkey));
+				}
+				else 							// クラス名
+				{
+					classDiff.put(diffkey,diffMap.get(diffkey));
+				}
+			}
+
+		}
+
+		for(GfxObject gfxobject : objects.keySet())
+		{
+			ClassArtifact artifact = (ClassArtifact) objects.get(gfxobject);
+			//Window.alert(artifact.toURL());
+
+
+			// クラス
+			UMLClass umlclass = artifact.getUMLClass();
+
+			// フィールド
+			if(!fieldDiff.isEmpty())
+			{
+				for(String fieldDiffKey : fieldDiff.keySet())
+				{
+					String[] splitDiffAttributeClassname= fieldDiffKey.split("!");
+					String classname = splitDiffAttributeClassname[0];
+					String attributename = splitDiffAttributeClassname[splitDiffAttributeClassname.length - 1];
+
+//					Window.alert(attribute.toString());
+//					System.out.println(attribute.toString());
+					if(umlclass.getName().equals(classname))
+						// フィールド追加
+						artifact.addAttribute(new UMLClassAttribute(UMLVisibility.getVisibilityFromToken('+'),"void",attributename));
+				}
+			}
+
+			// メソッド
+			if(!methodDiff.isEmpty())
+			{
+				for(String methodDiffKey : methodDiff.keySet())
+				{
+					String[] splitDiffMethodKey = methodDiffKey.split("&");
+					String classname = splitDiffMethodKey[0];
+					String methodname = splitDiffMethodKey[splitDiffMethodKey.length - 1];
+
+					if(umlclass.getName().equals(classname))
+						artifact.addMethod(new UMLClassMethod(UMLVisibility.getVisibilityFromToken('+'), "void", methodname, new ArrayList<UMLParameter>()));
+				}
+			}
+
+			if(!paraDiff.isEmpty())
+			{
+				for(String paraDiffKey : paraDiff.keySet())
+				{
+					String[] splitDiffMethodKey = paraDiffKey.split("&");
+					String classname = splitDiffMethodKey[0];
+					int methodEndIndex = splitDiffMethodKey[splitDiffMethodKey.length - 1].indexOf("%");
+					String methodname = splitDiffMethodKey[splitDiffMethodKey.length - 1].substring(0,methodEndIndex);
+
+					String[] splitDiffPara = paraDiffKey.split("%");
+					String paraname = splitDiffPara[splitDiffPara.length - 1];
+
+					if(umlclass.getName().equals(classname))
+					{
+						for(UMLClassMethod method : artifact.getMethods())
+						{
+							if(method.getName().equals(methodname))
+								method.addParametar(new UMLParameter("void", paraname));
+						}
+					}
+
+				}
+			}
+		}
+	}
 }

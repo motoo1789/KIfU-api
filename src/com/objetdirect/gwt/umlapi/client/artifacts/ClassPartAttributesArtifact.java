@@ -46,7 +46,7 @@ import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLVisibility;
  *
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
  */
-public class ClassPartAttributesArtifact extends NodePartArtifact {
+public class ClassPartAttributesArtifact extends NodePartArtifact implements ISetStrokeRED {
 	private final Map<GfxObject, UMLClassAttribute>	attributeGfxObjects;
 	private GfxObject								attributeRect;
 	private final List<UMLClassAttribute>			attributes;
@@ -124,24 +124,29 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			GfxObject vmtGroup = GfxManager.getPlatform().buildVirtualGroup();
 			GfxObject visibility = GfxManager.getPlatform().buildText(attribute.getVisibility().toString(),
 					new Point(OptionsManager.get("TextLeftPadding"), OptionsManager.get("TextTopPadding") + this.height));
+			super.setStroke_BLACK(visibility);
 			attributesVMap.put(attribute.getDiffVisibilityKey(), visibility);
+			attribute.setVisibilityGfxObject(visibility);
 			attributeWidth = GfxManager.getPlatform().getTextWidthFor(visibility);
-			int visibilityWidth = GfxManager.getPlatform().getTextWidthFor(visibility);
+
 
 			//　名前
 			GfxObject name = GfxManager.getPlatform().buildText(attribute.getName(),
 					new Point(OptionsManager.get("TextLeftPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
-
+			super.setStroke_BLACK(name);
+			attribute.setNameGfxObject(name);
 			attributesNMap.put(attribute.getDiffNameKey(), name);
 			attributeWidth = attributeWidth + GfxManager.getPlatform().getTextWidthFor(name);
-			int nameWidth = GfxManager.getPlatform().getTextWidthFor(name);
+
 
 			// 型
 			GfxObject type = GfxManager.getPlatform().buildText(attribute.getType(),
 					new Point(OptionsManager.get("TextLeftPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
+			super.setStroke_BLACK(type);
+			attribute.setTypeGfxObject(type);
 			attributesTMap.put(attribute.getDiffTypeKey(), type);
 			attributeWidth = attributeWidth + GfxManager.getPlatform().getTextWidthFor(type);
-			int typeWidth = GfxManager.getPlatform().getTextWidthFor(type);
+
 
 			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, visibility);
 			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, name);
@@ -363,5 +368,29 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 	{
 		if(attributesTMap.containsKey(key))
 			super.setStroke_RED(attributesTMap.get(key));
+	}
+
+	@Override
+	public void setVisibilityGfxObject(GfxObject visigility) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void setNameGfxObject(GfxObject name) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void setTypeGfxObject(GfxObject type) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void setStrokeRED(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+
 	}
 }

@@ -107,7 +107,8 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 //			GfxManager.getPlatform().setFont(this.stereotypeText, OptionsManager.getFont());
 //			GfxManager.getPlatform().setStroke(this.stereotypeText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
 //			GfxManager.getPlatform().setFillColor(this.stereotypeText, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
-			setStroke_BLACK(stereotypeText);
+			super.setStroke_BLACK(stereotypeText);
+			this.uMLclass.setTypeGfxObject(this.stereotypeText);
 
 			this.width = GfxManager.getPlatform().getTextWidthFor(this.stereotypeText);
 			this.height = GfxManager.getPlatform().getTextHeightFor(this.stereotypeText);
@@ -120,7 +121,9 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 //		GfxManager.getPlatform().setFont(this.nameText, OptionsManager.getFont());
 //		GfxManager.getPlatform().setStroke(this.nameText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
 //		GfxManager.getPlatform().setFillColor(this.nameText, ThemeManager.getTheme().getClassForegroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
-		setStroke_RED(nameText);
+		super.setStroke_BLACK(nameText);
+		this.uMLclass.setNameGfxObject(this.nameText);
+
 		final int thisNameWidth = GfxManager.getPlatform().getTextWidthFor(this.nameText) + OptionsManager.get("TextRightPadding")
 				+ OptionsManager.get("TextLeftPadding");
 		this.width = thisNameWidth > this.width ? thisNameWidth : this.width;
@@ -302,5 +305,10 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 				ClassPartNameArtifact.this.edit(gfxo);
 			}
 		};
+	}
+
+	public UMLClass getUMLClass()
+	{
+		return this.uMLclass;
 	}
 }

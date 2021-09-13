@@ -45,13 +45,21 @@ import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLVisibility;
  *
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
  */
-public class ClassPartMethodsArtifact extends NodePartArtifact {
+public class ClassPartMethodsArtifact extends NodePartArtifact implements ISetStrokeRED{
 
 	private GfxObject								lastGfxObject;
 	private final Map<GfxObject, UMLClassMethod>	methodGfxObjects;
 	private GfxObject								methodRect;
 	private final List<UMLClassMethod>				methods;
 
+
+	// Yamazaki add
+	private Map<String, GfxObject> methodVMap;
+	private Map<String, GfxObject> methodNMap;
+	private Map<String, GfxObject> methodTMap;
+
+	private Map<String, GfxObject> paraNMap;
+	private Map<String, GfxObject> paraTMap;
 	/**
 	 * Constructor of ClassPartMethodsArtifact It initializes the method list
 	 *
@@ -101,7 +109,7 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 
 		for (final UMLClassMethod method : this.methods) {
 
-			int methodElementWidth = OptionsManager.get("TextLeftPadding");
+			int methodElementWidth = 0; //OptionsManager.get("TextLeftPadding");
 			List<UMLParameter> parasList = method.getParameters();
 			GfxObject methodVNPRGroup = GfxManager.getPlatform().buildVirtualGroup();
 
@@ -109,12 +117,16 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 			GfxObject visibility = GfxManager.getPlatform().buildText(method.getVisibility().toString(),
 					new Point(methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
 			super.setStroke_BLACK(visibility);
+			methodVMap.put(method.getDiffVisibilityKey(), visibility);
+			method.setVisibilityGfxObject(visibility);
 			methodElementWidth += methodElementWidth + GfxManager.getPlatform().getTextWidthFor(visibility);
 
 			// name
 			GfxObject methodname = GfxManager.getPlatform().buildText(method.getName(),
 					new Point(methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-			super.setStroke_RED(methodname);
+			super.setStroke_BLACK(methodname);
+			methodNMap.put(method.getDiffNameKey(), methodname);
+			method.setNameGfxObject(methodname);
 			methodElementWidth += methodElementWidth + GfxManager.getPlatform().getTextWidthFor(methodname);
 
 			// para
@@ -126,12 +138,14 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 				GfxObject paraname = GfxManager.getPlatform().buildText(paraObject.getName(),
 						new Point(methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
 				super.setStroke_BLACK(paraname);
+				paraObject.setNameGfxObject(paraname);
 				methodElementWidth += methodElementWidth + GfxManager.getPlatform().getTextWidthFor(paraname);
 				useVirtualGroupAddGfxObjectList.add(paraname);
 
 				GfxObject paratype = GfxManager.getPlatform().buildText(paraObject.getType(),
 						new Point(methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-				super.setStroke_RED(paratype);
+				super.setStroke_BLACK(paratype);
+				paraObject.setTypeGfxObject(paratype);
 				methodElementWidth += methodElementWidth + GfxManager.getPlatform().getTextWidthFor(paratype);
 				useVirtualGroupAddGfxObjectList.add(paratype);
 			}
@@ -139,7 +153,9 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 			// return type
 			GfxObject returntype = GfxManager.getPlatform().buildText(method.getReturnType(),
 					new Point(methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-			super.setStroke_RED(returntype);
+			super.setStroke_BLACK(returntype);
+			methodTMap.put(method.getReturnType(), returntype);
+			method.setTypeGfxObject(returntype);
 			methodElementWidth += methodElementWidth + GfxManager.getPlatform().getTextWidthFor(returntype);
 
 			GfxManager.getPlatform().addToVirtualGroup(methodVNPRGroup, visibility);
@@ -353,5 +369,50 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 				ClassPartMethodsArtifact.this.edit(gfxo);
 			}
 		};
+	}
+
+	@Override
+	public void visibilityStroketoRED(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		if(methodVMap.containsKey(key))
+			super.setStroke_RED(methodVMap.get(key));
+	}
+
+	@Override
+	public void nameStroketoRED(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		if(methodNMap.containsKey(key))
+			super.setStroke_RED(methodNMap.get(key));
+	}
+
+	@Override
+	public void typeStroketoRED(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		if(methodTMap.containsKey(key))
+			super.setStroke_RED(methodTMap.get(key));
+	}
+
+	@Override
+	public void setStrokeRED(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void setVisibilityGfxObject(GfxObject visigility) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void setNameGfxObject(GfxObject name) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void setTypeGfxObject(GfxObject type) {
+		// TODO 自動生成されたメソッド・スタブ
+
 	}
 }

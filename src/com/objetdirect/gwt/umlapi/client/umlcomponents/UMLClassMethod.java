@@ -14,12 +14,16 @@
  */
 package com.objetdirect.gwt.umlapi.client.umlcomponents;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.objetdirect.gwt.umlapi.client.GWTUMLAPIException;
 import com.objetdirect.gwt.umlapi.client.analyser.LexicalAnalyzer;
 import com.objetdirect.gwt.umlapi.client.analyser.MethodSyntaxAnalyzer;
+import com.objetdirect.gwt.umlapi.client.artifacts.ISetStrokeRED;
+import com.objetdirect.gwt.umlapi.client.gfx.GfxObject;
 
 /**
  * This class represent a method in a class
@@ -27,7 +31,7 @@ import com.objetdirect.gwt.umlapi.client.analyser.MethodSyntaxAnalyzer;
  * @author Henri Darmet
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
  */
-public class UMLClassMethod implements IGetDiffString {
+public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrokeRED {
 
 	/**
 	 * Parse a method from a {@link String}
@@ -61,6 +65,12 @@ public class UMLClassMethod implements IGetDiffString {
 	private boolean				validated	= true;
 
 	private UMLVisibility		visibility;
+
+	private GfxObject methodVGfxObject;
+	private GfxObject methodNGfxObject;
+	private GfxObject methodTGfxObject;
+
+	private Map<String,GfxObject> methodGfxObjectMap = new HashMap<String,GfxObject>();
 
 	/**
 	 * Constructor of the method
@@ -192,6 +202,11 @@ public class UMLClassMethod implements IGetDiffString {
 		this.visibility = visibility;
 	}
 
+	public void addParametar(UMLParameter para)
+	{
+		this.parameters.add(para);
+	}
+
 	/**
 	 * Format a string from method name, parameters and return type
 	 *
@@ -240,5 +255,56 @@ public class UMLClassMethod implements IGetDiffString {
 		// TODO 自動生成されたメソッド・スタブ
 		return name + ";" + returnType;
 	}
+
+	@Override
+	public void visibilityStroketoRED(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		if(methodGfxObjectMap.containsKey(key))
+			super.setStroke_RED(this.methodGfxObjectMap.get(key));
+	}
+
+	@Override
+	public void nameStroketoRED(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		if(methodGfxObjectMap.containsKey(key))
+			super.setStroke_RED(this.methodGfxObjectMap.get(key));
+	}
+
+	@Override
+	public void typeStroketoRED(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		if(methodGfxObjectMap.containsKey(key))
+			super.setStroke_RED(this.methodGfxObjectMap.get(key));
+	}
+
+	@Override
+	public void setStrokeRED(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		if(methodGfxObjectMap.containsKey(key))
+			super.setStroke_RED(this.methodGfxObjectMap.get(key));
+	}
+
+	@Override
+	public void setVisibilityGfxObject(GfxObject visibility) {
+		// TODO 自動生成されたメソッド・スタブ
+		this.methodVGfxObject = visibility;
+		methodGfxObjectMap.put(this.getDiffVisibilityKey(), visibility);
+	}
+
+	@Override
+	public void setNameGfxObject(GfxObject name) {
+		// TODO 自動生成されたメソッド・スタブ
+		this.methodNGfxObject = name;
+		methodGfxObjectMap.put(this.getDiffNameKey(), name);
+	}
+
+	@Override
+	public void setTypeGfxObject(GfxObject type) {
+		// TODO 自動生成されたメソッド・スタブ
+		this.methodTGfxObject = type;
+		methodGfxObjectMap.put(this.getDiffTypeKey(), type);
+	}
+
+
 
 }

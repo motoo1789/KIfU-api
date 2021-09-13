@@ -17,6 +17,7 @@ package com.objetdirect.gwt.umlapi.client.artifacts;
 import java.util.List;
 
 import com.objetdirect.gwt.umlapi.client.helpers.MenuBarAndTitle;
+import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLClass;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLClassAttribute;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLClassMethod;
 
@@ -95,6 +96,19 @@ public class ClassArtifact extends NodeArtifact {
 		this.classMethods.add(method);
 	}
 
+	/////////////////////////////////////////////
+	// add Yamazaki
+	/**
+	 * Getter for the attributes
+	 *
+	 * @return the list of attributes of this class
+	 */
+	public UMLClass getUMLClass()
+	{
+		return className.getUMLClass();
+	}
+
+	////////////////////////////////////////////
 	/**
 	 * Getter for the attributes
 	 *
@@ -137,6 +151,33 @@ public class ClassArtifact extends NodeArtifact {
 		rightMenu.addItem(classMethodsRightMenu.getName(), classMethodsRightMenu.getSubMenu());
 
 		return rightMenu;
+	}
+
+	// add Yamazaki
+	public void fieldVisibilityStroketoRED()
+	{
+		classAttributes.visibilityStroketoRED("");
+	}
+	public void fieldNameStroketoRED()
+	{
+		classAttributes.nameStroketoRED("");
+	}
+	public void fieldTypeStroketoRED()
+	{
+		classAttributes.typeStroketoRED("");
+	}
+
+	public void methodVisibilityStroketoRED()
+	{
+		classMethods.visibilityStroketoRED("");
+	}
+	public void methodNameStroketoRED()
+	{
+		classMethods.nameStroketoRED("");
+	}
+	public void methodTypeStroketoRED()
+	{
+		classMethods.typeStroketoRED("");
 	}
 
 	/*

@@ -14,18 +14,29 @@
  */
 package com.objetdirect.gwt.umlapi.client.umlcomponents;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.objetdirect.gwt.umlapi.client.artifacts.ISetStrokeRED;
+import com.objetdirect.gwt.umlapi.client.gfx.GfxObject;
+
 /**
  * This class represent a parameter of a method
  *
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
  * @author Henri Darmet
  */
-public class UMLParameter implements IGetDiffString {
+public class UMLParameter extends UMLNode implements IGetDiffString, ISetStrokeRED {
 
 	private String	name;
 
 	private String	type;
 
+	// add Yamazaki
+	private GfxObject paraNGfxObject;
+	private GfxObject paraTGfxObject;
+
+	private Map<String,GfxObject> paraGfxObject = new HashMap<String,GfxObject>();
 	/**
 	 * Constructor of the parameter
 	 *
@@ -116,4 +127,51 @@ public class UMLParameter implements IGetDiffString {
 		// TODO 自動生成されたメソッド・スタブ
 		return name + ";" + type;
 	}
+
+	@Override
+	public void visibilityStroketoRED(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void nameStroketoRED(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		super.setStroke_RED(this.paraNGfxObject);
+	}
+
+	@Override
+	public void typeStroketoRED(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		super.setStroke_RED(this.paraTGfxObject);
+	}
+
+	@Override
+	public void setStrokeRED(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		if(this.paraGfxObject.containsKey(key))
+			super.setStroke_RED(this.paraGfxObject.get(key));
+	}
+
+
+	@Override
+	public void setVisibilityGfxObject(GfxObject visibility) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void setNameGfxObject(GfxObject name) {
+		// TODO 自動生成されたメソッド・スタブ
+		this.paraNGfxObject = name;
+		this.paraGfxObject.put(getDiffNameKey(), name);
+	}
+
+	@Override
+	public void setTypeGfxObject(GfxObject type) {
+		// TODO 自動生成されたメソッド・スタブ
+		this.paraTGfxObject = type;
+		this.paraGfxObject.put(getDiffTypeKey(), type);
+	}
+
 }
