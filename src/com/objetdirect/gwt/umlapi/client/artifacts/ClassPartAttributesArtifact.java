@@ -352,23 +352,23 @@ public class ClassPartAttributesArtifact extends NodePartArtifact implements ISe
 		};
 	}
 
-	public void visibilityStroketoRED(String key)
-	{
-		if(attributesVMap.containsKey(key))
-			super.setStroke_RED(attributesVMap.get(key));
-	}
-
-	public void nameStroketoRED(String key)
-	{
-		if(attributesNMap.containsKey(key))
-			super.setStroke_RED(attributesNMap.get(key));
-	}
-
-	public void typeStroketoRED(String key)
-	{
-		if(attributesTMap.containsKey(key))
-			super.setStroke_RED(attributesTMap.get(key));
-	}
+//	public void visibilityStroketoRED(String key)
+//	{
+//		if(attributesVMap.containsKey(key))
+//			super.setStroke_RED(attributesVMap.get(key));
+//	}
+//
+//	public void nameStroketoRED(String key)
+//	{
+//		if(attributesNMap.containsKey(key))
+//			super.setStroke_RED(attributesNMap.get(key));
+//	}
+//
+//	public void typeStroketoRED(String key)
+//	{
+//		if(attributesTMap.containsKey(key))
+//			super.setStroke_RED(attributesTMap.get(key));
+//	}
 
 	@Override
 	public void setVisibilityGfxObject(GfxObject visigility) {

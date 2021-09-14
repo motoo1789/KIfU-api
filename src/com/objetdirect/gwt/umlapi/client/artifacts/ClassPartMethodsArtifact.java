@@ -79,6 +79,12 @@ public class ClassPartMethodsArtifact extends NodePartArtifact implements ISetSt
 		this.paraTMap = new HashMap<String,GfxObject>();
 		this.height = 0;
 		this.width = 0;
+
+		this.methodVMap = new HashMap<String,GfxObject>();
+		this.methodNMap = new HashMap<String,GfxObject>();
+		this.methodTMap = new HashMap<String,GfxObject>();
+		this.paraNMap = new HashMap<String,GfxObject>();
+		this.paraTMap = new HashMap<String,GfxObject>();
 	}
 
 	/**
@@ -377,26 +383,26 @@ public class ClassPartMethodsArtifact extends NodePartArtifact implements ISetSt
 		};
 	}
 
-	@Override
-	public void visibilityStroketoRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
-		if(methodVMap.containsKey(key))
-			super.setStroke_RED(methodVMap.get(key));
-	}
-
-	@Override
-	public void nameStroketoRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
-		if(methodNMap.containsKey(key))
-			super.setStroke_RED(methodNMap.get(key));
-	}
-
-	@Override
-	public void typeStroketoRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
-		if(methodTMap.containsKey(key))
-			super.setStroke_RED(methodTMap.get(key));
-	}
+//	@Override
+//	public void visibilityStroketoRED(String key) {
+//		// TODO 自動生成されたメソッド・スタブ
+//		if(methodVMap.containsKey(key))
+//			super.setStroke_RED(methodVMap.get(key));
+//	}
+//
+//	@Override
+//	public void nameStroketoRED(String key) {
+//		// TODO 自動生成されたメソッド・スタブ
+//		if(methodNMap.containsKey(key))
+//			super.setStroke_RED(methodNMap.get(key));
+//	}
+//
+//	@Override
+//	public void typeStroketoRED(String key) {
+//		// TODO 自動生成されたメソッド・スタブ
+//		if(methodTMap.containsKey(key))
+//			super.setStroke_RED(methodTMap.get(key));
+//	}
 
 	@Override
 	public void setStrokeRED(String key) {

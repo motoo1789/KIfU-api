@@ -2210,8 +2210,10 @@ public class UMLCanvas extends AbsolutePanel {
 				for(String classDiffKey : classDiff.keySet())
 				{
 					String[] splitDiffClassKey = classDiffKey.split(";");
-					umlclass.nameStroketoRED(splitDiffClassKey[splitDiffClassKey.length - 1]);
-					umlclass.typeStroketoRED(splitDiffClassKey[splitDiffClassKey.length - 1]);
+					Window.alert("クラスの余剰:" + classDiffKey + "    split:" + splitDiffClassKey[splitDiffClassKey.length - 1]);
+					if(classDiffKey.equals(splitDiffClassKey[splitDiffClassKey.length - 1]))
+						umlclass.setStrokeRED(splitDiffClassKey[splitDiffClassKey.length - 1]);
+
 				}
 			}
 
@@ -2256,8 +2258,7 @@ public class UMLCanvas extends AbsolutePanel {
 									for(String paraDiffKey : paraDiff.keySet())
 									{
 										String[] splitDiffParaKey = paraDiffKey.split("%");
-										para.nameStroketoRED(splitDiffParaKey[splitDiffParaKey.length - 1]);
-										para.typeStroketoRED(splitDiffParaKey[splitDiffParaKey.length - 1]);
+										para.setStrokeRED(splitDiffParaKey[splitDiffParaKey.length - 1]);
 									}
 								}
 							}

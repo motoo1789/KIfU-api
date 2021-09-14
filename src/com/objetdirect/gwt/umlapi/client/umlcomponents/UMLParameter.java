@@ -128,23 +128,7 @@ public class UMLParameter extends UMLNode implements IGetDiffString, ISetStrokeR
 		return name + ";" + type;
 	}
 
-	@Override
-	public void visibilityStroketoRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
 
-	}
-
-	@Override
-	public void nameStroketoRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
-		super.setStroke_RED(this.paraNGfxObject);
-	}
-
-	@Override
-	public void typeStroketoRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
-		super.setStroke_RED(this.paraTGfxObject);
-	}
 
 	@Override
 	public void setStrokeRED(String key) {
@@ -163,14 +147,14 @@ public class UMLParameter extends UMLNode implements IGetDiffString, ISetStrokeR
 	@Override
 	public void setNameGfxObject(GfxObject name) {
 		// TODO 自動生成されたメソッド・スタブ
-		this.paraNGfxObject = name;
+		//this.paraNGfxObject = name;
 		this.paraGfxObject.put(getDiffNameKey(), name);
 	}
 
 	@Override
 	public void setTypeGfxObject(GfxObject type) {
 		// TODO 自動生成されたメソッド・スタブ
-		this.paraTGfxObject = type;
+		//this.paraTGfxObject = type;
 		this.paraGfxObject.put(getDiffTypeKey(), type);
 	}
 

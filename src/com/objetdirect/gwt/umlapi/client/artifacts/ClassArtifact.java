@@ -153,32 +153,32 @@ public class ClassArtifact extends NodeArtifact {
 		return rightMenu;
 	}
 
-	// add Yamazaki
-	public void fieldVisibilityStroketoRED()
-	{
-		classAttributes.visibilityStroketoRED("");
-	}
-	public void fieldNameStroketoRED()
-	{
-		classAttributes.nameStroketoRED("");
-	}
-	public void fieldTypeStroketoRED()
-	{
-		classAttributes.typeStroketoRED("");
-	}
-
-	public void methodVisibilityStroketoRED()
-	{
-		classMethods.visibilityStroketoRED("");
-	}
-	public void methodNameStroketoRED()
-	{
-		classMethods.nameStroketoRED("");
-	}
-	public void methodTypeStroketoRED()
-	{
-		classMethods.typeStroketoRED("");
-	}
+//	// add Yamazaki
+//	public void fieldVisibilityStroketoRED()
+//	{
+//		classAttributes.visibilityStroketoRED("");
+//	}
+//	public void fieldNameStroketoRED()
+//	{
+//		classAttributes.nameStroketoRED("");
+//	}
+//	public void fieldTypeStroketoRED()
+//	{
+//		classAttributes.typeStroketoRED("");
+//	}
+//
+//	public void methodVisibilityStroketoRED()
+//	{
+//		classMethods.visibilityStroketoRED("");
+//	}
+//	public void methodNameStroketoRED()
+//	{
+//		classMethods.nameStroketoRED("");
+//	}
+//	public void methodTypeStroketoRED()
+//	{
+//		classMethods.typeStroketoRED("");
+//	}
 
 	/*
 	 * (non-Javadoc)
