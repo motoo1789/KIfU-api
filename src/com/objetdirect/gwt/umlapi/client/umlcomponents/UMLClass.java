@@ -183,25 +183,6 @@ public class UMLClass extends UMLNode implements IGetDiffString, ISetStrokeRED  
 		return this.name + ";" + this.stereotype;
 	}
 
-	@Override
-	public void visibilityStroketoRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
-		Window.alert("visibilityStroketoRED とりあえず何もしない");
-	}
-
-	@Override
-	public void nameStroketoRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
-		if(this.name.equals(key))
-			super.setStroke_RED(classsNGfxObject);
-	}
-
-	@Override
-	public void typeStroketoRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
-		if(this.stereotype.equals(key))
-			super.setStroke_RED(classTGfxObject);
-	}
 
 	@Override
 	public void setVisibilityGfxObject(GfxObject visigility) {

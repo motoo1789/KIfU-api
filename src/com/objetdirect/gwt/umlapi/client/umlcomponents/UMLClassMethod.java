@@ -202,10 +202,13 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 		this.visibility = visibility;
 	}
 
+	/////////////////////////////////////////////////////
+	// add Yamazaki
 	public void addParametar(UMLParameter para)
 	{
 		this.parameters.add(para);
 	}
+	/////////////////////////////////////////////////////
 
 	/**
 	 * Format a string from method name, parameters and return type
@@ -256,26 +259,6 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 		return name + ";" + returnType;
 	}
 
-	@Override
-	public void visibilityStroketoRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
-		if(methodGfxObjectMap.containsKey(key))
-			super.setStroke_RED(this.methodGfxObjectMap.get(key));
-	}
-
-	@Override
-	public void nameStroketoRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
-		if(methodGfxObjectMap.containsKey(key))
-			super.setStroke_RED(this.methodGfxObjectMap.get(key));
-	}
-
-	@Override
-	public void typeStroketoRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
-		if(methodGfxObjectMap.containsKey(key))
-			super.setStroke_RED(this.methodGfxObjectMap.get(key));
-	}
 
 	@Override
 	public void setStrokeRED(String key) {
@@ -287,21 +270,21 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 	@Override
 	public void setVisibilityGfxObject(GfxObject visibility) {
 		// TODO 自動生成されたメソッド・スタブ
-		this.methodVGfxObject = visibility;
+		//this.methodVGfxObject = visibility;
 		methodGfxObjectMap.put(this.getDiffVisibilityKey(), visibility);
 	}
 
 	@Override
 	public void setNameGfxObject(GfxObject name) {
 		// TODO 自動生成されたメソッド・スタブ
-		this.methodNGfxObject = name;
+		//this.methodNGfxObject = name;
 		methodGfxObjectMap.put(this.getDiffNameKey(), name);
 	}
 
 	@Override
 	public void setTypeGfxObject(GfxObject type) {
 		// TODO 自動生成されたメソッド・スタブ
-		this.methodTGfxObject = type;
+		//this.methodTGfxObject = type;
 		methodGfxObjectMap.put(this.getDiffTypeKey(), type);
 	}
 

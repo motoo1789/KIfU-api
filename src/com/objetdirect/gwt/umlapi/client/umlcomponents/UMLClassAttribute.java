@@ -237,26 +237,6 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 		return this.name + ";" + this.type;
 	}
 
-	public void visibilityStroketoRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
-//		if(this.getVisibilitytoString().equals(key))
-		if(this.attributesGfxObject.containsKey(key))
-			super.setStroke_RED(this.attributesGfxObject.get(key));
-	}
-
-	public void nameStroketoRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
-//		if(this.name.equals(key))
-		if(this.attributesGfxObject.containsKey(key));
-			super.setStroke_RED(this.attributesGfxObject.get(key));
-	}
-
-	public void typeStroketoRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
-//		if(this.type.equals(key))
-		if(this.attributesGfxObject.containsKey(key))
-			super.setStroke_RED(this.attributesGfxObject.get(key));
-	}
 
 	@Override
 	public void setStrokeRED(String key) {
