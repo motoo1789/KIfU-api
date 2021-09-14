@@ -17,6 +17,7 @@ package com.objetdirect.gwt.umlapi.client.artifacts;
 import static com.objetdirect.gwt.umlapi.client.helpers.TextResource.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,11 @@ public class ClassPartMethodsArtifact extends NodePartArtifact implements ISetSt
 		// List<Parameter> methodParameters = new ArrayList<Parameter>();
 		// methodParameters.add(new Parameter("String", "parameter1"));
 		// methods.add(new Method("void","method", methodParameters));
+		this.methodVMap = new HashMap<String,GfxObject>();
+		this.methodNMap = new HashMap<String,GfxObject>();
+		this.methodTMap = new HashMap<String,GfxObject>();
+		this.paraNMap = new HashMap<String,GfxObject>();
+		this.paraTMap = new HashMap<String,GfxObject>();
 		this.height = 0;
 		this.width = 0;
 	}
