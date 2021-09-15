@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.allen_sauer.gwt.log.client.Log;
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 import com.objetdirect.gwt.umlapi.client.GWTUMLAPIException;
 import com.objetdirect.gwt.umlapi.client.analyser.LexicalAnalyzer;
 import com.objetdirect.gwt.umlapi.client.analyser.LexicalAnalyzer.LexicalFlag;
@@ -222,19 +224,21 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 	@Override
 	public String getDiffVisibilityKey() {
 		// TODO 自動生成されたメソッド・スタブ
-		return name + ";" + this.getVisibilitytoString();
+		String key = name + ";" + this.getVisibilitytoString();
+		return key.replaceAll(" ","");
 	}
 
 	@Override
 	public String getDiffNameKey() {
 		// TODO 自動生成されたメソッド・スタブ
-		return this.name;
+		return this.name.replaceAll(" ","");
 	}
 
 	@Override
 	public String getDiffTypeKey() {
 		// TODO 自動生成されたメソッド・スタブ
-		return this.name + ";" + this.type;
+		String key = this.name + ";" + this.type;
+		return key.replaceAll(" ","");
 	}
 
 
@@ -266,5 +270,12 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 		attributesGfxObject.put(this.getDiffTypeKey(), type);
 	}
 
+	public void showAttributesGfxObject()
+	{
+		for(String key : attributesGfxObject.keySet())
+		{
+			Window.alert("キー：" + key + " value:" + attributesGfxObject.get(key));
 
+		}
+	}
 }

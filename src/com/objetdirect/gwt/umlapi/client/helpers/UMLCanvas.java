@@ -25,6 +25,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import com.allen_sauer.gwt.log.client.Log;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
@@ -2210,7 +2211,7 @@ public class UMLCanvas extends AbsolutePanel {
 				for(String classDiffKey : classDiff.keySet())
 				{
 					String[] splitDiffClassKey = classDiffKey.split(";");
-					Window.alert("クラスの余剰:" + classDiffKey + "    split:" + splitDiffClassKey[splitDiffClassKey.length - 1]);
+					//Window.alert("クラスの余剰:" + classDiffKey + "    split:" + splitDiffClassKey[splitDiffClassKey.length - 1]);
 					if(classDiffKey.equals(splitDiffClassKey[splitDiffClassKey.length - 1]))
 						umlclass.setStrokeRED(splitDiffClassKey[splitDiffClassKey.length - 1]);
 
@@ -2222,12 +2223,13 @@ public class UMLCanvas extends AbsolutePanel {
 			{
 				for(UMLClassAttribute attribute : artifact.getAttributes())
 				{
-//					Window.alert(attribute.toString());
-//					System.out.println(attribute.toString());
+					attribute.showAttributesGfxObject();
 					for(String fieldDiffKey : fieldDiff.keySet())
 					{
 						String[] splitDiffAttributeClassname= fieldDiffKey.split("!");
 						String classname = splitDiffAttributeClassname[0];
+
+						GWT.log(splitDiffAttributeClassname[0] + "!" + splitDiffAttributeClassname[1] + " diffクラス名：" + classname + " umlclass" + umlclass.getName());
 						if(umlclass.getName().equals(classname))
 							// 差分検知したものと今見ているKIfUのクラス図でクラス名が一致してたらその中のフィールドをみる
 							attribute.setStrokeRED(splitDiffAttributeClassname[splitDiffAttributeClassname.length - 1]);

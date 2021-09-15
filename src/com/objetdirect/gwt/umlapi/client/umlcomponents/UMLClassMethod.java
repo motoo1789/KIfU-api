@@ -244,19 +244,21 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 	@Override
 	public String getDiffVisibilityKey() {
 		// TODO 自動生成されたメソッド・スタブ
-		return name + ";" + this.getVisibilitytoString();
+		String key = name + ";" + this.getVisibilitytoString();
+		return key.replaceAll(" ","");
 	}
 
 	@Override
 	public String getDiffNameKey() {
 		// TODO 自動生成されたメソッド・スタブ
-		return name;
+		return name.replaceAll(" ","");
 	}
 
 	@Override
 	public String getDiffTypeKey() {
 		// TODO 自動生成されたメソッド・スタブ
-		return name + ";" + returnType;
+		String key = name + ";" + returnType;
+		return key.replaceAll(" ","");
 	}
 
 
