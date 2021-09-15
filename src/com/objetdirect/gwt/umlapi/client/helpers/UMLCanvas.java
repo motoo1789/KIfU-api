@@ -2223,7 +2223,7 @@ public class UMLCanvas extends AbsolutePanel {
 			{
 				for(UMLClassAttribute attribute : artifact.getAttributes())
 				{
-					attribute.showAttributesGfxObject();
+					//attribute.showAttributesGfxObject();
 					for(String fieldDiffKey : fieldDiff.keySet())
 					{
 						String[] splitDiffAttributeClassname= fieldDiffKey.split("!");
@@ -2260,6 +2260,7 @@ public class UMLCanvas extends AbsolutePanel {
 									for(String paraDiffKey : paraDiff.keySet())
 									{
 										String[] splitDiffParaKey = paraDiffKey.split("%");
+										Window.alert("Key:" + paraDiffKey + " 余剰パラメータ要素" + splitDiffParaKey[splitDiffParaKey.length - 1]);
 										para.setStrokeRED(splitDiffParaKey[splitDiffParaKey.length - 1]);
 									}
 								}
@@ -2337,6 +2338,7 @@ public class UMLCanvas extends AbsolutePanel {
 					String[] splitDiffMethodKey = methodDiffKey.split("&");
 					String classname = splitDiffMethodKey[0];
 					String methodname = splitDiffMethodKey[splitDiffMethodKey.length - 1];
+
 
 					if(umlclass.getName().equals(classname))
 						artifact.addMethod(new UMLClassMethod(UMLVisibility.getVisibilityFromToken('+'), "void", methodname, new ArrayList<UMLParameter>()));
