@@ -2168,10 +2168,10 @@ public class UMLCanvas extends AbsolutePanel {
 	// add Yamazaki
 	public void addYamazakiDiffSurplus(Map<String,String> diffMap)
 	{
-		Map<String,String> classDiff  = new HashMap<String,String>();
-		Map<String,String> fieldDiff  = new HashMap<String,String>();
-		Map<String,String> methodDiff  = new HashMap<String,String>();
-		Map<String,String> paraDiff  = new HashMap<String,String>();
+		Map<String,String> classDiff  	= new HashMap<String,String>();
+		Map<String,String> fieldDiff  	= new HashMap<String,String>();
+		Map<String,String> methodDiff  	= new HashMap<String,String>();
+		Map<String,String> paraDiff  	= new HashMap<String,String>();
 
 		// Mapの整理
 		for(String diffkey : diffMap.keySet())
@@ -2182,7 +2182,7 @@ public class UMLCanvas extends AbsolutePanel {
 				{
 					fieldDiff.put(diffkey,diffMap.get(diffkey));
 				}
-				else if(diffkey.contains("%")) 	// パラメータ
+				else if(diffkey.contains("%") && diffkey.contains("&")) 	// パラメータ
 				{
 					paraDiff.put(diffkey,diffMap.get(diffkey));
 				}
@@ -2211,9 +2211,11 @@ public class UMLCanvas extends AbsolutePanel {
 				for(String classDiffKey : classDiff.keySet())
 				{
 					String[] splitDiffClassKey = classDiffKey.split(";");
-					//Window.alert("クラスの余剰:" + classDiffKey + "    split:" + splitDiffClassKey[splitDiffClassKey.length - 1]);
-					if(classDiffKey.equals(splitDiffClassKey[splitDiffClassKey.length - 1]))
-						umlclass.setStrokeRED(splitDiffClassKey[splitDiffClassKey.length - 1]);
+					Window.alert("クラスの余剰:" + classDiffKey);
+					if(classDiffKey.equals(classDiffKey))
+					{
+						umlclass.setStrokeRED(classDiffKey);
+					}
 
 				}
 			}
@@ -2260,7 +2262,7 @@ public class UMLCanvas extends AbsolutePanel {
 									for(String paraDiffKey : paraDiff.keySet())
 									{
 										String[] splitDiffParaKey = paraDiffKey.split("%");
-										Window.alert("Key:" + paraDiffKey + " 余剰パラメータ要素" + splitDiffParaKey[splitDiffParaKey.length - 1]);
+										//Window.alert("Key:" + paraDiffKey + " 余剰パラメータ要素" + splitDiffParaKey[splitDiffParaKey.length - 1]);
 										para.setStrokeRED(splitDiffParaKey[splitDiffParaKey.length - 1]);
 									}
 								}
@@ -2288,7 +2290,7 @@ public class UMLCanvas extends AbsolutePanel {
 				{
 					fieldDiff.put(diffkey,diffMap.get(diffkey));
 				}
-				else if(diffkey.contains("%")) 	// パラメータ
+				else if(diffkey.contains("%") && diffkey.contains("&")) 	// パラメータ
 				{
 					paraDiff.put(diffkey,diffMap.get(diffkey));
 				}

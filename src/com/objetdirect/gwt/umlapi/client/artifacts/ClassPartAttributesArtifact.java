@@ -140,7 +140,7 @@ public class ClassPartAttributesArtifact extends NodePartArtifact implements ISe
 
 
 			// 型
-			GfxObject type = GfxManager.getPlatform().buildText(attribute.getType(),
+			GfxObject type = GfxManager.getPlatform().buildText(":" + attribute.getType(),
 					new Point(OptionsManager.get("TextLeftPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
 			super.setStroke_BLACK(type);
 			attribute.setTypeGfxObject(type);

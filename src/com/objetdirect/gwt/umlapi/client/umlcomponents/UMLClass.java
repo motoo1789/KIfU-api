@@ -180,7 +180,8 @@ public class UMLClass extends UMLNode implements IGetDiffString, ISetStrokeRED  
 	@Override
 	public String getDiffTypeKey() {
 		// TODO 自動生成されたメソッド・スタブ
-		return this.name + ";" + this.stereotype;
+		String key = this.name + ";" + this.stereotype;
+		return key.replaceAll(" ","");
 	}
 
 
@@ -207,6 +208,10 @@ public class UMLClass extends UMLNode implements IGetDiffString, ISetStrokeRED  
 	@Override
 	public void setStrokeRED(String key) {
 		// TODO 自動生成されたメソッド・スタブ
+//		for(String classDiffKey : classGfxObject.keySet())
+//		{
+//			Window.alert("UMLCLasssetStrokeRED:" + classDiffKey);
+//		}
 		if(this.classGfxObject.containsKey(key))
 			super.setStroke_RED(this.classGfxObject.get(key));
 	}

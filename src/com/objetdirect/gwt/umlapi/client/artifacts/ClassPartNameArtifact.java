@@ -62,6 +62,7 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 	public ClassPartNameArtifact(final String className, final String stereotype) {
 		super();
 		this.uMLclass = new UMLClass(className);
+		this.uMLclass.setStereotype(stereotype);
 		this.stereotype = stereotype.equals("") ? "" : "«" + stereotype + "»";
 		this.height = 0;
 		this.width = 0;

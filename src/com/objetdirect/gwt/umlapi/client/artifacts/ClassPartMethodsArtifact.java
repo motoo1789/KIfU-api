@@ -134,7 +134,7 @@ public class ClassPartMethodsArtifact extends NodePartArtifact implements ISetSt
 			methodElementWidth += methodElementWidth + GfxManager.getPlatform().getTextWidthFor(visibility);
 
 			// name
-			GfxObject methodname = GfxManager.getPlatform().buildText(method.getName(),
+			GfxObject methodname = GfxManager.getPlatform().buildText(method.getName() + "(",
 					new Point(methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
 			super.setStroke_BLACK(methodname);
 			methodNMap.put(method.getDiffNameKey(), methodname);
@@ -154,7 +154,7 @@ public class ClassPartMethodsArtifact extends NodePartArtifact implements ISetSt
 				methodElementWidth += methodElementWidth + GfxManager.getPlatform().getTextWidthFor(paraname);
 				useVirtualGroupAddGfxObjectList.add(paraname);
 
-				GfxObject paratype = GfxManager.getPlatform().buildText(paraObject.getType(),
+				GfxObject paratype = GfxManager.getPlatform().buildText(":" + paraObject.getType(),
 						new Point(methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
 				super.setStroke_BLACK(paratype);
 				paraObject.setTypeGfxObject(paratype);
@@ -163,7 +163,7 @@ public class ClassPartMethodsArtifact extends NodePartArtifact implements ISetSt
 			}
 
 			// return type
-			GfxObject returntype = GfxManager.getPlatform().buildText(method.getReturnType(),
+			GfxObject returntype = GfxManager.getPlatform().buildText("):" + method.getReturnType(),
 					new Point(methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
 			super.setStroke_BLACK(returntype);
 			methodTMap.put(method.getReturnType(), returntype);
