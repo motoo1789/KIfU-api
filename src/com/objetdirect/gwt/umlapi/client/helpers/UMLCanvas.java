@@ -2178,19 +2178,19 @@ public class UMLCanvas extends AbsolutePanel {
 		{
 			if(diffMap.get(diffkey).equals(this.SURPLUS))
 			{
-				if(diffkey.contains("!")) 		// フィールド
+				if(diffkey.contains("!")) 								// フィールド
 				{
 					fieldDiff.put(diffkey,diffMap.get(diffkey));
 				}
-				else if(diffkey.contains("%") && diffkey.contains("&")) 	// パラメータ
+				else if(diffkey.contains("%") && diffkey.contains("&")) // パラメータ
 				{
 					paraDiff.put(diffkey,diffMap.get(diffkey));
 				}
-				else if(diffkey.contains("&")) 	//　メソッド
+				else if(diffkey.contains("&")) 							//　メソッド
 				{
 					methodDiff.put(diffkey,diffMap.get(diffkey));
 				}
-				else 							// クラス名
+				else 													// クラス名
 				{
 					classDiff.put(diffkey,diffMap.get(diffkey));
 				}
@@ -2211,7 +2211,7 @@ public class UMLCanvas extends AbsolutePanel {
 				for(String classDiffKey : classDiff.keySet())
 				{
 					String[] splitDiffClassKey = classDiffKey.split(";");
-					Window.alert("クラスの余剰:" + classDiffKey);
+
 					if(classDiffKey.equals(classDiffKey))
 					{
 						umlclass.setStrokeRED(classDiffKey);
@@ -2225,7 +2225,6 @@ public class UMLCanvas extends AbsolutePanel {
 			{
 				for(UMLClassAttribute attribute : artifact.getAttributes())
 				{
-					//attribute.showAttributesGfxObject();
 					for(String fieldDiffKey : fieldDiff.keySet())
 					{
 						String[] splitDiffAttributeClassname= fieldDiffKey.split("!");
@@ -2262,7 +2261,7 @@ public class UMLCanvas extends AbsolutePanel {
 									for(String paraDiffKey : paraDiff.keySet())
 									{
 										String[] splitDiffParaKey = paraDiffKey.split("%");
-										//Window.alert("Key:" + paraDiffKey + " 余剰パラメータ要素" + splitDiffParaKey[splitDiffParaKey.length - 1]);
+
 										para.setStrokeRED(splitDiffParaKey[splitDiffParaKey.length - 1]);
 									}
 								}
@@ -2286,19 +2285,19 @@ public class UMLCanvas extends AbsolutePanel {
 		{
 			if(diffMap.get(diffkey).equals(this.NOTHAS))
 			{
-				if(diffkey.contains("!")) 		// フィールド
+				if(diffkey.contains("!")) 								// フィールド
 				{
 					fieldDiff.put(diffkey,diffMap.get(diffkey));
 				}
-				else if(diffkey.contains("%") && diffkey.contains("&")) 	// パラメータ
+				else if(diffkey.contains("%") && diffkey.contains("&")) // パラメータ
 				{
 					paraDiff.put(diffkey,diffMap.get(diffkey));
 				}
-				else if(diffkey.contains("&")) 	//　メソッド
+				else if(diffkey.contains("&")) 							//　メソッド
 				{
 					methodDiff.put(diffkey,diffMap.get(diffkey));
 				}
-				else 							// クラス名
+				else 													// クラス名
 				{
 					classDiff.put(diffkey,diffMap.get(diffkey));
 				}
@@ -2309,8 +2308,6 @@ public class UMLCanvas extends AbsolutePanel {
 		for(GfxObject gfxobject : objects.keySet())
 		{
 			ClassArtifact artifact = (ClassArtifact) objects.get(gfxobject);
-			//Window.alert(artifact.toURL());
-
 
 			// クラス
 			UMLClass umlclass = artifact.getUMLClass();
@@ -2324,8 +2321,6 @@ public class UMLCanvas extends AbsolutePanel {
 					String classname = splitDiffAttributeClassname[0];
 					String attributename = splitDiffAttributeClassname[splitDiffAttributeClassname.length - 1];
 
-//					Window.alert(attribute.toString());
-//					System.out.println(attribute.toString());
 					if(umlclass.getName().equals(classname))
 						// フィールド追加
 						artifact.addAttribute(new UMLClassAttribute(UMLVisibility.getVisibilityFromToken('+'),"void",attributename));
@@ -2340,7 +2335,6 @@ public class UMLCanvas extends AbsolutePanel {
 					String[] splitDiffMethodKey = methodDiffKey.split("&");
 					String classname = splitDiffMethodKey[0];
 					String methodname = splitDiffMethodKey[splitDiffMethodKey.length - 1];
-
 
 					if(umlclass.getName().equals(classname))
 						artifact.addMethod(new UMLClassMethod(UMLVisibility.getVisibilityFromToken('+'), "void", methodname, new ArrayList<UMLParameter>()));

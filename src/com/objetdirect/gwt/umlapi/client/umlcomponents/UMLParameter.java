@@ -29,13 +29,9 @@ import com.objetdirect.gwt.umlapi.client.gfx.GfxObject;
 public class UMLParameter extends UMLNode implements IGetDiffString, ISetStrokeRED {
 
 	private String	name;
-
 	private String	type;
 
 	// add Yamazaki
-	private GfxObject paraNGfxObject;
-	private GfxObject paraTGfxObject;
-
 	private Map<String,GfxObject> paraGfxObject = new HashMap<String,GfxObject>();
 	/**
 	 * Constructor of the parameter
@@ -148,14 +144,12 @@ public class UMLParameter extends UMLNode implements IGetDiffString, ISetStrokeR
 	@Override
 	public void setNameGfxObject(GfxObject name) {
 		// TODO 自動生成されたメソッド・スタブ
-		//this.paraNGfxObject = name;
 		this.paraGfxObject.put(getDiffNameKey(), name);
 	}
 
 	@Override
 	public void setTypeGfxObject(GfxObject type) {
 		// TODO 自動生成されたメソッド・スタブ
-		//this.paraTGfxObject = type;
 		this.paraGfxObject.put(getDiffTypeKey(), type);
 	}
 

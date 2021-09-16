@@ -85,11 +85,7 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 
 	protected UMLVisibility	visibility;
 
-	// Yamazaki add
-	private GfxObject attributesVGfxObject;
-	private GfxObject attributesNGfxObject;
-	private GfxObject attributesTGfxObject;
-
+	// add Yamazaki
 	private Map<String,GfxObject> attributesGfxObject = new HashMap<String,GfxObject>();
 
 	/**
@@ -252,30 +248,19 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 	@Override
 	public void setVisibilityGfxObject(GfxObject visibility) {
 		// TODO 自動生成されたメソッド・スタブ
-		this.attributesVGfxObject = visibility;
 		attributesGfxObject.put(this.getDiffVisibilityKey(), visibility);
 	}
 
 	@Override
 	public void setNameGfxObject(GfxObject name) {
 		// TODO 自動生成されたメソッド・スタブ
-		this.attributesNGfxObject = name;
 		attributesGfxObject.put(this.getDiffNameKey(), name);
 	}
 
 	@Override
 	public void setTypeGfxObject(GfxObject type) {
 		// TODO 自動生成されたメソッド・スタブ
-		this.attributesTGfxObject = type;
 		attributesGfxObject.put(this.getDiffTypeKey(), type);
 	}
 
-	public void showAttributesGfxObject()
-	{
-		for(String key : attributesGfxObject.keySet())
-		{
-			Window.alert("キー：" + key + " value:" + attributesGfxObject.get(key));
-
-		}
-	}
 }

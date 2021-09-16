@@ -66,10 +66,7 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 
 	private UMLVisibility		visibility;
 
-	private GfxObject methodVGfxObject;
-	private GfxObject methodNGfxObject;
-	private GfxObject methodTGfxObject;
-
+	// add Yamazaki
 	private Map<String,GfxObject> methodGfxObjectMap = new HashMap<String,GfxObject>();
 
 	/**

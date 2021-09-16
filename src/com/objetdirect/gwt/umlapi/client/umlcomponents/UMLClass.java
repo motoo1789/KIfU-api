@@ -63,9 +63,7 @@ public class UMLClass extends UMLNode implements IGetDiffString, ISetStrokeRED  
 	private ArrayList<UMLClassAttribute>	attributes;
 	private ArrayList<UMLClassMethod>		methods;
 
-	private GfxObject classsNGfxObject;
-	private GfxObject classTGfxObject;
-
+	// add Yamazaki
 	private Map<String,GfxObject> classGfxObject = new HashMap<String,GfxObject>();
 
 	/**
@@ -194,14 +192,12 @@ public class UMLClass extends UMLNode implements IGetDiffString, ISetStrokeRED  
 	@Override
 	public void setNameGfxObject(GfxObject name) {
 		// TODO 自動生成されたメソッド・スタブ
-		this.classsNGfxObject = name;
 		classGfxObject.put(getDiffNameKey(), name);
 	}
 
 	@Override
 	public void setTypeGfxObject(GfxObject type) {
 		// TODO 自動生成されたメソッド・スタブ
-		this.classTGfxObject = type;
 		classGfxObject.put(getDiffTypeKey(), type);
 	}
 

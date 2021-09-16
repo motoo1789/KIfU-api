@@ -46,20 +46,12 @@ import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLVisibility;
  *
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
  */
-public class ClassPartAttributesArtifact extends NodePartArtifact implements ISetStrokeRED {
+public class ClassPartAttributesArtifact extends NodePartArtifact {
 	private final Map<GfxObject, UMLClassAttribute>	attributeGfxObjects;
 	private GfxObject								attributeRect;
 	private final List<UMLClassAttribute>			attributes;
 	private GfxObject								lastGfxObject;
 
-	// Yamazaki add
-	private Map<String, GfxObject> attributesVMap;
-	private Map<String, GfxObject> attributesNMap;
-	private Map<String, GfxObject> attributesTMap;
-
-//	private Map<UMLClassAttribute, GfxObject> attributesVMap;
-//	private Map<UMLClassAttribute, GfxObject> attributesNMap;
-//	private Map<UMLClassAttribute, GfxObject> attributesTMap;
 
 
 	/**
@@ -73,15 +65,6 @@ public class ClassPartAttributesArtifact extends NodePartArtifact implements ISe
 
 		this.height = 0;
 		this.width = 0;
-
-		// add Yamazaki
-		this.attributesVMap = new HashMap<String,GfxObject>();
-		this.attributesNMap = new HashMap<String,GfxObject>();
-		this.attributesTMap = new HashMap<String,GfxObject>();
-//		this.attributesVMap = new HashMap<String,GfxObject>();
-//		this.attributesVMap = new HashMap<UMLClassAttribute,GfxObject>();
-//		this.attributesNMap = new HashMap<UMLClassAttribute,GfxObject>();
-//		this.attributesTMap = new HashMap<UMLClassAttribute,GfxObject>();
 	}
 
 	/**
@@ -125,7 +108,6 @@ public class ClassPartAttributesArtifact extends NodePartArtifact implements ISe
 			GfxObject visibility = GfxManager.getPlatform().buildText(attribute.getVisibility().toString(),
 					new Point(OptionsManager.get("TextLeftPadding"), OptionsManager.get("TextTopPadding") + this.height));
 			super.setStroke_BLACK(visibility);
-			attributesVMap.put(attribute.getDiffVisibilityKey(), visibility);
 			attribute.setVisibilityGfxObject(visibility);
 			attributeWidth = GfxManager.getPlatform().getTextWidthFor(visibility);
 
@@ -135,7 +117,6 @@ public class ClassPartAttributesArtifact extends NodePartArtifact implements ISe
 					new Point(OptionsManager.get("TextLeftPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
 			super.setStroke_BLACK(name);
 			attribute.setNameGfxObject(name);
-			attributesNMap.put(attribute.getDiffNameKey(), name);
 			attributeWidth = attributeWidth + GfxManager.getPlatform().getTextWidthFor(name);
 
 
@@ -144,7 +125,6 @@ public class ClassPartAttributesArtifact extends NodePartArtifact implements ISe
 					new Point(OptionsManager.get("TextLeftPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
 			super.setStroke_BLACK(type);
 			attribute.setTypeGfxObject(type);
-			attributesTMap.put(attribute.getDiffTypeKey(), type);
 			attributeWidth = attributeWidth + GfxManager.getPlatform().getTextWidthFor(type);
 
 
@@ -352,45 +332,4 @@ public class ClassPartAttributesArtifact extends NodePartArtifact implements ISe
 		};
 	}
 
-//	public void visibilityStroketoRED(String key)
-//	{
-//		if(attributesVMap.containsKey(key))
-//			super.setStroke_RED(attributesVMap.get(key));
-//	}
-//
-//	public void nameStroketoRED(String key)
-//	{
-//		if(attributesNMap.containsKey(key))
-//			super.setStroke_RED(attributesNMap.get(key));
-//	}
-//
-//	public void typeStroketoRED(String key)
-//	{
-//		if(attributesTMap.containsKey(key))
-//			super.setStroke_RED(attributesTMap.get(key));
-//	}
-
-	@Override
-	public void setVisibilityGfxObject(GfxObject visigility) {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
-
-	@Override
-	public void setNameGfxObject(GfxObject name) {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
-
-	@Override
-	public void setTypeGfxObject(GfxObject type) {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
-
-	@Override
-	public void setStrokeRED(String key) {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
 }
