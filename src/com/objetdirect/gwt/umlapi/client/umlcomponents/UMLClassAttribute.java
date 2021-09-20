@@ -34,6 +34,16 @@ import com.objetdirect.gwt.umlapi.client.gfx.GfxObject;
  */
 public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetStrokeRED{
 
+	protected String		name;
+	protected String		type;
+	protected boolean		validated	= true;
+
+	protected UMLVisibility	visibility;
+
+	// add Yamazaki
+	private Map<String,GfxObject> attributesGfxObject = new HashMap<String,GfxObject>();
+
+
 	/**
 	 * Parse an attribute from a {@link String}
 	 *
@@ -79,14 +89,7 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 		return new UMLClassAttribute(visibility, type, name);
 	}
 
-	protected String		name;
-	protected String		type;
-	protected boolean		validated	= true;
 
-	protected UMLVisibility	visibility;
-
-	// add Yamazaki
-	private Map<String,GfxObject> attributesGfxObject = new HashMap<String,GfxObject>();
 
 	/**
 	 * Constructor of the attribute
@@ -163,6 +166,7 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 	 *            to be set
 	 *
 	 */
+	@Override
 	public void setName(final String name) {
 		this.name = name;
 	}
@@ -174,6 +178,7 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 	 *            to be set
 	 *
 	 */
+	@Override
 	public void setType(final String type) {
 		this.type = type;
 	}
@@ -185,6 +190,7 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 	 *            boolean for validated validation state
 	 *
 	 */
+
 	public void setValidated(final boolean validated) {
 		this.validated = validated;
 	}
@@ -195,6 +201,7 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 	 * @see UMLVisibility
 	 * @param visibility
 	 */
+	@Override
 	public void setVisibility(final UMLVisibility visibility) {
 		this.visibility = visibility;
 	}
@@ -220,7 +227,7 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 	@Override
 	public String getDiffVisibilityKey() {
 		// TODO 自動生成されたメソッド・スタブ
-		String key = name + ";" + this.getVisibilitytoString();
+		String key = name + "{visibility";
 		return key.replaceAll(" ","");
 	}
 
@@ -233,7 +240,7 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 	@Override
 	public String getDiffTypeKey() {
 		// TODO 自動生成されたメソッド・スタブ
-		String key = this.name + ";" + this.type;
+		String key = this.name + "}type";
 		return key.replaceAll(" ","");
 	}
 

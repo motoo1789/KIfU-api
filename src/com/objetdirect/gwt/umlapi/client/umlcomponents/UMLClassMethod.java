@@ -152,6 +152,7 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 	 *            to be set
 	 *
 	 */
+	@Override
 	public void setName(final String name) {
 		this.name = name;
 	}
@@ -195,6 +196,7 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 	 * @param visibility
 	 *            The {@link UMLVisibility} of this method
 	 */
+	@Override
 	public void setVisibility(final UMLVisibility visibility) {
 		this.visibility = visibility;
 	}
@@ -241,7 +243,7 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 	@Override
 	public String getDiffVisibilityKey() {
 		// TODO 自動生成されたメソッド・スタブ
-		String key = name + ";" + this.getVisibilitytoString();
+		String key = name + "{visibility";
 		return key.replaceAll(" ","");
 	}
 
@@ -254,7 +256,7 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 	@Override
 	public String getDiffTypeKey() {
 		// TODO 自動生成されたメソッド・スタブ
-		String key = name + ";" + returnType;
+		String key = name + "}type";
 		return key.replaceAll(" ","");
 	}
 
@@ -285,6 +287,12 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 		// TODO 自動生成されたメソッド・スタブ
 		//this.methodTGfxObject = type;
 		methodGfxObjectMap.put(this.getDiffTypeKey(), type);
+	}
+
+	@Override
+	public void setType(String type) {
+		// TODO 自動生成されたメソッド・スタブ
+		this.returnType = type;
 	}
 
 

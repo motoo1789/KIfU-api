@@ -89,6 +89,7 @@ import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLParameter;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLSecurityUseCase;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLUseCase;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLVisibility;
+import com.objetdirect.gwt.umlapi.client.yamazaki.replace.ReplaceElements;
 
 /**
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
@@ -212,6 +213,7 @@ public class UMLCanvas extends AbsolutePanel {
 	// add Yamazaki
 	private final String SURPLUS = "余剰";
 	private final String NOTHAS = "欠損";
+	private final String NOTHASSURPLUS = "欠損差分";
 
 	/**
 	 * Constructor of an {@link UMLCanvas} with default size
@@ -2176,7 +2178,7 @@ public class UMLCanvas extends AbsolutePanel {
 		// Mapの整理
 		for(String diffkey : diffMap.keySet())
 		{
-			if(diffMap.get(diffkey).equals(this.SURPLUS))
+			if(diffMap.get(diffkey).equals(this.SURPLUS) || diffMap.get(diffkey).equals(this.NOTHASSURPLUS))
 			{
 				if(diffkey.contains("!")) 								// フィールド
 				{
@@ -2366,4 +2368,438 @@ public class UMLCanvas extends AbsolutePanel {
 			}
 		}
 	}
+
+	public void addYamazakiDiffReplacefromNotHastoSurplus(Map<String,String> diffMap)
+	{
+		Map<String,String> classDiff  	= new HashMap<String,String>();
+		Map<String,String> fieldDiff  	= new HashMap<String,String>();
+		Map<String,String> methodDiff  	= new HashMap<String,String>();
+		Map<String,String> paraDiff  	= new HashMap<String,String>();
+
+		// Mapの整理
+		for(String diffkey : diffMap.keySet())
+		{
+			if(diffMap.get(diffkey).equals(this.NOTHASSURPLUS))
+			{
+				if(diffkey.contains("!")) 								// フィールド
+				{
+					fieldDiff.put(diffkey,diffMap.get(diffkey));
+				}
+				else if(diffkey.contains("%") && diffkey.contains("&")) // パラメータ
+				{
+					paraDiff.put(diffkey,diffMap.get(diffkey));
+				}
+				else if(diffkey.contains("&")) 							//　メソッド
+				{
+					methodDiff.put(diffkey,diffMap.get(diffkey));
+				}
+				else 													// クラス名
+				{
+					classDiff.put(diffkey,diffMap.get(diffkey));
+				}
+			}
+
+		}
+
+		for(GfxObject gfxobject : objects.keySet())
+		{
+			ClassArtifact artifact = (ClassArtifact) objects.get(gfxobject);
+			//Window.alert(artifact.toURL());
+
+
+			// クラス
+			UMLClass umlclass = artifact.getUMLClass();
+			if(!classDiff.isEmpty())
+			{
+				for(String classDiffKey : classDiff.keySet())
+				{
+					String[] splitDiffClassKey = classDiffKey.split(";");
+
+					if(classDiffKey.equals(classDiffKey))
+					{
+						umlclass.setStrokeRED(classDiffKey);
+					}
+
+				}
+			}
+
+			// フィールド
+			if(!fieldDiff.isEmpty())
+			{
+				for(UMLClassAttribute attribute : artifact.getAttributes())
+				{
+					for(String fieldDiffKey : fieldDiff.keySet())
+					{
+						String[] splitDiffAttributeClassname= fieldDiffKey.split("!");
+						String classname = splitDiffAttributeClassname[0];
+
+						GWT.log(splitDiffAttributeClassname[0] + "!" + splitDiffAttributeClassname[1] + " diffクラス名：" + classname + " umlclass" + umlclass.getName());
+						if(umlclass.getName().equals(classname))
+							// 差分検知したものと今見ているKIfUのクラス図でクラス名が一致してたらその中のフィールドをみる
+							attribute.setStrokeRED(splitDiffAttributeClassname[splitDiffAttributeClassname.length - 1]);
+
+					}
+				}
+			}
+
+			// メソッド
+			if(!methodDiff.isEmpty())
+			{
+				for(UMLClassMethod method : artifact.getMethods())
+				{
+					for(String methodDiffKey : methodDiff.keySet())
+					{
+						String[] splitDiffMethodKey = methodDiffKey.split("&");
+						String classname = splitDiffMethodKey[0];
+
+						if(umlclass.getName().equals(classname))
+						{
+
+							method.setStrokeRED(splitDiffMethodKey[splitDiffMethodKey.length - 1]);
+
+							if(!paraDiff.isEmpty())
+							{
+								for(UMLParameter para : method.getParameters())
+								{
+									for(String paraDiffKey : paraDiff.keySet())
+									{
+										String[] splitDiffParaKey = paraDiffKey.split("%");
+
+										para.setStrokeRED(splitDiffParaKey[splitDiffParaKey.length - 1]);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public ArrayList<ReplaceElements> addYamazakiReplaceDiff(Map<String,Map<String,String>> diffMap)
+	{
+		Map<String,String> surplusMap = diffMap.get(this.SURPLUS);
+		Map<String,String> nothasMap = diffMap.get(this.NOTHAS);
+
+		Map<String,String> replacetoNothas = new HashMap<String,String>();
+		ArrayList<ReplaceElements> replaceList = new ArrayList<ReplaceElements>();
+
+
+
+		Map<String,String> classDiffSurplus  	= new HashMap<String,String>();
+		Map<String,String> fieldDiffSurplus  	= new HashMap<String,String>();
+		Map<String,String> methodDiffSurplus  	= new HashMap<String,String>();
+		Map<String,String> paraDiffSurplus  	= new HashMap<String,String>();
+
+		// Mapの整理
+		for(String diffkey : surplusMap.keySet())
+		{
+			if(diffkey.contains("!")) 								// フィールド
+			{
+				fieldDiffSurplus.put(diffkey,surplusMap.get(diffkey));
+			}
+			else if(diffkey.contains("%") && diffkey.contains("&")) // パラメータ
+			{
+				paraDiffSurplus.put(diffkey,surplusMap.get(diffkey));
+			}
+			else if(diffkey.contains("&")) 							//　メソッド
+			{
+				methodDiffSurplus.put(diffkey,surplusMap.get(diffkey));
+			}
+			else 													// クラス名
+			{
+				classDiffSurplus.put(diffkey,surplusMap.get(diffkey));
+			}
+		}
+
+		Map<String,String> classDiffNothas  	= new HashMap<String,String>();
+		Map<String,String> fieldDiffNothas  	= new HashMap<String,String>();
+		Map<String,String> methodDiffNothas  	= new HashMap<String,String>();
+		Map<String,String> paraDiffNothas 	= new HashMap<String,String>();
+
+		// Mapの整理
+		for(String diffkey : nothasMap.keySet())
+		{
+			if(diffkey.contains("!")) 								// フィールド
+			{
+				fieldDiffNothas.put(diffkey,nothasMap.get(diffkey));
+			}
+			else if(diffkey.contains("%") && diffkey.contains("&")) // パラメータ
+			{
+				paraDiffNothas.put(diffkey,nothasMap.get(diffkey));
+			}
+			else if(diffkey.contains("&")) 							//　メソッド
+			{
+				methodDiffNothas.put(diffkey,nothasMap.get(diffkey));
+			}
+			else 													// クラス名
+			{
+				classDiffNothas.put(diffkey,nothasMap.get(diffkey));
+			}
+		}
+
+
+
+		for(GfxObject gfxobject : objects.keySet())
+		{
+			ClassArtifact artifact = (ClassArtifact) objects.get(gfxobject);
+			//Window.alert(artifact.toURL());
+
+
+			// クラス
+			UMLClass umlclass = artifact.getUMLClass();
+			if(!classDiffSurplus.isEmpty() && !classDiffNothas.isEmpty())
+			{
+				for(String surplusKey : classDiffSurplus.keySet())
+				{
+					for(String nothasKey : classDiffNothas.keySet())
+					{
+						if(surplusKey.equals(nothasKey))
+						{
+							String[] splitDiffAttributeClassname= nothasKey.split(";");
+							String classname = splitDiffAttributeClassname[0];
+
+							if(umlclass.getName().equals(classname))
+							{
+								ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),umlclass);
+								replaceList.add(tmpReplaceObject);
+								replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
+							}
+
+						}
+					}
+				}
+			}
+
+			// フィールド
+			if(!fieldDiffSurplus.isEmpty() && !fieldDiffNothas.isEmpty())
+			{
+				for(String surplusKey : fieldDiffSurplus.keySet())
+				{
+					for(String nothasKey : fieldDiffNothas.keySet())
+					{
+
+						if(surplusKey.equals(nothasKey))
+						{
+							for(UMLClassAttribute attribute : artifact.getAttributes())
+							{
+
+								String[] splitDiffAttributeClassname= nothasKey.split("!");
+								String classname = splitDiffAttributeClassname[0];
+
+								GWT.log(splitDiffAttributeClassname[0] + "!" + splitDiffAttributeClassname[1] + " diffクラス名：" + classname + " umlclass" + umlclass.getName());
+								if(umlclass.getName().equals(classname))
+								{
+									// 差分検知したものと今見ているKIfUのクラス図でクラス名が一致してたらその中のフィールドをみる
+									ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),attribute);
+									replaceList.add(tmpReplaceObject);
+									replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
+								}
+							}
+						}
+
+					}
+				}
+			}
+
+			// メソッド
+
+			if(!methodDiffSurplus.isEmpty() && !methodDiffNothas.isEmpty())
+			{
+				for(String surplusKey : fieldDiffSurplus.keySet())
+				{
+					for(String nothasKey : fieldDiffNothas.keySet())
+					{
+						if(surplusKey.equals(nothasKey))
+						{
+							for(UMLClassMethod method : artifact.getMethods())
+							{
+
+								String[] splitDiffMethodKey = nothasKey.split("&");
+								String classname = splitDiffMethodKey[0];
+
+								if(umlclass.getName().equals(classname))
+								{
+
+									ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),method);
+									replaceList.add(tmpReplaceObject);
+									replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
+
+									if(!paraDiffSurplus.isEmpty() && !paraDiffNothas.isEmpty())
+									{
+										for(String parasurplusKey : fieldDiffSurplus.keySet())
+										{
+											for(String paranothasKey : fieldDiffNothas.keySet())
+											{
+												if(surplusKey.equals(nothasKey))
+												{
+													for(UMLParameter para : method.getParameters())
+													{
+
+														String[] splitDiffParaKey = paranothasKey.split("%");
+
+														ReplaceElements tmpparaReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),para);
+														replaceList.add(tmpparaReplaceObject);
+														replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
+
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+		for(String surplusKey : surplusMap.keySet())
+		{
+			for(String nothasKey : nothasMap.keySet())
+			{
+				if(surplusKey.equals(nothasKey))
+				{
+					ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey));
+					replaceList.add(tmpReplaceObject);
+					replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
+				}
+			}
+		}
+
+		return replaceList;
+	}
 }
+
+/*
+ * for(GfxObject gfxobject : objects.keySet())
+		{
+			ClassArtifact artifact = (ClassArtifact) objects.get(gfxobject);
+			//Window.alert(artifact.toURL());
+
+
+			// クラス
+			UMLClass umlclass = artifact.getUMLClass();
+			if(!classDiffSurplus.isEmpty() && !classDiffNothas.isEmpty())
+			{
+				for(String surplusKey : classDiffSurplus.keySet())
+				{
+					for(String nothasKey : classDiffNothas.keySet())
+					{
+						if(surplusKey.equals(nothasKey))
+						{
+							String[] splitDiffAttributeClassname= nothasKey.split(";");
+							String classname = splitDiffAttributeClassname[0];
+
+							if(umlclass.getName().equals(classname))
+							{
+								ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),umlclass);
+								replaceList.add(tmpReplaceObject);
+								replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
+							}
+
+						}
+					}
+				}
+			}
+
+			// フィールド
+			if(!fieldDiffSurplus.isEmpty() && !fieldDiffNothas.isEmpty())
+			{
+				for(String surplusKey : fieldDiffSurplus.keySet())
+				{
+					for(String nothasKey : fieldDiffNothas.keySet())
+					{
+
+						if(surplusKey.equals(nothasKey))
+						{
+							for(UMLClassAttribute attribute : artifact.getAttributes())
+							{
+
+								String[] splitDiffAttributeClassname= nothasKey.split("!");
+								String classname = splitDiffAttributeClassname[0];
+
+								GWT.log(splitDiffAttributeClassname[0] + "!" + splitDiffAttributeClassname[1] + " diffクラス名：" + classname + " umlclass" + umlclass.getName());
+								if(umlclass.getName().equals(classname))
+								{
+									// 差分検知したものと今見ているKIfUのクラス図でクラス名が一致してたらその中のフィールドをみる
+									ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),attribute);
+									replaceList.add(tmpReplaceObject);
+									replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
+								}
+							}
+						}
+
+					}
+				}
+			}
+
+			// メソッド
+
+			if(!methodDiffSurplus.isEmpty() && !methodDiffNothas.isEmpty())
+			{
+				for(String surplusKey : fieldDiffSurplus.keySet())
+				{
+					for(String nothasKey : fieldDiffNothas.keySet())
+					{
+						if(surplusKey.equals(nothasKey))
+						{
+							for(UMLClassMethod method : artifact.getMethods())
+							{
+
+								String[] splitDiffMethodKey = nothasKey.split("&");
+								String classname = splitDiffMethodKey[0];
+
+								if(umlclass.getName().equals(classname))
+								{
+
+									ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),method);
+									replaceList.add(tmpReplaceObject);
+									replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
+
+									if(!paraDiffSurplus.isEmpty() && !paraDiffNothas.isEmpty())
+									{
+										for(String parasurplusKey : fieldDiffSurplus.keySet())
+										{
+											for(String paranothasKey : fieldDiffNothas.keySet())
+											{
+												if(surplusKey.equals(nothasKey))
+												{
+													for(UMLParameter para : method.getParameters())
+													{
+
+														String[] splitDiffParaKey = paranothasKey.split("%");
+
+														ReplaceElements tmpparaReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),para);
+														replaceList.add(tmpparaReplaceObject);
+														replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
+
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+		for(String surplusKey : surplusMap.keySet())
+		{
+			for(String nothasKey : nothasMap.keySet())
+			{
+				if(surplusKey.equals(nothasKey))
+				{
+					ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey));
+					replaceList.add(tmpReplaceObject);
+					replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
+				}
+			}
+		}
+*/

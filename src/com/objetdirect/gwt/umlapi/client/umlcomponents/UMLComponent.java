@@ -29,6 +29,7 @@ import com.objetdirect.gwt.umlapi.client.helpers.ThemeManager;
 public abstract class UMLComponent {
 	// Nothing here yet
 
+
 	// add Yamazaki
 	protected void setStroke_BLACK(GfxObject element)
 	{

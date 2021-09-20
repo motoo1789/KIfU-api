@@ -138,6 +138,7 @@ public class UMLClass extends UMLNode implements IGetDiffString, ISetStrokeRED  
 	 * @param name
 	 *            the name to set
 	 */
+	@Override
 	public final void setName(final String name) {
 		this.name = name;
 	}
@@ -178,7 +179,7 @@ public class UMLClass extends UMLNode implements IGetDiffString, ISetStrokeRED  
 	@Override
 	public String getDiffTypeKey() {
 		// TODO 自動生成されたメソッド・スタブ
-		String key = this.name + ";" + this.stereotype;
+		String key = this.name + ";type";
 		return key.replaceAll(" ","");
 	}
 
@@ -210,5 +211,17 @@ public class UMLClass extends UMLNode implements IGetDiffString, ISetStrokeRED  
 //		}
 		if(this.classGfxObject.containsKey(key))
 			super.setStroke_RED(this.classGfxObject.get(key));
+	}
+
+	@Override
+	public void setType(String type) {
+		// TODO 自動生成されたメソッド・スタブ
+		this.stereotype = type;
+	}
+
+	@Override
+	public void setVisibility(UMLVisibility visibility) {
+		// TODO 自動生成されたメソッド・スタブ
+
 	}
 }
