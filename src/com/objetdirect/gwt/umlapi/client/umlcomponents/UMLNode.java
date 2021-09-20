@@ -25,5 +25,6 @@ public abstract class UMLNode extends UMLComponent {
 	abstract public void setType(final String type);
 	abstract public void setName(final String name);
 	abstract public void setVisibility(final UMLVisibility visibility);
+	abstract public boolean hasGfxObjectKey(String haskey);
 
 }

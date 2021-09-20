@@ -2558,8 +2558,9 @@ public class UMLCanvas extends AbsolutePanel {
 						{
 							String[] splitDiffAttributeClassname= nothasKey.split(";");
 							String classname = splitDiffAttributeClassname[0];
+							String element = splitDiffAttributeClassname[1];
 
-							if(umlclass.getName().equals(classname))
+							if(umlclass.hasGfxObjectKey(element))
 							{
 								ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),umlclass);
 								replaceList.add(tmpReplaceObject);
@@ -2586,9 +2587,10 @@ public class UMLCanvas extends AbsolutePanel {
 
 								String[] splitDiffAttributeClassname= nothasKey.split("!");
 								String classname = splitDiffAttributeClassname[0];
+								String element = splitDiffAttributeClassname[1];
 
 								GWT.log(splitDiffAttributeClassname[0] + "!" + splitDiffAttributeClassname[1] + " diffクラス名：" + classname + " umlclass" + umlclass.getName());
-								if(umlclass.getName().equals(classname))
+								if(attribute.hasGfxObjectKey(element))
 								{
 									// 差分検知したものと今見ているKIfUのクラス図でクラス名が一致してたらその中のフィールドをみる
 									ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),attribute);
@@ -2617,8 +2619,9 @@ public class UMLCanvas extends AbsolutePanel {
 
 								String[] splitDiffMethodKey = nothasKey.split("&");
 								String classname = splitDiffMethodKey[0];
+								String element = splitDiffMethodKey[1];
 
-								if(umlclass.getName().equals(classname))
+								if(method.hasGfxObjectKey(element))
 								{
 
 									ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),method);
@@ -2637,11 +2640,14 @@ public class UMLCanvas extends AbsolutePanel {
 													{
 
 														String[] splitDiffParaKey = paranothasKey.split("%");
+														String paraelement = splitDiffParaKey[1];
 
-														ReplaceElements tmpparaReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),para);
-														replaceList.add(tmpparaReplaceObject);
-														replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
-
+														if(para.hasGfxObjectKey(paraelement))
+														{
+															ReplaceElements tmpparaReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),para);
+															replaceList.add(tmpparaReplaceObject);
+															replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
+														}
 													}
 												}
 											}

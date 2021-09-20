@@ -224,4 +224,10 @@ public class UMLClass extends UMLNode implements IGetDiffString, ISetStrokeRED  
 		// TODO 自動生成されたメソッド・スタブ
 
 	}
+
+	@Override
+	public boolean hasGfxObjectKey(String haskey) {
+		// TODO 自動生成されたメソッド・スタブ
+		return classGfxObject.containsKey(haskey) ? true : false;
+	}
 }

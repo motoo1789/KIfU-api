@@ -161,4 +161,10 @@ public class UMLParameter extends UMLNode implements IGetDiffString, ISetStrokeR
 
 	}
 
+	@Override
+	public boolean hasGfxObjectKey(String haskey) {
+		// TODO 自動生成されたメソッド・スタブ
+		return paraGfxObject.containsKey(haskey) ? true : false;
+	}
+
 }

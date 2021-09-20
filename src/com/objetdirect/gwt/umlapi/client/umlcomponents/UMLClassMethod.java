@@ -295,6 +295,10 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 		this.returnType = type;
 	}
 
-
+	@Override
+	public boolean hasGfxObjectKey(String haskey) {
+		// TODO 自動生成されたメソッド・スタブ
+		return methodGfxObjectMap.containsKey(haskey) ? true : false;
+	}
 
 }
