@@ -1,15 +1,15 @@
 /*
  * This file is part of the GWTUML project and was written by Mounier Florian <mounier-dot-florian.at.gmail'dot'com> for Objet Direct
  * <http://wwww.objetdirect.com>
- * 
+ *
  * Copyright © 2009 Objet Direct Contact: gwtuml@googlegroups.com
- * 
+ *
  * GWTUML is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later version.
- * 
+ *
  * GWTUML is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License along with GWTUML. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.objetdirect.gwt.umlapi.client.umlcomponents;
@@ -25,17 +25,17 @@ import com.objetdirect.gwt.umlapi.client.analyser.LexicalAnalyzer.LexicalFlag;
 
 /**
  * This class represents an object uml component
- * 
+ *
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
- * 
+ *
  */
 public class UMLObject extends UMLNode {
 	/**
 	 * Parse a name from a {@link String}
-	 * 
+	 *
 	 * @param nameToParse
 	 *            The string containing a name
-	 * 
+	 *
 	 * @return The list of the new parsed name and instance or an empty one if there was a problem
 	 */
 	public static List<String> parseName(final String nameToParse) {
@@ -75,10 +75,10 @@ public class UMLObject extends UMLNode {
 
 	/**
 	 * Parse a stereotype from a {@link String}
-	 * 
+	 *
 	 * @param stereotypeToParse
 	 *            The string containing a stereotype
-	 * 
+	 *
 	 * @return The new parsed stereotype or an empty one if there was a problem
 	 */
 	public static String parseStereotype(final String stereotypeToParse) {
@@ -105,7 +105,7 @@ public class UMLObject extends UMLNode {
 
 	/**
 	 * Constructor of an {@link UMLObject}
-	 * 
+	 *
 	 * @param objectInstance
 	 *            The name of this instance
 	 * @param objectName
@@ -119,7 +119,7 @@ public class UMLObject extends UMLNode {
 
 	/**
 	 * Getter for the object instance name
-	 * 
+	 *
 	 * @return the object instance name
 	 */
 	public final String getInstanceName() {
@@ -128,7 +128,7 @@ public class UMLObject extends UMLNode {
 
 	/**
 	 * Getter for the attributes
-	 * 
+	 *
 	 * @return the attributes
 	 */
 	public final ArrayList<UMLObjectAttribute> getObjectAttributes() {
@@ -137,7 +137,7 @@ public class UMLObject extends UMLNode {
 
 	/**
 	 * Getter for the object name
-	 * 
+	 *
 	 * @return the object name
 	 */
 	public final String getObjectName() {
@@ -146,7 +146,7 @@ public class UMLObject extends UMLNode {
 
 	/**
 	 * Getter for the stereotype
-	 * 
+	 *
 	 * @return the stereotype
 	 */
 	public final String getStereotype() {
@@ -155,7 +155,7 @@ public class UMLObject extends UMLNode {
 
 	/**
 	 * Setter for the object instance name
-	 * 
+	 *
 	 * @param instanceName
 	 *            the object instance name to set
 	 */
@@ -165,7 +165,7 @@ public class UMLObject extends UMLNode {
 
 	/**
 	 * Setter for the attributes
-	 * 
+	 *
 	 * @param attributes
 	 *            the attributes to set
 	 */
@@ -175,7 +175,7 @@ public class UMLObject extends UMLNode {
 
 	/**
 	 * Setter for the object name
-	 * 
+	 *
 	 * @param objectName
 	 *            the object name to set
 	 */
@@ -185,7 +185,7 @@ public class UMLObject extends UMLNode {
 
 	/**
 	 * /** Setter for the stereotype
-	 * 
+	 *
 	 * @param stereotype
 	 *            the stereotype to set
 	 */
@@ -195,11 +195,35 @@ public class UMLObject extends UMLNode {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return this.instanceName + ":" + this.objectName;
+	}
+
+	@Override
+	public void setType(String type) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void setName(String name) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void setVisibility(UMLVisibility visibility) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public boolean hasGfxObjectKey(String haskey) {
+		// TODO 自動生成されたメソッド・スタブ
+		return false;
 	}
 }

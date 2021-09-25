@@ -45,6 +45,24 @@ public class UMLActor extends UMLNode{
 		return this.name;
 	}
 
+	@Override
+	public void setType(String type) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void setVisibility(UMLVisibility visibility) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public boolean hasGfxObjectKey(String haskey) {
+		// TODO 自動生成されたメソッド・スタブ
+		return false;
+	}
+
 
 
 }

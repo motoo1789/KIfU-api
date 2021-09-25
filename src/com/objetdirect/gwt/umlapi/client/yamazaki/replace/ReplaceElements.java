@@ -1,12 +1,12 @@
 package com.objetdirect.gwt.umlapi.client.yamazaki.replace;
 
-import com.objetdirect.gwt.umlapi.client.artifacts.ISetStrokeRED;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLNode;
+import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLVisibility;
 
 public class ReplaceElements {
 
 	private StringSplitSubstring splitsubstringObject;
-
 	private UMLNode replaceTarget;
 
 	private String surplusKey;
@@ -15,6 +15,8 @@ public class ReplaceElements {
 	private String nothasValue;
 
 	private String message;
+
+	private CheckBox checkbox;
 
 
 	public ReplaceElements(String surplusKey,String surplusValue,String nothasKey,String nothasValue,UMLNode component)
@@ -25,15 +27,55 @@ public class ReplaceElements {
 		this.nothasKey = nothasKey;
 		this.nothasValue = nothasValue;
 		this.replaceTarget = component;
+
+		setMessage();
+
+		this.checkbox = new CheckBox(this.message);
+		//checkbox.setValue(false);
+	}
+
+	public void replace()
+	{
+		if(surplusKey.contains("{"))
+		{
+			char[] tmp = nothasValue.toCharArray();
+			replaceTarget.setVisibility(UMLVisibility.getVisibilityFromToken(tmp[0]));
+		}
+		else if(surplusKey.contains("}"))
+		{
+			replaceTarget.setType(nothasValue);;
+		}
+		else
+		{
+			replaceTarget.setName(nothasValue);
+		}
+
 	}
 
 	private void setMessage()
 	{
+		//  何が入っているか　？？？の？？？をまで
 		String classnamefmname = splitsubstringObject.splitClassname(this.surplusKey);
 
-
-		message = classnamefmname;
+		String  appendReplaceString = classnamefmname + nothasValue + "に変換";
+		message = appendReplaceString;
 	}
+
+	public CheckBox getCheckBox()
+	{
+		return this.checkbox;
+	}
+
+	private boolean getCheckBoxBoole()
+	{
+		return this.checkbox.getValue();
+	}
+
+//	public String getMessage()
+//	{
+//		return this.message;
+//	}
+
 
 	public String getSurplusKey()
 	{
@@ -55,8 +97,4 @@ public class ReplaceElements {
 		return this.nothasValue;
 	}
 
-	public void strokeRED()
-	{
-		setStrokeREDTarget.setStrokeRED(key);
-	}
 }

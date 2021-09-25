@@ -464,7 +464,7 @@ public class GWTCanvasGfxPlatform implements GfxPlatform {
 	public void setStrokeStyle(final GfxObject gfxO, final GfxStyle style) {
 		this.getIncubatorGraphicalObjectFrom(gfxO).setStyle(style);
 		this.getIncubatorGraphicalObjectFrom(gfxO).draw();
-		// redraw();
+		//redraw();
 	}
 
 	/*
