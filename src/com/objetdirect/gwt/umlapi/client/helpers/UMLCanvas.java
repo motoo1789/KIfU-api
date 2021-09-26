@@ -92,6 +92,7 @@ import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLVisibility;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.IDrawReplaceAddDelete;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.NotHasAttributeElements;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.NotHasClassElements;
+import com.objetdirect.gwt.umlapi.client.yamazaki.replace.NotHasClassTypeElements;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.NotHasMethodElements;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.NotHasParameterElements;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.ReplaceElements;
@@ -2457,7 +2458,16 @@ public class UMLCanvas extends AbsolutePanel {
 					UMLClass umlclass = artifact.getUMLClass();
 					if(umlclass.getName().equals(classname))
 					{
-						isClassName = !isClassName;
+						if(splitDiffClassKey.length > 1)
+						{
+							String type = splitDiffClassKey[1];
+							if(!type.equals(umlclass.getStereotype()))
+							{
+								IDrawReplaceAddDelete addElements = new NotHasClassTypeElements(classDiffKey,classDiff.get(classDiffKey),umlclass);
+								nothasList.add(addElements);
+							}
+						}
+						isClassName = true;
 					}
 				}
 
@@ -2664,151 +2674,7 @@ public class UMLCanvas extends AbsolutePanel {
 			}
 		}
 
-
-//		for(String surplusKey : surplusMap.keySet())
-//		{
-//			for(String nothasKey : nothasMap.keySet())
-//			{
-//				if(surplusKey.equals(nothasKey))
-//				{
-//					ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey));
-//					replaceList.add(tmpReplaceObject);
-//					replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
-//				}
-//			}
-//		}
-
 		return replaceList;
 	}
 }
 
-/*
- * for(GfxObject gfxobject : objects.keySet())
-		{
-			ClassArtifact artifact = (ClassArtifact) objects.get(gfxobject);
-			//Window.alert(artifact.toURL());
-
-
-			// クラス
-			UMLClass umlclass = artifact.getUMLClass();
-			if(!classDiffSurplus.isEmpty() && !classDiffNothas.isEmpty())
-			{
-				for(String surplusKey : classDiffSurplus.keySet())
-				{
-					for(String nothasKey : classDiffNothas.keySet())
-					{
-						if(surplusKey.equals(nothasKey))
-						{
-							String[] splitDiffAttributeClassname= nothasKey.split(";");
-							String classname = splitDiffAttributeClassname[0];
-
-							if(umlclass.getName().equals(classname))
-							{
-								ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),umlclass);
-								replaceList.add(tmpReplaceObject);
-								replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
-							}
-
-						}
-					}
-				}
-			}
-
-			// フィールド
-			if(!fieldDiffSurplus.isEmpty() && !fieldDiffNothas.isEmpty())
-			{
-				for(String surplusKey : fieldDiffSurplus.keySet())
-				{
-					for(String nothasKey : fieldDiffNothas.keySet())
-					{
-
-						if(surplusKey.equals(nothasKey))
-						{
-							for(UMLClassAttribute attribute : artifact.getAttributes())
-							{
-
-								String[] splitDiffAttributeClassname= nothasKey.split("!");
-								String classname = splitDiffAttributeClassname[0];
-
-								GWT.log(splitDiffAttributeClassname[0] + "!" + splitDiffAttributeClassname[1] + " diffクラス名：" + classname + " umlclass" + umlclass.getName());
-								if(umlclass.getName().equals(classname))
-								{
-									// 差分検知したものと今見ているKIfUのクラス図でクラス名が一致してたらその中のフィールドをみる
-									ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),attribute);
-									replaceList.add(tmpReplaceObject);
-									replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
-								}
-							}
-						}
-
-					}
-				}
-			}
-
-			// メソッド
-
-			if(!methodDiffSurplus.isEmpty() && !methodDiffNothas.isEmpty())
-			{
-				for(String surplusKey : fieldDiffSurplus.keySet())
-				{
-					for(String nothasKey : fieldDiffNothas.keySet())
-					{
-						if(surplusKey.equals(nothasKey))
-						{
-							for(UMLClassMethod method : artifact.getMethods())
-							{
-
-								String[] splitDiffMethodKey = nothasKey.split("&");
-								String classname = splitDiffMethodKey[0];
-
-								if(umlclass.getName().equals(classname))
-								{
-
-									ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),method);
-									replaceList.add(tmpReplaceObject);
-									replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
-
-									if(!paraDiffSurplus.isEmpty() && !paraDiffNothas.isEmpty())
-									{
-										for(String parasurplusKey : fieldDiffSurplus.keySet())
-										{
-											for(String paranothasKey : fieldDiffNothas.keySet())
-											{
-												if(surplusKey.equals(nothasKey))
-												{
-													for(UMLParameter para : method.getParameters())
-													{
-
-														String[] splitDiffParaKey = paranothasKey.split("%");
-
-														ReplaceElements tmpparaReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),para);
-														replaceList.add(tmpparaReplaceObject);
-														replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
-
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-
-		for(String surplusKey : surplusMap.keySet())
-		{
-			for(String nothasKey : nothasMap.keySet())
-			{
-				if(surplusKey.equals(nothasKey))
-				{
-					ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey));
-					replaceList.add(tmpReplaceObject);
-					replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
-				}
-			}
-		}
-*/
