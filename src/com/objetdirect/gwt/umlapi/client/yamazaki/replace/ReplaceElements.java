@@ -4,7 +4,7 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLNode;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLVisibility;
 
-public class ReplaceElements {
+public class ReplaceElements implements IDrawReplaceAddDelete {
 
 	private StringSplitSubstring splitsubstringObject;
 	private UMLNode replaceTarget;
@@ -34,7 +34,7 @@ public class ReplaceElements {
 		//checkbox.setValue(false);
 	}
 
-	public void replace()
+	public void drawReplaceAddDelete()
 	{
 		if(surplusKey.contains("{"))
 		{
@@ -66,10 +66,6 @@ public class ReplaceElements {
 		return this.checkbox;
 	}
 
-	private boolean getCheckBoxBoole()
-	{
-		return this.checkbox.getValue();
-	}
 
 //	public String getMessage()
 //	{

@@ -89,6 +89,11 @@ import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLParameter;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLSecurityUseCase;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLUseCase;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLVisibility;
+import com.objetdirect.gwt.umlapi.client.yamazaki.replace.IDrawReplaceAddDelete;
+import com.objetdirect.gwt.umlapi.client.yamazaki.replace.NotHasAttributeElements;
+import com.objetdirect.gwt.umlapi.client.yamazaki.replace.NotHasClassElements;
+import com.objetdirect.gwt.umlapi.client.yamazaki.replace.NotHasMethodElements;
+import com.objetdirect.gwt.umlapi.client.yamazaki.replace.NotHasParameterElements;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.ReplaceElements;
 
 /**
@@ -2298,12 +2303,14 @@ public class UMLCanvas extends AbsolutePanel {
 		}
 	}
 
-	public void addYamazakiDiffNotHas(Map<String,String> diffMap)
+	public ArrayList<IDrawReplaceAddDelete> addYamazakiDiffNotHas(Map<String,String> diffMap)
 	{
 		Map<String,String> classDiff  = new HashMap<String,String>();
 		Map<String,String> fieldDiff  = new HashMap<String,String>();
 		Map<String,String> methodDiff  = new HashMap<String,String>();
 		Map<String,String> paraDiff  = new HashMap<String,String>();
+
+		ArrayList<IDrawReplaceAddDelete> nothasList = new ArrayList<IDrawReplaceAddDelete>();
 
 		// Mapの整理
 		for(String diffkey : diffMap.keySet())
@@ -2342,9 +2349,14 @@ public class UMLCanvas extends AbsolutePanel {
 					String classname = splitDiffAttributeClassname[0];
 					String attributename = splitDiffAttributeClassname[splitDiffAttributeClassname.length - 1];
 
-					if(umlclass.getName().equals(classname))
+					if(umlclass.getName().equals(classname) && !attributename.contains("{") && !attributename.contains("}"))
+					{
 						// フィールド追加
-						artifact.addAttribute(new UMLClassAttribute(UMLVisibility.getVisibilityFromToken('+'),"void",attributename));
+						IDrawReplaceAddDelete addElements = new NotHasAttributeElements(fieldDiffKey,fieldDiff.get(fieldDiffKey),artifact);
+						nothasList.add(addElements);
+
+						//artifact.addAttribute(new UMLClassAttribute(UMLVisibility.getVisibilityFromToken('+'),"void",attributename));
+					}
 				}
 			}
 
@@ -2357,8 +2369,14 @@ public class UMLCanvas extends AbsolutePanel {
 					String classname = splitDiffMethodKey[0];
 					String methodname = splitDiffMethodKey[splitDiffMethodKey.length - 1];
 
-					if(umlclass.getName().equals(classname))
-						artifact.addMethod(new UMLClassMethod(UMLVisibility.getVisibilityFromToken('+'), "void", methodname, new ArrayList<UMLParameter>()));
+					if(umlclass.getName().equals(classname) && !methodname.contains("{") && !methodname.contains("}"))
+					{
+						//Window.alert("value:" + methodDiff.get(methodDiffKey));
+						IDrawReplaceAddDelete addElements = new NotHasMethodElements(methodDiffKey,methodDiff.get(methodDiffKey),artifact);
+						nothasList.add(addElements);
+						//artifact.addMethod(new UMLClassMethod(UMLVisibility.getVisibilityFromToken('+'), "void", methodname, new ArrayList<UMLParameter>()));
+					}
+
 				}
 			}
 
@@ -2378,23 +2396,57 @@ public class UMLCanvas extends AbsolutePanel {
 					{
 						for(UMLClassMethod method : artifact.getMethods())
 						{
-							if(method.getName().equals(methodname))
-								method.addParametar(new UMLParameter("void", paraname));
+							if(method.getName().equals(methodname) && !paraname.contains("}"))
+							{
+								IDrawReplaceAddDelete addElements = new NotHasParameterElements(paraDiffKey,paraDiff.get(paraDiffKey),method);
+								nothasList.add(addElements);
+								//method.addParametar(new UMLParameter("void", paraname));
+							}
+
 						}
 					}
-
 				}
 			}
 		}
+
+		if(!classDiff.isEmpty())
+		{
+			for(String classDiffKey : classDiff.keySet())
+			{
+				String[] splitDiffClassKey = classDiffKey.split(";");
+				String classname = splitDiffClassKey[0];
+
+				boolean isClassName = false;
+				for(GfxObject gfxobject : objects.keySet())
+				{
+					ClassArtifact artifact = (ClassArtifact) objects.get(gfxobject);
+
+					// クラス
+					UMLClass umlclass = artifact.getUMLClass();
+					if(umlclass.getName().equals(classname))
+					{
+						isClassName = !isClassName;
+					}
+				}
+
+				if(!isClassName)
+				{
+					IDrawReplaceAddDelete addElements = new NotHasClassElements(classDiffKey,classDiff.get(classDiffKey),this);
+					nothasList.add(addElements);
+				}
+			}
+		}
+
+		return nothasList;
 	}
 
-	public ArrayList<ReplaceElements> addYamazakiReplaceDiff(Map<String,Map<String,String>> diffMap)
+	public ArrayList<IDrawReplaceAddDelete> addYamazakiReplaceDiff(Map<String,Map<String,String>> diffMap)
 	{
 		Map<String,String> surplusMap = diffMap.get(this.SURPLUS);
 		Map<String,String> nothasMap = diffMap.get(this.NOTHAS);
 
 		Map<String,String> replacetoNothas = new HashMap<String,String>();
-		ArrayList<ReplaceElements> replaceList = new ArrayList<ReplaceElements>();
+		ArrayList<IDrawReplaceAddDelete> replaceList = new ArrayList<IDrawReplaceAddDelete>();
 
 		Map<String,String> classDiffSurplus  	= new HashMap<String,String>();
 		Map<String,String> fieldDiffSurplus  	= new HashMap<String,String>();
@@ -2431,7 +2483,7 @@ public class UMLCanvas extends AbsolutePanel {
 		// Mapの整理
 		for(String diffkey : nothasMap.keySet())
 		{
-			Window.alert("nothas paranothasKey:" + diffkey);
+			//Window.alert("nothas paranothasKey:" + diffkey);
 			if(diffkey.contains("!")) 								// フィールド
 			{
 				fieldDiffNothas.put(diffkey,nothasMap.get(diffkey));
