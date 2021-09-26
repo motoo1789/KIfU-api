@@ -66,13 +66,6 @@ public class ReplaceElements implements IDrawReplaceAddDelete {
 		return this.checkbox;
 	}
 
-
-//	public String getMessage()
-//	{
-//		return this.message;
-//	}
-
-
 	public String getSurplusKey()
 	{
 		return this.surplusKey;

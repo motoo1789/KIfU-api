@@ -301,4 +301,8 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 		return methodGfxObjectMap.containsKey(haskey) ? true : false;
 	}
 
+	public void removeParameter(UMLParameter targetpara)
+	{
+		parameters.remove(targetpara);
+	}
 }

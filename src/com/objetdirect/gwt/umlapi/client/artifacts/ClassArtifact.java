@@ -153,33 +153,6 @@ public class ClassArtifact extends NodeArtifact {
 		return rightMenu;
 	}
 
-//	// add Yamazaki
-//	public void fieldVisibilityStroketoRED()
-//	{
-//		classAttributes.visibilityStroketoRED("");
-//	}
-//	public void fieldNameStroketoRED()
-//	{
-//		classAttributes.nameStroketoRED("");
-//	}
-//	public void fieldTypeStroketoRED()
-//	{
-//		classAttributes.typeStroketoRED("");
-//	}
-//
-//	public void methodVisibilityStroketoRED()
-//	{
-//		classMethods.visibilityStroketoRED("");
-//	}
-//	public void methodNameStroketoRED()
-//	{
-//		classMethods.nameStroketoRED("");
-//	}
-//	public void methodTypeStroketoRED()
-//	{
-//		classMethods.typeStroketoRED("");
-//	}
-
 	/*
 	 * (non-Javadoc)
 	 *
@@ -189,5 +162,21 @@ public class ClassArtifact extends NodeArtifact {
 	public String toURL() {
 		return "Class$" + this.getLocation() + "!" + this.className.toURL() + "!" + this.classAttributes.toURL() + "!" + this.classMethods.toURL();
 
+	}
+
+	// 山崎が追加　プログラムから要素を削除するため ↓
+	public void removeAttribute(UMLClassAttribute attribute)
+	{
+		classAttributes.remove(attribute);
+	}
+
+	public void removeMethod(UMLClassMethod method)
+	{
+		classMethods.remove(method);
+	}
+
+	public ClassPartNameArtifact getClassPartNameArtifact()
+	{
+		return className;
 	}
 }
