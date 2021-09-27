@@ -31,7 +31,13 @@ public class NotHasParameterElements implements IDrawReplaceAddDelete {
 
 	private void setMessage()
 	{
-		message = nothasKey + "に" + nothasValue + "を追加しますか？";
+		String[] splitDiffAttributeClassname = nothasKey.split("&");
+		String classname = splitDiffAttributeClassname[0];
+
+		String[] splitMethodName = nothasKey.split("%");
+		int indexAndMark = splitMethodName[0].indexOf("&") + 1;
+		String substringMethodName = splitMethodName[0].substring(indexAndMark,splitMethodName[0].length());
+		message = classname + "クラスの" + substringMethodName + "メソッドにパラメータ" + nothasValue + "を追加しますか？";
 	}
 
 	@Override

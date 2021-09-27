@@ -1,13 +1,14 @@
 package com.objetdirect.gwt.umlapi.client.yamazaki.replace;
 
 import com.google.gwt.user.client.ui.CheckBox;
+import com.objetdirect.gwt.umlapi.client.artifacts.ClassArtifact;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLNode;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLVisibility;
 
-public class ReplaceElements implements IDrawReplaceAddDelete {
+public class ReplaceClassStereoType implements IDrawReplaceAddDelete {
 
 	private StringSplitSubstring splitsubstringObject;
-	private UMLNode replaceTarget;
+	private ClassArtifact replaceTarget;
 
 	private String surplusKey;
 	private String surplusValue;
@@ -19,7 +20,7 @@ public class ReplaceElements implements IDrawReplaceAddDelete {
 	private CheckBox checkbox;
 
 
-	public ReplaceElements(String surplusKey,String surplusValue,String nothasKey,String nothasValue,UMLNode component)
+	public ReplaceClassStereoType(String surplusKey,String surplusValue,String nothasKey,String nothasValue,ClassArtifact component)
 	{
 		splitsubstringObject = StringSplitSubstring.getInstance();
 		this.surplusKey = surplusKey;
@@ -36,14 +37,10 @@ public class ReplaceElements implements IDrawReplaceAddDelete {
 
 	public void drawReplaceAddDelete()
 	{
-		if(surplusKey.contains("{"))
+
+		if(surplusKey.contains(";")) // 本当はやりたくないがわからない
 		{
-			char[] tmp = nothasValue.toCharArray();
-			replaceTarget.setVisibility(UMLVisibility.getVisibilityFromToken(tmp[0]));
-		}
-		else if(surplusKey.contains("}"))
-		{
-			replaceTarget.setType(nothasValue);
+			replaceTarget.getClassPartNameArtifact().setStereotype(nothasValue);
 		}
 	}
 
@@ -80,5 +77,6 @@ public class ReplaceElements implements IDrawReplaceAddDelete {
 	{
 		return this.nothasValue;
 	}
+
 
 }

@@ -95,6 +95,7 @@ import com.objetdirect.gwt.umlapi.client.yamazaki.replace.NotHasClassElements;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.NotHasClassTypeElements;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.NotHasMethodElements;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.NotHasParameterElements;
+import com.objetdirect.gwt.umlapi.client.yamazaki.replace.ReplaceClassStereoType;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.ReplaceElements;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.SurplusAttributeElement;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.SurplusClassElement;
@@ -2460,10 +2461,11 @@ public class UMLCanvas extends AbsolutePanel {
 					{
 						if(splitDiffClassKey.length > 1)
 						{
-							String type = splitDiffClassKey[1];
+							String type = classDiff.get(classDiffKey);
 							if(!type.equals(umlclass.getStereotype()))
 							{
-								IDrawReplaceAddDelete addElements = new NotHasClassTypeElements(classDiffKey,classDiff.get(classDiffKey),umlclass);
+
+								IDrawReplaceAddDelete addElements = new NotHasClassTypeElements(classDiffKey,classDiff.get(classDiffKey),artifact);
 								nothasList.add(addElements);
 							}
 						}
@@ -2566,9 +2568,9 @@ public class UMLCanvas extends AbsolutePanel {
 							String[] splitDiffAttributeClassname= nothasKey.split(";");
 							String classname = splitDiffAttributeClassname[0];
 
-							if(umlclass.hasGfxObjectKey(nothasKey))
+							if(umlclass.hasGfxObjectKey(nothasKey) && splitDiffAttributeClassname.length > 1)
 							{
-								ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),umlclass);
+								ReplaceClassStereoType tmpReplaceObject = new ReplaceClassStereoType(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),artifact);
 								replaceList.add(tmpReplaceObject);
 								replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
 							}

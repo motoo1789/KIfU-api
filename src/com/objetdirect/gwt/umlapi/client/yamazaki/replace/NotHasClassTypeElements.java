@@ -2,12 +2,10 @@ package com.objetdirect.gwt.umlapi.client.yamazaki.replace;
 
 import com.google.gwt.user.client.ui.CheckBox;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassArtifact;
-import com.objetdirect.gwt.umlapi.client.helpers.UMLCanvas;
-import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLClass;
 
 public class NotHasClassTypeElements implements IDrawReplaceAddDelete {
 	private StringSplitSubstring splitsubstringObject;
-	private UMLClass addTarget;
+	private ClassArtifact addTarget;
 
 	private String nothasKey;
 	private String nothasValue;
@@ -16,7 +14,7 @@ public class NotHasClassTypeElements implements IDrawReplaceAddDelete {
 
 	private CheckBox checkbox;
 
-	public NotHasClassTypeElements(String nothasKey,String nothasValue,UMLClass addTarget)
+	public NotHasClassTypeElements(String nothasKey,String nothasValue,ClassArtifact addTarget)
 	{
 		splitsubstringObject = StringSplitSubstring.getInstance();
 		this.nothasKey = nothasKey;
@@ -39,7 +37,7 @@ public class NotHasClassTypeElements implements IDrawReplaceAddDelete {
 	@Override
 	public void drawReplaceAddDelete() {
 		// TODO 自動生成されたメソッド・スタブ
-		addTarget.setType(nothasValue);
+		addTarget.getClassPartNameArtifact().setStereotype(nothasValue);
 	}
 
 	@Override
