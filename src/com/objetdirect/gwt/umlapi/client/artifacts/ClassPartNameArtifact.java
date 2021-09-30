@@ -308,8 +308,14 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 		};
 	}
 
+	// add Yamazaki
 	public UMLClass getUMLClass()
 	{
 		return this.uMLclass;
+	}
+
+	public void addYamazakichecngeisSelected()
+	{
+		this.select();
 	}
 }

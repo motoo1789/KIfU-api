@@ -23,6 +23,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import com.allen_sauer.gwt.log.client.Log;
+import com.google.gwt.user.client.Window;
 import com.objetdirect.gwt.umlapi.client.GWTUMLAPIException;
 import com.objetdirect.gwt.umlapi.client.engine.Direction;
 import com.objetdirect.gwt.umlapi.client.engine.Point;
@@ -519,6 +520,7 @@ public abstract class UMLArtifact {
 		this.isSelected = true;
 		for (final Entry<LinkArtifact, UMLArtifact> dependentUMLArtifact : this.dependentUMLArtifacts.entrySet()) {
 			if (!dependentUMLArtifact.getValue().equals(this) && dependentUMLArtifact.getValue().isSelected) {
+				Window.alert("UMLArtifact:select()");
 				this.canvas.selectArtifact(dependentUMLArtifact.getKey());
 
 			}

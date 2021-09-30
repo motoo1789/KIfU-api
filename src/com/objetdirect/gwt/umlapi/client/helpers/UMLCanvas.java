@@ -1769,10 +1769,13 @@ public class UMLCanvas extends AbsolutePanel {
 		}
 	}
 
-	void removeSelected() {
+	// checnge Yamazaki 修飾子なしからpublicに変更
+	public void removeSelected() {
 		if (!this.selectedArtifacts.isEmpty()) {
+			Window.alert("removeSelected");
 			final HashMap<UMLArtifact, ArrayList<Point>> selectedBeforeRemovalArtifacts = new HashMap<UMLArtifact, ArrayList<Point>>(this.selectedArtifacts);
 			for (final UMLArtifact selectedArtifact : selectedBeforeRemovalArtifacts.keySet()) {
+				Window.alert("removeSelected: forの中に入ってるか");
 				this.remove(selectedArtifact);
 			}
 			//TODO takafumi
@@ -2242,7 +2245,7 @@ public class UMLCanvas extends AbsolutePanel {
 						}
 						else
 						{
-							IDrawReplaceAddDelete addElements = new SurplusClassElement(classDiffKey,classDiff.get(classDiffKey),this,artifact.getClassPartNameArtifact());
+							IDrawReplaceAddDelete addElements = new SurplusClassElement(classDiffKey,classDiff.get(classDiffKey),this,artifact);
 							surplusList.add(addElements);
 						}
 					}
