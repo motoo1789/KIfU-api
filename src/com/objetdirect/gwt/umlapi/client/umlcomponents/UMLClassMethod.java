@@ -95,7 +95,7 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 	 *
 	 */
 	public String getName() {
-		return this.name;
+		return this.name.toString().replaceAll(" ", "");
 	}
 
 	/**
@@ -115,7 +115,7 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 	 *
 	 */
 	public String getReturnType() {
-		return this.returnType;
+		return this.returnType.toString().replaceAll(" ", "");
 	}
 
 	/**

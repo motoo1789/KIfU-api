@@ -163,6 +163,10 @@ public class OptionsManager {
 		OptionsManager.optionsList.put("Advanced", 0);
 
 		OptionsManager.optionsList.put("LifeLineSpacing", 25);
+
+		// add Yamazaki
+		OptionsManager.optionsList.put("AddYamazakiGfxObjectPadding", 5);
+
 		OptionsManager.defaultOptionsList = new HashMap<String, Integer>(OptionsManager.optionsList);
 	}
 

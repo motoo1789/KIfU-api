@@ -114,7 +114,7 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 	 *
 	 */
 	public String getName() {
-		return this.name;
+		return this.name.toString().replaceAll(" ", "");
 	}
 
 	/**
@@ -124,7 +124,7 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 	 *
 	 */
 	public String getType() {
-		return this.type;
+		return this.type.toString().replaceAll(" ", "");
 	}
 
 	/**

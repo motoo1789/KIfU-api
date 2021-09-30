@@ -106,26 +106,26 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			//修飾子
 			GfxObject vmtGroup = GfxManager.getPlatform().buildVirtualGroup();
 			GfxObject visibility = GfxManager.getPlatform().buildText(attribute.getVisibility().toString(),
-					new Point(OptionsManager.get("TextLeftPadding"), OptionsManager.get("TextTopPadding") + this.height));
+					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding"), OptionsManager.get("TextTopPadding") + this.height));
 			super.setStroke_BLACK(visibility);
 			attribute.setVisibilityGfxObject(visibility);
-			attributeWidth = GfxManager.getPlatform().getTextWidthFor(visibility);
+			attributeWidth = OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(visibility);
 
 
 			//　名前
 			GfxObject name = GfxManager.getPlatform().buildText(attribute.getName(),
-					new Point(OptionsManager.get("TextLeftPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
+					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
 			super.setStroke_BLACK(name);
 			attribute.setNameGfxObject(name);
-			attributeWidth = attributeWidth + GfxManager.getPlatform().getTextWidthFor(name);
+			attributeWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(name);
 
 
 			// 型
 			GfxObject type = GfxManager.getPlatform().buildText(":" + attribute.getType(),
-					new Point(OptionsManager.get("TextLeftPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
+					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
 			super.setStroke_BLACK(type);
 			attribute.setTypeGfxObject(type);
-			attributeWidth = attributeWidth + GfxManager.getPlatform().getTextWidthFor(type);
+			attributeWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(type);
 
 
 			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, visibility);
