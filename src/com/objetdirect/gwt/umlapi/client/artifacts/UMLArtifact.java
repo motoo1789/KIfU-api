@@ -326,6 +326,8 @@ public abstract class UMLArtifact {
 	public void rebuildGfxObjectAddYamazaki() {
 		final long t = System.currentTimeMillis();
 		GfxManager.getPlatform().clearVirtualGroup(this.gfxObject);
+		//this.buildGfxObjectWithAnimationAddYamazaki();
+		Window.alert("rebuildGfxObjectAddYamazaki");
 		this.buildGfxObjectWithAnimationAddYamazaki();
 		if (this.isSelected) {
 			this.select();
@@ -481,8 +483,8 @@ public abstract class UMLArtifact {
 		if (QualityLevel.IsAlmost(QualityLevel.VERY_HIGH)) {
 			// ThemeManager.setForegroundOpacityTo(0);
 		}
-
-		this.buildGfxObjectAddYamazaki();
+		Window.alert("buildGfxObjectWithAnimationAddYamazaki");
+		this.buildGfxObject();
 		if (QualityLevel.IsAlmost(QualityLevel.VERY_HIGH)) {
 			for (int i = 25; i < 256; i += 25) {
 				final int j = i;

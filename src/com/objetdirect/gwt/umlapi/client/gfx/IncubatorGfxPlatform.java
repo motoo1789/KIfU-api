@@ -26,6 +26,7 @@ import com.google.gwt.user.client.ui.MouseListener;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.widgetideas.graphics.client.Color;
 import com.objetdirect.gwt.umlapi.client.engine.Point;
+import com.google.gwt.widgetideas.graphics.client.Color;
 
 /**
  * This class implements the graphic platform using the <a href="http://code.google.com/p/google-web-toolkit-incubator/">GWT Incubator</a> canvas library
@@ -460,6 +461,9 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 		// redraw();
 	}
 
+	// Add Yamazaki
+
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -511,8 +515,19 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 		return ((IncubatorGfxObjectContainer) gfxO).getGraphicObject();
 	}
 
-	@Override
 	public void setColor(GfxObject gfxObject, com.objetdirect.tatami.client.gfx.Color color) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public Color getCurrentStrokeColor(GfxObject gfxO) {
+		// TODO 自動生成されたメソッド・スタブ
+		return this.getIncubatorGraphicalObjectFrom(gfxO).getStrokeColor();
+	}
+
+	@Override
+	public void setColor(GfxObject gfxObject, Color color) {
 		// TODO 自動生成されたメソッド・スタブ
 
 	}

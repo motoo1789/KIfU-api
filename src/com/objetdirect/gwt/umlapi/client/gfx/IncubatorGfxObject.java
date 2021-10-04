@@ -108,6 +108,7 @@ abstract class IncubatorGfxObject {
 		//this.strokeColor = new Color(255, 0, 0, gfxColor.getAlpha());
 	}
 
+
 	public void setStrokeWidth(final int width) {
 		this.strokeWidth = width;
 	}
@@ -119,5 +120,11 @@ abstract class IncubatorGfxObject {
 	public void translate(final int dx, final int dy) {
 		this.x += dx;
 		this.y += dy;
+	}
+
+	// add Yamazaki
+	public Color getStrokeColor()
+	{
+		return this.strokeColor;
 	}
 }

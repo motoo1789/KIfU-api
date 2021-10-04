@@ -21,6 +21,7 @@ import java.util.List;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
 import com.objetdirect.gwt.umlapi.client.editors.ClassPartNameFieldEditor;
 import com.objetdirect.gwt.umlapi.client.engine.Point;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxColor;
@@ -329,6 +330,7 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 	@Override
 	protected void buildGfxObjectAddYamazaki() {
 		// TODO 自動生成されたメソッド・スタブ
+		Window.alert("ClassPartName buildGfxObjectAddYamazaki");
 		if (this.textVirtualGroup == null) {
 			this.computeBoundsAddYamazaki();
 		}
@@ -355,6 +357,7 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 	}
 
 	private void computeBoundsAddYamazaki() {
+		Window.alert("ClassPartName computeBoundsAddYamazaki");
 		this.height = 0;
 		this.width = 0;
 		this.textVirtualGroup = GfxManager.getPlatform().buildVirtualGroup();
@@ -366,7 +369,7 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 //			GfxManager.getPlatform().setFont(this.stereotypeText, OptionsManager.getFont());
 //			GfxManager.getPlatform().setStroke(this.stereotypeText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
 //			GfxManager.getPlatform().setFillColor(this.stereotypeText, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
-			//super.setStroke_BLACK(stereotypeText);
+			super.setStroke_Black_forcomputeBounds(stereotypeText);
 			this.uMLclass.setTypeGfxObject(this.stereotypeText);
 
 			this.width = GfxManager.getPlatform().getTextWidthFor(this.stereotypeText);
@@ -380,7 +383,7 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 //		GfxManager.getPlatform().setFont(this.nameText, OptionsManager.getFont());
 //		GfxManager.getPlatform().setStroke(this.nameText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
 //		GfxManager.getPlatform().setFillColor(this.nameText, ThemeManager.getTheme().getClassForegroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
-		//super.setStroke_BLACK(nameText);
+		super.setStroke_Black_forcomputeBounds(nameText);
 		this.uMLclass.setNameGfxObject(this.nameText);
 
 		final int thisNameWidth = GfxManager.getPlatform().getTextWidthFor(this.nameText) + OptionsManager.get("TextRightPadding")

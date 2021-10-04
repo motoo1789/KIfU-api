@@ -14,6 +14,9 @@
  */
 package com.objetdirect.gwt.umlapi.client.artifacts;
 
+import java.util.ArrayList;
+
+import com.google.gwt.widgetideas.graphics.client.Color;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxColor;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxManager;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxObject;
@@ -95,8 +98,40 @@ public abstract class NodePartArtifact extends BoxArtifact {
 	{
 		GfxManager.getPlatform().setFont(element, OptionsManager.getSmallFont());
 		GfxManager.getPlatform().setStroke(element, GfxColor.RED, 1); //ThemeManager.getTheme().getClassBackgroundColor()
-
 		GfxManager.getPlatform().setFillColor(element, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
+	}
+
+	protected void setStroke_Black_forcomputeBounds(GfxObject element)
+	{
+		Color currentColor = GfxManager.getPlatform().getCurrentStrokeColor(element);
+		ArrayList<Integer> rgbList = getRGB(currentColor);
+		int r = rgbList.get(0);
+		int g = rgbList.get(1);
+		int b = rgbList.get(2);
+
+		GfxManager.getPlatform().setStroke(element, new GfxColor(r,g,b), 1);
+		GfxManager.getPlatform().setFont(element, OptionsManager.getSmallFont());
+		GfxManager.getPlatform().setFillColor(element, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
+	}
+
+	private ArrayList<Integer> getRGB(Color currentColor)
+	{
+		ArrayList<Integer> rgbList = new ArrayList<Integer>();
+
+		int startkakko = currentColor.toString().indexOf("(") + 1;
+		int endkakko = currentColor.toString().indexOf(")");
+		String subst = currentColor.toString().substring(startkakko,endkakko);
+		String[] split = subst.split(",");
+
+		// strokecolorはalphaまであるから4固定でいいと思う
+		int[] rgtColor = new int[4];
+		for(int i = 0; i < split.length; i++)
+		{
+			rgbList.add(Integer.parseInt(split[i]));
+		}
+
+		return rgbList;
+
 	}
 	//
 }

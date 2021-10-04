@@ -18,7 +18,7 @@ package com.objetdirect.gwt.umlapi.client.gfx;
 
 import com.google.gwt.user.client.ui.Widget;
 import com.objetdirect.gwt.umlapi.client.engine.Point;
-import com.objetdirect.tatami.client.gfx.Color;
+import com.google.gwt.widgetideas.graphics.client.Color;
 
 /**
  * This interface normalize all the methods used on and by a graphical object for any gfx implementation
@@ -397,4 +397,7 @@ public interface GfxPlatform {
 	void translate(GfxObject gfxObject, Point offset);
 
 	void setColor(GfxObject gfxObject , Color color);
+
+	// Add Yamazaki
+	Color getCurrentStrokeColor(final GfxObject gfxO);
 }

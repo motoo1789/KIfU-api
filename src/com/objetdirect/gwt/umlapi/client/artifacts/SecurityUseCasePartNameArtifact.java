@@ -82,7 +82,7 @@ public class SecurityUseCasePartNameArtifact extends NodePartArtifact{
 				new Point(OptionsManager.get("MisEllipseTextLeftPadding"), OptionsManager.get("TextTopPadding") + this.height));
 		GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, this.nameText);
 		GfxManager.getPlatform().setFont(this.nameText, OptionsManager.getFont());
-		GfxManager.getPlatform().setColor(this.nameText, Color.RED);//to complete method inTatamiGfxPlatform
+		//Tatamiとgwt.wedgetのColorの相性が悪いから消す　GfxManager.getPlatform().setColor(this.nameText, Color.RED);//to complete method inTatamiGfxPlatform
 		GfxManager.getPlatform().setStroke(this.nameText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
 		GfxManager.getPlatform().setFillColor(this.nameText, ThemeManager.getTheme().getClassForegroundColor());
 		final int thisNameWidth = GfxManager.getPlatform().getTextWidthFor(this.nameText) + OptionsManager.get("TextRightPadding")

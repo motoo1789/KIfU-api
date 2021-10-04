@@ -34,6 +34,7 @@ import com.objetdirect.tatami.client.gfx.Rect;
 import com.objetdirect.tatami.client.gfx.Text;
 import com.objetdirect.tatami.client.gfx.VirtualGroup;
 
+
 /**
  * This class implements the graphic platform using the <a href="http://code.google.com/p/tatami/">Tatami</a> graphics library
  *
@@ -494,11 +495,23 @@ public class TatamiGfxPlatfrom implements GfxPlatform {
 		return new com.objetdirect.tatami.client.gfx.Point(p.getX(), p.getY());
 	}
 
-	@Override
 	public void setColor(GfxObject gfxObject, Color color) {
 		// TODO 自動生成されたメソッド・スタブ
 
 	}
+
+	@Override
+	public void setColor(GfxObject gfxObject, com.google.gwt.widgetideas.graphics.client.Color color) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public com.google.gwt.widgetideas.graphics.client.Color getCurrentStrokeColor(GfxObject gfxO) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
 
 
 

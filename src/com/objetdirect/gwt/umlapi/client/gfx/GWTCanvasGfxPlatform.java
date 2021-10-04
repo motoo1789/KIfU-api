@@ -507,9 +507,20 @@ public class GWTCanvasGfxPlatform implements GfxPlatform {
 		return ((IncubatorGfxObjectContainer) gfxO).getGraphicObject();
 	}
 
-	@Override
 	public void setColor(GfxObject gfxObject,  com.objetdirect.tatami.client.gfx.Color color) {
 		// TODO 自動生成されたメソッド・スタブ
 
+	}
+
+	@Override
+	public void setColor(GfxObject gfxObject, Color color) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public Color getCurrentStrokeColor(GfxObject gfxO) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
 	}
 }

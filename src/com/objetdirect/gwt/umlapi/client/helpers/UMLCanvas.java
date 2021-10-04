@@ -1736,7 +1736,8 @@ public class UMLCanvas extends AbsolutePanel {
 							selectedArtifact.moveTo(new Point(selectedArtifact.getLocation().getX() + direction.getXShift(),
 									selectedArtifact.getLocation().getY() + direction.getYShift()));
 
-							selectedArtifact.rebuildGfxObjectAddYamazaki(); // ← これを何とかすれば赤のままになる
+							Window.alert("moveSelected");
+							selectedArtifact.rebuildGfxObject(); // ← これを何とかすれば赤のままになる ならなかった
 						}
 					};
 				}
@@ -1977,7 +1978,9 @@ public class UMLCanvas extends AbsolutePanel {
 				Point oldPoint = selectedArtifact.getLocation();
 				selectedArtifact.moveTo(Point.substract(Point.add(selectedArtifact.getLocation(), this.totalDragShift), this.duringDragOffset));
 
-				selectedArtifact.rebuildGfxObjectAddYamazaki(); // ← これを何とかすれば赤のままになる
+				Window.alert("drop()");
+				selectedArtifact.rebuildGfxObjectAddYamazaki(); // ← これを何とかすれば赤のままになるかも
+				//selectedArtifact.rebuildGfxObject();
 
 				//TODO dropEvent
 				//writeLog(selectedArtifact);

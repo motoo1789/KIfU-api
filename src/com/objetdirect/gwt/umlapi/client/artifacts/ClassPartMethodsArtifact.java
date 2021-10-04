@@ -26,6 +26,7 @@ import java.util.Map.Entry;
 
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.user.client.Command;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.objetdirect.gwt.umlapi.client.editors.ClassPartMethodsFieldEditor;
 import com.objetdirect.gwt.umlapi.client.engine.Point;
@@ -399,6 +400,7 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 
 	@Override
 	protected void buildGfxObjectAddYamazaki() {
+		Window.alert("ClassPartMethod buildGfxObjectAddYamazaki");
 		// TODO 自動生成されたメソッド・スタブ
 		if (this.textVirtualGroup == null) {
 			this.computeBoundsAddYamazaki();
@@ -413,6 +415,7 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 	}
 
 	private void computeBoundsAddYamazaki() {
+		Window.alert("ClassPartMethod computeBoundsAddYamazaki");
 		this.methodGfxObjects.clear();
 		this.height = 0;
 		this.width = 0;
@@ -428,14 +431,14 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 			//visibility
 			GfxObject visibility = GfxManager.getPlatform().buildText(method.getVisibility().toString(),
 					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding"), OptionsManager.get("TextTopPadding") + this.height));
-			//super.setStroke_BLACK(visibility);
+			super.setStroke_Black_forcomputeBounds(visibility);
 			method.setVisibilityGfxObject(visibility);
 			methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(visibility);
 
 			// name
 			GfxObject methodname = GfxManager.getPlatform().buildText(method.getName() + "(",
 					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-			//super.setStroke_BLACK(methodname);
+			super.setStroke_Black_forcomputeBounds(methodname);
 			method.setNameGfxObject(methodname);
 			methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(methodname);
 
@@ -450,7 +453,7 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 
 				GfxObject paraname = GfxManager.getPlatform().buildText(paraObject.getName(),
 						new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-				//super.setStroke_BLACK(paraname);
+				super.setStroke_Black_forcomputeBounds(paraname);
 				paraObject.setNameGfxObject(paraname);
 				methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(paraname);
 				useVirtualGroupAddGfxObjectList.add(paraname);
@@ -459,7 +462,7 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 				{
 					GfxObject paratype = GfxManager.getPlatform().buildText(":" + paraObject.getType(),
 							new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-					//super.setStroke_BLACK(paratype);
+					super.setStroke_Black_forcomputeBounds(paratype);
 					paraObject.setTypeGfxObject(paratype);
 					methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(paratype);
 					useVirtualGroupAddGfxObjectList.add(paratype);
@@ -468,7 +471,7 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 				{
 					GfxObject paratype = GfxManager.getPlatform().buildText(":" + paraObject.getType() + ",",
 							new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-					//super.setStroke_BLACK(paratype);
+					super.setStroke_Black_forcomputeBounds(paratype);
 					paraObject.setTypeGfxObject(paratype);
 					methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(paratype);
 					useVirtualGroupAddGfxObjectList.add(paratype);
@@ -478,7 +481,7 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 			// return type
 			GfxObject returntype = GfxManager.getPlatform().buildText("):" + method.getReturnType(),
 					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-			//super.setStroke_BLACK(returntype);
+			super.setStroke_Black_forcomputeBounds(returntype);
 			method.setTypeGfxObject(returntype);
 			methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(returntype);
 
