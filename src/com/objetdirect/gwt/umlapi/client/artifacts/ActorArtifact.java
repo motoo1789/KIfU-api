@@ -50,4 +50,10 @@ public class ActorArtifact extends NodeArtifact {
 		return "Actor$" + this.getLocation() + "!" + this.actorName.toURL();
 
 	}
+
+	@Override
+	protected void buildGfxObjectAddYamazaki() {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
 }

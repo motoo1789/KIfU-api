@@ -295,4 +295,10 @@ public class MessageLinkArtifact extends LinkArtifact {
 
 		};
 	}
+
+	@Override
+	protected void buildGfxObjectAddYamazaki() {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
 }

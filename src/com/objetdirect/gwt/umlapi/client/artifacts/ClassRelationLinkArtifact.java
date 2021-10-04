@@ -712,4 +712,10 @@ public class ClassRelationLinkArtifact extends RelationLinkArtifact {
 			}
 		};
 	}
+
+	@Override
+	protected void buildGfxObjectAddYamazaki() {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
 }

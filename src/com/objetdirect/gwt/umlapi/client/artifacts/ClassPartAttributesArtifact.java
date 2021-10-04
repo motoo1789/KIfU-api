@@ -107,7 +107,7 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			GfxObject vmtGroup = GfxManager.getPlatform().buildVirtualGroup();
 			GfxObject visibility = GfxManager.getPlatform().buildText(attribute.getVisibility().toString(),
 					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding"), OptionsManager.get("TextTopPadding") + this.height));
-			super.setStroke_BLACK(visibility);
+			//super.setStroke_BLACK(visibility);
 			attribute.setVisibilityGfxObject(visibility);
 			attributeWidth = OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(visibility);
 
@@ -115,7 +115,7 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			//　名前
 			GfxObject name = GfxManager.getPlatform().buildText(attribute.getName(),
 					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
-			super.setStroke_BLACK(name);
+			//super.setStroke_BLACK(name);
 			attribute.setNameGfxObject(name);
 			attributeWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(name);
 
@@ -123,7 +123,7 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			// 型
 			GfxObject type = GfxManager.getPlatform().buildText(":" + attribute.getType(),
 					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
-			super.setStroke_BLACK(type);
+			//super.setStroke_BLACK(type);
 			attribute.setTypeGfxObject(type);
 			attributeWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(type);
 
@@ -330,6 +330,83 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 				ClassPartAttributesArtifact.this.edit(gfxo);
 			}
 		};
+	}
+
+	@Override
+	protected void buildGfxObjectAddYamazaki() {
+		// TODO 自動生成されたメソッド・スタブ
+		if (this.textVirtualGroup == null) {
+			this.computeBoundsAddYamazaki();
+		}
+		Window.alert("addYamazaki buildGfxObjectAddYamazaki");
+		this.attributeRect = GfxManager.getPlatform().buildRect(this.nodeWidth, this.height);
+		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.attributeRect);
+		GfxManager.getPlatform().setFillColor(this.attributeRect, ThemeManager.getTheme().getClassBackgroundColor());
+		GfxManager.getPlatform().setStroke(this.attributeRect, ThemeManager.getTheme().getClassForegroundColor(), 1); //ThemeManager.getTheme().getClassForegroundColor()
+		GfxManager.getPlatform().translate(this.textVirtualGroup,
+				new Point(OptionsManager.get("RectangleLeftPadding"), OptionsManager.get("RectangleTopPadding")));
+		GfxManager.getPlatform().moveToFront(this.textVirtualGroup);
+	}
+
+	private void computeBoundsAddYamazaki() {
+		this.attributeGfxObjects.clear();
+		this.height = 0;
+		this.width = 0;
+		this.textVirtualGroup = GfxManager.getPlatform().buildVirtualGroup();
+		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.textVirtualGroup);
+
+		for (final UMLClassAttribute attribute : this.attributes) {
+			int attributeWidth = 0;
+
+			// add Yamazaki
+			//修飾子
+			GfxObject vmtGroup = GfxManager.getPlatform().buildVirtualGroup();
+			GfxObject visibility = GfxManager.getPlatform().buildText(attribute.getVisibility().toString(),
+					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding"), OptionsManager.get("TextTopPadding") + this.height));
+			super.setStroke_BLACK(visibility);
+			attribute.setVisibilityGfxObject(visibility);
+			attributeWidth = OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(visibility);
+
+
+			//　名前
+			GfxObject name = GfxManager.getPlatform().buildText(attribute.getName(),
+					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
+			super.setStroke_BLACK(name);
+			attribute.setNameGfxObject(name);
+			attributeWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(name);
+
+
+			// 型
+			GfxObject type = GfxManager.getPlatform().buildText(":" + attribute.getType(),
+					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
+			super.setStroke_BLACK(type);
+			attribute.setTypeGfxObject(type);
+			attributeWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(type);
+
+
+			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, visibility);
+			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, name);
+			GfxManager.getPlatform().addToVirtualGroup(vmtGroup, type);
+
+
+			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, vmtGroup);
+
+			int thisAttributeWidth = attributeWidth;
+			int thisAttributeHeight = GfxManager.getPlatform().getTextHeightFor(name);
+
+			/////////////////////
+			thisAttributeWidth += OptionsManager.get("TextRightPadding") + OptionsManager.get("TextLeftPadding");
+			thisAttributeHeight += OptionsManager.get("TextTopPadding") + OptionsManager.get("TextBottomPadding");
+			this.width = thisAttributeWidth > this.width ? thisAttributeWidth : this.width;
+			this.height += thisAttributeHeight;
+			this.attributeGfxObjects.put(vmtGroup, attribute);
+			this.lastGfxObject = vmtGroup;
+
+		}
+		this.width += OptionsManager.get("RectangleRightPadding") + OptionsManager.get("RectangleLeftPadding");
+		this.height += OptionsManager.get("RectangleTopPadding") + OptionsManager.get("RectangleBottomPadding");
+
+		Log.trace("WxH for " + GWTUMLDrawerHelper.getShortName(this) + "is now " + this.width + "x" + this.height);
 	}
 
 }

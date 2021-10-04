@@ -387,5 +387,11 @@ public class MisAndSecurityUseRelationLinkArtifact extends RelationLinkArtifact 
 	public void setRightRole(final String rightRole) {
 		this.relation.setRightRole(rightRole);
 	}
+
+	@Override
+	protected void buildGfxObjectAddYamazaki() {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
 }
 

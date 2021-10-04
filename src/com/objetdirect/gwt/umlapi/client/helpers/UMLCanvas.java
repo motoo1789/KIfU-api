@@ -1735,7 +1735,8 @@ public class UMLCanvas extends AbsolutePanel {
 						public void process() {
 							selectedArtifact.moveTo(new Point(selectedArtifact.getLocation().getX() + direction.getXShift(),
 									selectedArtifact.getLocation().getY() + direction.getYShift()));
-							selectedArtifact.rebuildGfxObject();
+
+							selectedArtifact.rebuildGfxObjectAddYamazaki(); // ← これを何とかすれば赤のままになる
 						}
 					};
 				}
@@ -1772,10 +1773,8 @@ public class UMLCanvas extends AbsolutePanel {
 	// checnge Yamazaki 修飾子なしからpublicに変更
 	public void removeSelected() {
 		if (!this.selectedArtifacts.isEmpty()) {
-			Window.alert("removeSelected");
 			final HashMap<UMLArtifact, ArrayList<Point>> selectedBeforeRemovalArtifacts = new HashMap<UMLArtifact, ArrayList<Point>>(this.selectedArtifacts);
 			for (final UMLArtifact selectedArtifact : selectedBeforeRemovalArtifacts.keySet()) {
-				Window.alert("removeSelected: forの中に入ってるか");
 				this.remove(selectedArtifact);
 			}
 			//TODO takafumi
@@ -1977,7 +1976,9 @@ public class UMLCanvas extends AbsolutePanel {
 				placeFlag=true;
 				Point oldPoint = selectedArtifact.getLocation();
 				selectedArtifact.moveTo(Point.substract(Point.add(selectedArtifact.getLocation(), this.totalDragShift), this.duringDragOffset));
-				selectedArtifact.rebuildGfxObject();
+
+				selectedArtifact.rebuildGfxObjectAddYamazaki(); // ← これを何とかすれば赤のままになる
+
 				//TODO dropEvent
 				//writeLog(selectedArtifact);
 				//MyLogger.operationLog("DropArtifact"+":"+selectedArtifact.toURL());
@@ -2197,7 +2198,6 @@ public class UMLCanvas extends AbsolutePanel {
 		{
 			if(diffkey.contains("!")) 								// フィールド
 			{
-				Window.alert("振り分け野中surplusField:" + diffkey + " value:" + diffMap.get(diffkey));
 				fieldDiff.put(diffkey,diffMap.get(diffkey));
 			}
 			else if(diffkey.contains("%") && diffkey.contains("&")) // パラメータ
@@ -2238,7 +2238,6 @@ public class UMLCanvas extends AbsolutePanel {
 						String attributename = splitDiffClassKey[splitDiffClassKey.length - 1];
 						if(splitDiffClassKey.length > 1)
 						{
-							Window.alert("kifu:" + umlclass.getName() + " surplus:" + classDiffKey);
 							IDrawReplaceAddDelete addElements = new SurplusClassTypeElement(classDiffKey,classDiff.get(classDiffKey),artifact.getClassPartNameArtifact());
 							surplusList.add(addElements);
 
@@ -2272,7 +2271,6 @@ public class UMLCanvas extends AbsolutePanel {
 							String attributename = splitDiffAttributeClassname[splitDiffAttributeClassname.length - 1];
 							if(!attributename.contains("{") && !attributename.contains("}") && attribute.getDiffNameKey().equals(attributename))
 							{
-								Window.alert("surplusField:" + fieldDiffKey + " value:" + fieldDiff.get(fieldDiffKey));
 								IDrawReplaceAddDelete addElements = new SurplusAttributeElement(fieldDiffKey,fieldDiff.get(fieldDiffKey),artifact,attribute);
 								surplusList.add(addElements);
 							}
@@ -2323,10 +2321,8 @@ public class UMLCanvas extends AbsolutePanel {
 								para.setStrokeRED(splitDiffParaKey[splitDiffParaKey.length - 1]);
 
 								String paradname = splitDiffParaKey[splitDiffParaKey.length - 1];
-								Window.alert("attributename:" + paradname + " UMLClassAttributename:" + para.getDiffNameKey() + "加藤");
 								if(!paradname.contains("}") && para.getDiffNameKey().equals(paradname))
 								{
-									Window.alert("加藤");
 									IDrawReplaceAddDelete addElements = new SurplusParameterElement(paraDiffKey,paraDiff.get(paraDiffKey),method,para);
 									surplusList.add(addElements);
 								}

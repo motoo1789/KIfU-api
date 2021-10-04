@@ -111,4 +111,10 @@ public class LinkNoteArtifact extends LinkArtifact {
 		super.select();
 		GfxManager.getPlatform().setStroke(this.line, ThemeManager.getTheme().getLinkNoteHighlightedForegroundColor(), 2);
 	}
+
+	@Override
+	protected void buildGfxObjectAddYamazaki() {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
 }

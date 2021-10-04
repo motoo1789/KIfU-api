@@ -175,4 +175,11 @@ public class UseCasePartNameArtifact extends NodePartArtifact{
 			}
 		};
 	}
+
+
+	@Override
+	protected void buildGfxObjectAddYamazaki() {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
 }

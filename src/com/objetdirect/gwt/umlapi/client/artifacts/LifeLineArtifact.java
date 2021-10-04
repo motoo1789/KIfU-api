@@ -231,4 +231,10 @@ public class LifeLineArtifact extends BoxArtifact {
 		};
 	}
 
+	@Override
+	protected void buildGfxObjectAddYamazaki() {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
 }
