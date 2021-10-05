@@ -275,4 +275,9 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 		// TODO 自動生成されたメソッド・スタブ
 		return attributesGfxObject.containsKey(haskey) ? true : false;
 	}
+
+	public GfxObject getGfxObject(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		return attributesGfxObject.get(key);
+	}
 }

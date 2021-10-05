@@ -230,4 +230,9 @@ public class UMLClass extends UMLNode implements IGetDiffString, ISetStrokeRED  
 		// TODO 自動生成されたメソッド・スタブ
 		return classGfxObject.containsKey(haskey) ? true : false;
 	}
+
+	public GfxObject getGfxObject(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		return classGfxObject.get(key);
+	}
 }

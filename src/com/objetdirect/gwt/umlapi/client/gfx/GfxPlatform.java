@@ -399,5 +399,5 @@ public interface GfxPlatform {
 	void setColor(GfxObject gfxObject , Color color);
 
 	// Add Yamazaki
-	Color getCurrentStrokeColor(final GfxObject gfxO);
+	String getCurrentStrokeColor(final GfxObject gfxO);
 }

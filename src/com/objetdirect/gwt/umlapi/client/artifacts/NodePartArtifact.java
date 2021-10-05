@@ -16,6 +16,7 @@ package com.objetdirect.gwt.umlapi.client.artifacts;
 
 import java.util.ArrayList;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.widgetideas.graphics.client.Color;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxColor;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxManager;
@@ -87,10 +88,28 @@ public abstract class NodePartArtifact extends BoxArtifact {
 
 	// add Yamazaki
 
-	protected void setStroke_BLACK(GfxObject element)
+	protected void setStroke_BLACK(GfxObject element,GfxObject beforeGfxObject)
 	{
+		Window.alert("setStroke_BLACK(GfxObject element,GfxObject beforeGfxObject)");
+		String currentColor = GfxManager.getPlatform().getCurrentStrokeColor(beforeGfxObject);	// 初期の読み込みでbiforeGfxObjectを使うとバグる
+		Window.alert(currentColor);
+		//Color currentColor = GfxManager.getPlatform().getCurrentStrokeColor(element);
+		if(currentColor != null)
+		{
+			ArrayList<Integer> rgbList = getRGB(currentColor);
+			int r = rgbList.get(0);
+			int g = rgbList.get(1);
+			int b = rgbList.get(2);
+			Window.alert(r + " " + g + " " + b);
+			GfxManager.getPlatform().setStroke(element, new GfxColor(r,g,b), 0); //ThemeManager.getTheme().getClassBackgroundColor()
+		}
+		else
+		{
+			Window.alert("currentColorがnull");
+			GfxManager.getPlatform().setStroke(element, GfxColor.BLACK, 0); //ThemeManager.getTheme().getClassBackgroundColor()
+		}
+
 		GfxManager.getPlatform().setFont(element, OptionsManager.getSmallFont());
-		GfxManager.getPlatform().setStroke(element, ThemeManager.getTheme().getClassForegroundColor(), 0); //ThemeManager.getTheme().getClassBackgroundColor()
 		GfxManager.getPlatform().setFillColor(element, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
 	}
 
@@ -103,18 +122,18 @@ public abstract class NodePartArtifact extends BoxArtifact {
 
 	protected void setStroke_Black_forcomputeBounds(GfxObject element)
 	{
-		Color currentColor = GfxManager.getPlatform().getCurrentStrokeColor(element);
-		ArrayList<Integer> rgbList = getRGB(currentColor);
-		int r = rgbList.get(0);
-		int g = rgbList.get(1);
-		int b = rgbList.get(2);
-
-		GfxManager.getPlatform().setStroke(element, new GfxColor(r,g,b), 1);
+//		String currentColor = GfxManager.getPlatform().getCurrentStrokeColor(element);
+//		ArrayList<Integer> rgbList = getRGB(currentColor);
+//		int r = rgbList.get(0);
+//		int g = rgbList.get(1);
+//		int b = rgbList.get(2);
+//
+//		GfxManager.getPlatform().setStroke(element, new GfxColor(r,g,b), 1);
 		GfxManager.getPlatform().setFont(element, OptionsManager.getSmallFont());
 		GfxManager.getPlatform().setFillColor(element, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
 	}
 
-	private ArrayList<Integer> getRGB(Color currentColor)
+	private ArrayList<Integer> getRGB(String currentColor)
 	{
 		ArrayList<Integer> rgbList = new ArrayList<Integer>();
 
@@ -132,6 +151,6 @@ public abstract class NodePartArtifact extends BoxArtifact {
 
 		return rgbList;
 
+
 	}
-	//
 }

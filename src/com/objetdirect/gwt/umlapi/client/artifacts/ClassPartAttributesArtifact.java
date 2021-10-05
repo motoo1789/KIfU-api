@@ -107,7 +107,10 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			GfxObject vmtGroup = GfxManager.getPlatform().buildVirtualGroup();
 			GfxObject visibility = GfxManager.getPlatform().buildText(attribute.getVisibility().toString(),
 					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding"), OptionsManager.get("TextTopPadding") + this.height));
-			super.setStroke_BLACK(visibility);
+
+			String chengeObjectColorKey = attribute.getDiffVisibilityKey();
+			GfxObject beforeGfxObject = attribute.getGfxObject(chengeObjectColorKey);
+			super.setStroke_BLACK(visibility,beforeGfxObject);
 			attribute.setVisibilityGfxObject(visibility);
 			attributeWidth = OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(visibility);
 
@@ -115,7 +118,10 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			//　名前
 			GfxObject name = GfxManager.getPlatform().buildText(attribute.getName(),
 					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
-			super.setStroke_BLACK(name);
+
+			chengeObjectColorKey = attribute.getDiffNameKey();
+			beforeGfxObject = attribute.getGfxObject(chengeObjectColorKey);
+			super.setStroke_BLACK(name,beforeGfxObject);
 			attribute.setNameGfxObject(name);
 			attributeWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(name);
 
@@ -123,7 +129,10 @@ public class ClassPartAttributesArtifact extends NodePartArtifact {
 			// 型
 			GfxObject type = GfxManager.getPlatform().buildText(":" + attribute.getType(),
 					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + attributeWidth, OptionsManager.get("TextTopPadding") + this.height));
-			super.setStroke_BLACK(type);
+
+			chengeObjectColorKey = attribute.getDiffTypeKey();
+			beforeGfxObject = attribute.getGfxObject(chengeObjectColorKey);
+			super.setStroke_BLACK(type,beforeGfxObject);
 			attribute.setTypeGfxObject(type);
 			attributeWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(type);
 

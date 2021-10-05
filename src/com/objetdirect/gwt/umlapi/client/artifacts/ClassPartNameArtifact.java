@@ -116,7 +116,10 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 //			GfxManager.getPlatform().setFont(this.stereotypeText, OptionsManager.getFont());
 //			GfxManager.getPlatform().setStroke(this.stereotypeText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
 //			GfxManager.getPlatform().setFillColor(this.stereotypeText, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
-			super.setStroke_BLACK(stereotypeText);
+
+			String chengeObjectColorKey = uMLclass.getDiffTypeKey();
+			GfxObject beforeGfxObject = uMLclass.getGfxObject(chengeObjectColorKey);
+			super.setStroke_BLACK(stereotypeText,beforeGfxObject);
 			this.uMLclass.setTypeGfxObject(this.stereotypeText);
 
 			this.width = GfxManager.getPlatform().getTextWidthFor(this.stereotypeText);
@@ -130,7 +133,11 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 //		GfxManager.getPlatform().setFont(this.nameText, OptionsManager.getFont());
 //		GfxManager.getPlatform().setStroke(this.nameText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
 //		GfxManager.getPlatform().setFillColor(this.nameText, ThemeManager.getTheme().getClassForegroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
-		super.setStroke_BLACK(nameText);
+
+
+		String chengeObjectColorNameKey = uMLclass.getDiffNameKey();
+		GfxObject beforeGfxObjectName = uMLclass.getGfxObject(chengeObjectColorNameKey);
+		super.setStroke_BLACK(nameText,beforeGfxObjectName);
 		this.uMLclass.setNameGfxObject(this.nameText);
 
 		final int thisNameWidth = GfxManager.getPlatform().getTextWidthFor(this.nameText) + OptionsManager.get("TextRightPadding")

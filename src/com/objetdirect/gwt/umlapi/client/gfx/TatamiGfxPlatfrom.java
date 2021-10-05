@@ -17,6 +17,7 @@ package com.objetdirect.gwt.umlapi.client.gfx;
 import com.allen_sauer.gwt.log.client.Log;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import com.objetdirect.gwt.umlapi.client.engine.Point;
@@ -506,13 +507,21 @@ public class TatamiGfxPlatfrom implements GfxPlatform {
 
 	}
 
+
 	@Override
-	public com.google.gwt.widgetideas.graphics.client.Color getCurrentStrokeColor(GfxObject gfxO) {
+	public String getCurrentStrokeColor(GfxObject gfxO) {
 		// TODO 自動生成されたメソッド・スタブ
-		return null;
+		Window.alert("Tatami  getCurrentStrokeColor");
+		final Color currentColor = this.getTatamiGraphicalObjectFrom(gfxO).getStrokeColor();
+		
+		int r = currentColor.getRed();
+		
+		int g = currentColor.getGreen();
+		int b = currentColor.getBlue();
+		String currentColorString = "rgb(" + String.valueOf(r) +"," + String.valueOf(g) + "," + String.valueOf(b) + ")";
+		
+		return currentColorString;
 	}
-
-
 
 
 }

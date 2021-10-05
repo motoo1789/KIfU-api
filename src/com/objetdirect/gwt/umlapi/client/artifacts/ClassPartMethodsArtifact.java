@@ -113,14 +113,21 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 			//visibility
 			GfxObject visibility = GfxManager.getPlatform().buildText(method.getVisibility().toString(),
 					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding"), OptionsManager.get("TextTopPadding") + this.height));
-			super.setStroke_BLACK(visibility);
+
+			String chengeObjectColorKey = method.getDiffVisibilityKey();
+			GfxObject beforeGfxObject = method.getGfxObject(chengeObjectColorKey);
+			super.setStroke_BLACK(visibility,beforeGfxObject);
+
 			method.setVisibilityGfxObject(visibility);
 			methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(visibility);
 
 			// name
 			GfxObject methodname = GfxManager.getPlatform().buildText(method.getName() + "(",
 					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-			super.setStroke_BLACK(methodname);
+
+			chengeObjectColorKey = method.getDiffNameKey();
+			beforeGfxObject = method.getGfxObject(chengeObjectColorKey);
+			super.setStroke_BLACK(methodname,beforeGfxObject);
 			method.setNameGfxObject(methodname);
 			methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(methodname);
 
@@ -135,7 +142,9 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 
 				GfxObject paraname = GfxManager.getPlatform().buildText(paraObject.getName(),
 						new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-				super.setStroke_BLACK(paraname);
+				chengeObjectColorKey = paraObject.getDiffNameKey();
+				beforeGfxObject = paraObject.getGfxObject(chengeObjectColorKey);
+				super.setStroke_BLACK(paraname,beforeGfxObject);
 				paraObject.setNameGfxObject(paraname);
 				methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(paraname);
 				useVirtualGroupAddGfxObjectList.add(paraname);
@@ -144,7 +153,9 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 				{
 					GfxObject paratype = GfxManager.getPlatform().buildText(":" + paraObject.getType(),
 							new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-					super.setStroke_BLACK(paratype);
+					chengeObjectColorKey = paraObject.getDiffTypeKey();
+					beforeGfxObject = paraObject.getGfxObject(chengeObjectColorKey);
+					super.setStroke_BLACK(paratype,beforeGfxObject);
 					paraObject.setTypeGfxObject(paratype);
 					methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(paratype);
 					useVirtualGroupAddGfxObjectList.add(paratype);
@@ -153,7 +164,9 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 				{
 					GfxObject paratype = GfxManager.getPlatform().buildText(":" + paraObject.getType() + ",",
 							new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-					super.setStroke_BLACK(paratype);
+					chengeObjectColorKey = paraObject.getDiffTypeKey();
+					beforeGfxObject = paraObject.getGfxObject(chengeObjectColorKey);
+					super.setStroke_BLACK(paratype,beforeGfxObject);
 					paraObject.setTypeGfxObject(paratype);
 					methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(paratype);
 					useVirtualGroupAddGfxObjectList.add(paratype);
@@ -180,7 +193,10 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 			// return type
 			GfxObject returntype = GfxManager.getPlatform().buildText("):" + method.getReturnType(),
 					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-			super.setStroke_BLACK(returntype);
+			chengeObjectColorKey = method.getDiffTypeKey();
+			beforeGfxObject = method.getGfxObject(chengeObjectColorKey);
+			super.setStroke_BLACK(returntype,beforeGfxObject);
+
 			method.setTypeGfxObject(returntype);
 			methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(returntype);
 

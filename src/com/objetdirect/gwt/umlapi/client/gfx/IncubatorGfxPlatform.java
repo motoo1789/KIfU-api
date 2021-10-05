@@ -515,15 +515,13 @@ public class IncubatorGfxPlatform implements GfxPlatform {
 		return ((IncubatorGfxObjectContainer) gfxO).getGraphicObject();
 	}
 
-	public void setColor(GfxObject gfxObject, com.objetdirect.tatami.client.gfx.Color color) {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
 
 	@Override
-	public Color getCurrentStrokeColor(GfxObject gfxO) {
+	public String getCurrentStrokeColor(GfxObject gfxO) {
 		// TODO 自動生成されたメソッド・スタブ
-		return this.getIncubatorGraphicalObjectFrom(gfxO).getStrokeColor();
+		Color corrent = this.getIncubatorGraphicalObjectFrom(gfxO).getStrokeColor();
+		String correntColorString = corrent.toString();
+		return correntColorString;
 	}
 
 	@Override

@@ -305,4 +305,9 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 	{
 		parameters.remove(targetpara);
 	}
+
+	public GfxObject getGfxObject(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		return methodGfxObjectMap.get(key);
+	}
 }
