@@ -116,7 +116,11 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 
 			String chengeObjectColorKey = method.getDiffVisibilityKey();
 			GfxObject beforeGfxObject = method.getGfxObject(chengeObjectColorKey);
-			super.setStroke_BLACK(visibility,beforeGfxObject);
+
+			if(beforeGfxObject == null)
+				super.setStroke_BLACK(visibility);
+			else
+				super.setStroke_BLACK(visibility,beforeGfxObject);
 
 			method.setVisibilityGfxObject(visibility);
 			methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(visibility);
@@ -127,7 +131,12 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 
 			chengeObjectColorKey = method.getDiffNameKey();
 			beforeGfxObject = method.getGfxObject(chengeObjectColorKey);
-			super.setStroke_BLACK(methodname,beforeGfxObject);
+
+			if(beforeGfxObject == null)
+				super.setStroke_BLACK(methodname);
+			else
+				super.setStroke_BLACK(methodname,beforeGfxObject);
+
 			method.setNameGfxObject(methodname);
 			methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(methodname);
 
@@ -144,7 +153,13 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 						new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
 				chengeObjectColorKey = paraObject.getDiffNameKey();
 				beforeGfxObject = paraObject.getGfxObject(chengeObjectColorKey);
-				super.setStroke_BLACK(paraname,beforeGfxObject);
+
+				if(beforeGfxObject == null)
+					super.setStroke_BLACK(paraname);
+				else
+					super.setStroke_BLACK(paraname,beforeGfxObject);
+
+
 				paraObject.setNameGfxObject(paraname);
 				methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(paraname);
 				useVirtualGroupAddGfxObjectList.add(paraname);
@@ -155,7 +170,12 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 							new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
 					chengeObjectColorKey = paraObject.getDiffTypeKey();
 					beforeGfxObject = paraObject.getGfxObject(chengeObjectColorKey);
-					super.setStroke_BLACK(paratype,beforeGfxObject);
+
+					if(beforeGfxObject == null)
+						super.setStroke_BLACK(paratype);
+					else
+						super.setStroke_BLACK(paratype,beforeGfxObject);
+
 					paraObject.setTypeGfxObject(paratype);
 					methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(paratype);
 					useVirtualGroupAddGfxObjectList.add(paratype);
@@ -166,7 +186,12 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 							new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
 					chengeObjectColorKey = paraObject.getDiffTypeKey();
 					beforeGfxObject = paraObject.getGfxObject(chengeObjectColorKey);
-					super.setStroke_BLACK(paratype,beforeGfxObject);
+
+					if(beforeGfxObject == null)
+						super.setStroke_BLACK(paratype);
+					else
+						super.setStroke_BLACK(paratype,beforeGfxObject);
+
 					paraObject.setTypeGfxObject(paratype);
 					methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(paratype);
 					useVirtualGroupAddGfxObjectList.add(paratype);
@@ -195,7 +220,11 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
 			chengeObjectColorKey = method.getDiffTypeKey();
 			beforeGfxObject = method.getGfxObject(chengeObjectColorKey);
-			super.setStroke_BLACK(returntype,beforeGfxObject);
+
+			if(beforeGfxObject == null)
+				super.setStroke_BLACK(returntype);
+			else
+				super.setStroke_BLACK(returntype,beforeGfxObject);
 
 			method.setTypeGfxObject(returntype);
 			methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(returntype);
@@ -414,119 +443,5 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 		};
 	}
 
-	@Override
-	protected void buildGfxObjectAddYamazaki() {
-		Window.alert("ClassPartMethod buildGfxObjectAddYamazaki");
-		// TODO 自動生成されたメソッド・スタブ
-		if (this.textVirtualGroup == null) {
-			this.computeBoundsAddYamazaki();
-		}
-		this.methodRect = GfxManager.getPlatform().buildRect(this.nodeWidth, this.height);
-		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.methodRect);
-		GfxManager.getPlatform().setFillColor(this.methodRect, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
-		GfxManager.getPlatform().setStroke(this.methodRect, ThemeManager.getTheme().getClassForegroundColor(), 1);
-		GfxManager.getPlatform().translate(this.textVirtualGroup,
-				new Point(OptionsManager.get("RectangleLeftPadding"), OptionsManager.get("RectangleTopPadding")));
-		GfxManager.getPlatform().moveToFront(this.textVirtualGroup);
-	}
 
-	private void computeBoundsAddYamazaki() {
-		Window.alert("ClassPartMethod computeBoundsAddYamazaki");
-		this.methodGfxObjects.clear();
-		this.height = 0;
-		this.width = 0;
-		this.textVirtualGroup = GfxManager.getPlatform().buildVirtualGroup();
-		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.textVirtualGroup);
-
-		for (final UMLClassMethod method : this.methods) {
-
-			int methodElementWidth = 0; //OptionsManager.get("TextLeftPadding");
-			List<UMLParameter> parasList = method.getParameters();
-			GfxObject methodVNPRGroup = GfxManager.getPlatform().buildVirtualGroup();
-
-			//visibility
-			GfxObject visibility = GfxManager.getPlatform().buildText(method.getVisibility().toString(),
-					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding"), OptionsManager.get("TextTopPadding") + this.height));
-			super.setStroke_Black_forcomputeBounds(visibility);
-			method.setVisibilityGfxObject(visibility);
-			methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(visibility);
-
-			// name
-			GfxObject methodname = GfxManager.getPlatform().buildText(method.getName() + "(",
-					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-			super.setStroke_Black_forcomputeBounds(methodname);
-			method.setNameGfxObject(methodname);
-			methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(methodname);
-
-			// para
-			List<GfxObject> useVirtualGroupAddGfxObjectList = new ArrayList<GfxObject>();
-//			List<GfxObject> paranameList = new ArrayList<GfxObject>();
-//			List<GfxObject> paratypeList = new ArrayList<GfxObject>();
-
-			for(int index = 0; index < parasList.size(); index++)
-			{
-				UMLParameter paraObject = parasList.get(index);
-
-				GfxObject paraname = GfxManager.getPlatform().buildText(paraObject.getName(),
-						new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-				super.setStroke_Black_forcomputeBounds(paraname);
-				paraObject.setNameGfxObject(paraname);
-				methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(paraname);
-				useVirtualGroupAddGfxObjectList.add(paraname);
-
-				if(index == parasList.size() - 1)
-				{
-					GfxObject paratype = GfxManager.getPlatform().buildText(":" + paraObject.getType(),
-							new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-					super.setStroke_Black_forcomputeBounds(paratype);
-					paraObject.setTypeGfxObject(paratype);
-					methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(paratype);
-					useVirtualGroupAddGfxObjectList.add(paratype);
-				}
-				else
-				{
-					GfxObject paratype = GfxManager.getPlatform().buildText(":" + paraObject.getType() + ",",
-							new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-					super.setStroke_Black_forcomputeBounds(paratype);
-					paraObject.setTypeGfxObject(paratype);
-					methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(paratype);
-					useVirtualGroupAddGfxObjectList.add(paratype);
-				}
-			}
-
-			// return type
-			GfxObject returntype = GfxManager.getPlatform().buildText("):" + method.getReturnType(),
-					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-			super.setStroke_Black_forcomputeBounds(returntype);
-			method.setTypeGfxObject(returntype);
-			methodElementWidth += OptionsManager.get("AddYamazakiGfxObjectPadding") + GfxManager.getPlatform().getTextWidthFor(returntype);
-
-			// virtual groupにオブジェクトを入れる
-			GfxManager.getPlatform().addToVirtualGroup(methodVNPRGroup, visibility);
-			GfxManager.getPlatform().addToVirtualGroup(methodVNPRGroup, methodname);
-
-			for(GfxObject addParaGfxObject : useVirtualGroupAddGfxObjectList)
-				GfxManager.getPlatform().addToVirtualGroup(methodVNPRGroup, addParaGfxObject);
-
-			GfxManager.getPlatform().addToVirtualGroup(methodVNPRGroup, returntype);
-
-			// method 全体の横幅計算
-			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, methodVNPRGroup);
-			int thisMethodWidth = methodElementWidth;
-			int thisMethodHeight = GfxManager.getPlatform().getTextHeightFor(methodname);
-			thisMethodWidth += OptionsManager.get("TextRightPadding") + OptionsManager.get("TextLeftPadding");
-			//thisMethodWidth += OptionsManager.get("TextLeftPadding");
-			thisMethodHeight += OptionsManager.get("TextTopPadding") + OptionsManager.get("TextBottomPadding");
-
-			this.width = thisMethodWidth > this.width ? thisMethodWidth : this.width;
-			this.height += thisMethodHeight;
-			this.methodGfxObjects.put(methodVNPRGroup, method);
-			this.lastGfxObject = methodVNPRGroup;
-
-		}
-		this.width += OptionsManager.get("RectangleRightPadding") + OptionsManager.get("RectangleLeftPadding");
-		this.height += OptionsManager.get("RectangleTopPadding") + OptionsManager.get("RectangleBottomPadding");
-
-		Log.trace("WxH for " + GWTUMLDrawerHelper.getShortName(this) + "is now " + this.width + "x" + this.height);
-	}
 }

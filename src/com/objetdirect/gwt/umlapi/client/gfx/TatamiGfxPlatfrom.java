@@ -511,17 +511,19 @@ public class TatamiGfxPlatfrom implements GfxPlatform {
 	@Override
 	public String getCurrentStrokeColor(GfxObject gfxO) {
 		// TODO 自動生成されたメソッド・スタブ
-		Window.alert("Tatami  getCurrentStrokeColor");
+		//Window.alert("Tatami  getCurrentStrokeColor");
 		final Color currentColor = this.getTatamiGraphicalObjectFrom(gfxO).getStrokeColor();
-		
+
 		int r = currentColor.getRed();
-		
+
 		int g = currentColor.getGreen();
 		int b = currentColor.getBlue();
 		String currentColorString = "rgb(" + String.valueOf(r) +"," + String.valueOf(g) + "," + String.valueOf(b) + ")";
-		
+
 		return currentColorString;
 	}
+
+
 
 
 }

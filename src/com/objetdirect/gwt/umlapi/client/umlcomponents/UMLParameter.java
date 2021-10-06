@@ -17,6 +17,7 @@ package com.objetdirect.gwt.umlapi.client.umlcomponents;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.gwt.user.client.Window;
 import com.objetdirect.gwt.umlapi.client.artifacts.ISetStrokeRED;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxObject;
 
@@ -127,7 +128,12 @@ public class UMLParameter extends UMLNode implements IGetDiffString, ISetStrokeR
 		return key.replaceAll(" ","");
 	}
 
-
+	@Override
+	public void setStrokeBLACK(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		if(this.paraGfxObject.containsKey(key))
+			super.setStroke_BLACK(this.paraGfxObject.get(key));
+	}
 
 	@Override
 	public void setStrokeRED(String key) {
@@ -171,5 +177,7 @@ public class UMLParameter extends UMLNode implements IGetDiffString, ISetStrokeR
 		// TODO 自動生成されたメソッド・スタブ
 		return paraGfxObject.get(key);
 	}
+
+
 
 }

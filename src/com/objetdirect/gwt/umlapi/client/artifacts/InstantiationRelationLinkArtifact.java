@@ -226,9 +226,5 @@ public class InstantiationRelationLinkArtifact extends RelationLinkArtifact {
 		GfxManager.getPlatform().setStroke(this.arrowVirtualGroup, ThemeManager.getTheme().getInstantiationHighlightedForegroundColor(), 2);
 	}
 
-	@Override
-	protected void buildGfxObjectAddYamazaki() {
-		// TODO 自動生成されたメソッド・スタブ
 
-	}
 }

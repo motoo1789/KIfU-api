@@ -119,7 +119,16 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 
 			String chengeObjectColorKey = uMLclass.getDiffTypeKey();
 			GfxObject beforeGfxObject = uMLclass.getGfxObject(chengeObjectColorKey);
-			super.setStroke_BLACK(stereotypeText,beforeGfxObject);
+
+			if(beforeGfxObject == null)
+				super.setStroke_BLACK(stereotypeText);
+			else
+			{
+				//Window.alert("ClassPartNameArtifact computeBounds Type");
+				super.setStroke_BLACK(stereotypeText,beforeGfxObject);
+			}
+
+
 			this.uMLclass.setTypeGfxObject(this.stereotypeText);
 
 			this.width = GfxManager.getPlatform().getTextWidthFor(this.stereotypeText);
@@ -137,7 +146,15 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 
 		String chengeObjectColorNameKey = uMLclass.getDiffNameKey();
 		GfxObject beforeGfxObjectName = uMLclass.getGfxObject(chengeObjectColorNameKey);
-		super.setStroke_BLACK(nameText,beforeGfxObjectName);
+
+		if(beforeGfxObjectName == null)
+			super.setStroke_BLACK(nameText);
+		else
+		{
+			//Window.alert("ClassPartNameArtifact computeBounds Name" + GfxManager.getPlatform());
+			super.setStroke_BLACK(nameText,beforeGfxObjectName);
+		}
+
 		this.uMLclass.setNameGfxObject(this.nameText);
 
 		final int thisNameWidth = GfxManager.getPlatform().getTextWidthFor(this.nameText) + OptionsManager.get("TextRightPadding")
@@ -332,75 +349,5 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 	public void addYamazakichecngeisSelected()
 	{
 		this.select();
-	}
-
-	@Override
-	protected void buildGfxObjectAddYamazaki() {
-		// TODO 自動生成されたメソッド・スタブ
-		Window.alert("ClassPartName buildGfxObjectAddYamazaki");
-		if (this.textVirtualGroup == null) {
-			this.computeBoundsAddYamazaki();
-		}
-		this.nameRect = GfxManager.getPlatform().buildRect(this.nodeWidth, this.height);
-		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.nameRect);
-		GfxManager.getPlatform().setFillColor(this.nameRect, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
-		GfxManager.getPlatform().setStroke(this.nameRect, ThemeManager.getTheme().getClassForegroundColor(), 1);
-
-		// Centering name class :
-		GfxManager.getPlatform().translate(
-				this.nameText,
-				new Point((this.nodeWidth - GfxManager.getPlatform().getTextWidthFor(this.nameText) - OptionsManager.get("TextRightPadding") - OptionsManager
-						.get("TextLeftPadding")) / 2, OptionsManager.get("RectangleTopPadding")));
-		if (this.stereotypeText != null) {
-			GfxManager
-					.getPlatform()
-					.translate(
-							this.stereotypeText,
-							new Point(
-									(this.nodeWidth - GfxManager.getPlatform().getTextWidthFor(this.stereotypeText) - OptionsManager.get("TextRightPadding") - OptionsManager
-											.get("TextLeftPadding")) / 2, OptionsManager.get("RectangleTopPadding")));
-		}
-		GfxManager.getPlatform().moveToFront(this.textVirtualGroup);
-	}
-
-	private void computeBoundsAddYamazaki() {
-		Window.alert("ClassPartName computeBoundsAddYamazaki");
-		this.height = 0;
-		this.width = 0;
-		this.textVirtualGroup = GfxManager.getPlatform().buildVirtualGroup();
-		GfxManager.getPlatform().addToVirtualGroup(this.gfxObject, this.textVirtualGroup);
-		if ((this.stereotype != null) && (this.stereotype != "")) {
-			this.stereotypeText = GfxManager.getPlatform().buildText(this.stereotype,
-					new Point(OptionsManager.get("TextLeftPadding"), OptionsManager.get("TextTopPadding")));
-			GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, this.stereotypeText);
-//			GfxManager.getPlatform().setFont(this.stereotypeText, OptionsManager.getFont());
-//			GfxManager.getPlatform().setStroke(this.stereotypeText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
-//			GfxManager.getPlatform().setFillColor(this.stereotypeText, ThemeManager.getTheme().getClassBackgroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
-			super.setStroke_Black_forcomputeBounds(stereotypeText);
-			this.uMLclass.setTypeGfxObject(this.stereotypeText);
-
-			this.width = GfxManager.getPlatform().getTextWidthFor(this.stereotypeText);
-			this.height = GfxManager.getPlatform().getTextHeightFor(this.stereotypeText);
-			this.width += OptionsManager.get("TextRightPadding") + OptionsManager.get("TextLeftPadding");
-			this.height += OptionsManager.get("TextTopPadding") + OptionsManager.get("TextBottomPadding");
-		}
-		this.nameText = GfxManager.getPlatform().buildText(this.uMLclass.getName(),
-				new Point(OptionsManager.get("TextLeftPadding"), OptionsManager.get("TextTopPadding") + this.height));
-		GfxManager.getPlatform().addToVirtualGroup(this.textVirtualGroup, this.nameText);
-//		GfxManager.getPlatform().setFont(this.nameText, OptionsManager.getFont());
-//		GfxManager.getPlatform().setStroke(this.nameText, ThemeManager.getTheme().getClassBackgroundColor(), 0);
-//		GfxManager.getPlatform().setFillColor(this.nameText, ThemeManager.getTheme().getClassForegroundColor());//ThemeManager.getTheme().getClassBackgroundColor()
-		super.setStroke_Black_forcomputeBounds(nameText);
-		this.uMLclass.setNameGfxObject(this.nameText);
-
-		final int thisNameWidth = GfxManager.getPlatform().getTextWidthFor(this.nameText) + OptionsManager.get("TextRightPadding")
-				+ OptionsManager.get("TextLeftPadding");
-		this.width = thisNameWidth > this.width ? thisNameWidth : this.width;
-		this.height += GfxManager.getPlatform().getTextHeightFor(this.nameText);
-		this.height += OptionsManager.get("TextTopPadding") + OptionsManager.get("TextBottomPadding");
-		this.width += OptionsManager.get("RectangleRightPadding") + OptionsManager.get("RectangleLeftPadding");
-		this.height += OptionsManager.get("RectangleTopPadding") + OptionsManager.get("RectangleBottomPadding");
-
-		//Log.trace("WxH for " + GWTUMLDrawerHelper.getShortName(this) + "is now " + this.width + "x" + this.height);
 	}
 }

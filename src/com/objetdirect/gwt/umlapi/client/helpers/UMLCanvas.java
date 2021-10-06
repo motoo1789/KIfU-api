@@ -36,6 +36,7 @@ import com.objetdirect.gwt.umlapi.client.artifacts.ActorArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.AssetAndMisUseRelationLinkArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.AssetArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.ClassPartAttributesArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassRelationLinkArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.InstantiationRelationLinkArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.LifeLineArtifact;
@@ -1978,8 +1979,6 @@ public class UMLCanvas extends AbsolutePanel {
 				Point oldPoint = selectedArtifact.getLocation();
 				selectedArtifact.moveTo(Point.substract(Point.add(selectedArtifact.getLocation(), this.totalDragShift), this.duringDragOffset));
 
-				Window.alert("drop()");
-				//selectedArtifact.rebuildGfxObjectAddYamazaki(); // ← これを何とかすれば赤のままになるかも
 				selectedArtifact.rebuildGfxObject();
 
 				//TODO dropEvent
@@ -2416,6 +2415,7 @@ public class UMLCanvas extends AbsolutePanel {
 				}
 			}
 
+			// パラメータ
 			if(!paraDiff.isEmpty())
 			{
 				for(String paraDiffKey : paraDiff.keySet())
@@ -2434,7 +2434,8 @@ public class UMLCanvas extends AbsolutePanel {
 						{
 							if(method.getName().equals(methodname) && !paraname.contains("}"))
 							{
-								IDrawReplaceAddDelete addElements = new NotHasParameterElements(paraDiffKey,paraDiff.get(paraDiffKey),method);
+								UMLArtifact roleRebuild = artifact.getClassPartMethodArtifact();
+								IDrawReplaceAddDelete addElements = new NotHasParameterElements(paraDiffKey,paraDiff.get(paraDiffKey),method,roleRebuild);
 								nothasList.add(addElements);
 								//method.addParametar(new UMLParameter("void", paraname));
 							}
@@ -2576,7 +2577,6 @@ public class UMLCanvas extends AbsolutePanel {
 								replaceList.add(tmpReplaceObject);
 								replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
 							}
-
 						}
 					}
 				}
@@ -2603,9 +2603,10 @@ public class UMLCanvas extends AbsolutePanel {
 								GWT.log(splitDiffAttributeClassname[0] + "!" + splitDiffAttributeClassname[1] + " diffクラス名：" + classname + " umlclass" + umlclass.getName());
 								if(attribute.hasGfxObjectKey(element))
 								{
-									//Window.alert("if(attribute.hasGfxObjectKey(element))" + nothasKey);
+									//UMLArtifact roleRebuild = artifact.getClassPartAttributesArtifact();
+
 									// 差分検知したものと今見ているKIfUのクラス図でクラス名が一致してたらその中のフィールドをみる
-									ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),attribute);
+									ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,nothasMap.get(nothasKey),attribute,artifact);
 									replaceList.add(tmpReplaceObject);
 									replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
 								}
@@ -2635,8 +2636,8 @@ public class UMLCanvas extends AbsolutePanel {
 
 								if(method.hasGfxObjectKey(element))
 								{
-
-									ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),method);
+									//UMLArtifact roleRebuild = artifact.getClassPartMethodArtifact();
+									ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,nothasMap.get(nothasKey),method,artifact);
 									replaceList.add(tmpReplaceObject);
 									replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
 
@@ -2666,7 +2667,8 @@ public class UMLCanvas extends AbsolutePanel {
 
 									if(para.hasGfxObjectKey(paraelement))
 									{
-										ReplaceElements tmpparaReplaceObject = new ReplaceElements(parasurplusKey,surplusMap.get(parasurplusKey),paranothasKey,nothasMap.get(paranothasKey),para);
+										//UMLArtifact roleRebuild = artifact.getClassPartMethodArtifact();
+										ReplaceElements tmpparaReplaceObject = new ReplaceElements(parasurplusKey,nothasMap.get(paranothasKey),para,artifact);
 										replaceList.add(tmpparaReplaceObject);
 										replacetoNothas.put(paranothasKey,nothasMap.get(paranothasKey));
 									}

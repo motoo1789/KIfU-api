@@ -180,9 +180,13 @@ public class ClassArtifact extends NodeArtifact {
 		return className;
 	}
 
-	@Override
-	protected void buildGfxObjectAddYamazaki() {
-		// TODO 自動生成されたメソッド・スタブ
+	public ClassPartAttributesArtifact getClassPartAttributesArtifact()
+	{
+		return this.classAttributes;
+	}
 
+	public ClassPartMethodsArtifact getClassPartMethodArtifact()
+	{
+		return this.classMethods;
 	}
 }

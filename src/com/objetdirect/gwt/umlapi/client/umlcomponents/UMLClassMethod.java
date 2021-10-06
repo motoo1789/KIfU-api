@@ -260,6 +260,12 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 		return key.replaceAll(" ","");
 	}
 
+	@Override
+	public void setStrokeBLACK(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		if(methodGfxObjectMap.containsKey(key))
+			super.setStroke_BLACK(this.methodGfxObjectMap.get(key));
+	}
 
 	@Override
 	public void setStrokeRED(String key) {
@@ -310,4 +316,6 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 		// TODO 自動生成されたメソッド・スタブ
 		return methodGfxObjectMap.get(key);
 	}
+
+
 }

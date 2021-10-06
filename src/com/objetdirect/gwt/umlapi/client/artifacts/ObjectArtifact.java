@@ -125,9 +125,5 @@ public class ObjectArtifact extends NodeArtifact {
 		return "Object$" + this.getLocation() + "!" + this.objectName.toURL() + "!" + this.objectAttributes.toURL();
 	}
 
-	@Override
-	protected void buildGfxObjectAddYamazaki() {
-		// TODO 自動生成されたメソッド・スタブ
 
-	}
 }

@@ -111,9 +111,5 @@ public class LinkClassRelationArtifact extends LinkArtifact {
 		GfxManager.getPlatform().setStroke(this.line, ThemeManager.getTheme().getLinkClassHighlightedForegroundColor(), 2);
 	}
 
-	@Override
-	protected void buildGfxObjectAddYamazaki() {
-		// TODO 自動生成されたメソッド・スタブ
 
-	}
 }

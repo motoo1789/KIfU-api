@@ -42,6 +42,8 @@ public class NotHasMethodElements implements IDrawReplaceAddDelete {
 		if(nothasKey.contains("&")) 							//　メソッド
 		{
 			addTarget.addMethod(UMLClassMethod.parseMethod(nothasValue));
+			addTarget.rebuildGfxObject();
+			//addTarget.getClassPartMethodArtifact().rebuildGfxObject();
 		}
 
 	}

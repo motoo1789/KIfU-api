@@ -87,51 +87,44 @@ public abstract class NodePartArtifact extends BoxArtifact {
 	abstract void setNodeWidth(int width);
 
 	// add Yamazaki
-
 	protected void setStroke_BLACK(GfxObject element,GfxObject beforeGfxObject)
 	{
-		Window.alert("setStroke_BLACK(GfxObject element,GfxObject beforeGfxObject)");
 		String currentColor = GfxManager.getPlatform().getCurrentStrokeColor(beforeGfxObject);	// 初期の読み込みでbiforeGfxObjectを使うとバグる
-		Window.alert(currentColor);
-		//Color currentColor = GfxManager.getPlatform().getCurrentStrokeColor(element);
+
 		if(currentColor != null)
 		{
 			ArrayList<Integer> rgbList = getRGB(currentColor);
 			int r = rgbList.get(0);
 			int g = rgbList.get(1);
 			int b = rgbList.get(2);
-			Window.alert(r + " " + g + " " + b);
-			GfxManager.getPlatform().setStroke(element, new GfxColor(r,g,b), 0); //ThemeManager.getTheme().getClassBackgroundColor()
+			GfxManager.getPlatform().setStroke(element, new GfxColor(r,g,b), 1); //ThemeManager.getTheme().getClassBackgroundColor()
 		}
 		else
 		{
-			Window.alert("currentColorがnull");
-			GfxManager.getPlatform().setStroke(element, GfxColor.BLACK, 0); //ThemeManager.getTheme().getClassBackgroundColor()
+			// 色が取得できなかったら黒で代用
+			GfxManager.getPlatform().setStroke(element, GfxColor.BLACK, 1); //ThemeManager.getTheme().getClassBackgroundColor()
 		}
 
 		GfxManager.getPlatform().setFont(element, OptionsManager.getSmallFont());
 		GfxManager.getPlatform().setFillColor(element, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
 	}
 
-	protected void setStroke_RED(GfxObject element)
+	protected void setStroke_BLACK(GfxObject element)
 	{
+		// DBから初期で読み込んだ時とか要素を追加したときにに前のGfxObjectはないからその時だけオーバロードした塗りつぶし初期化用のメソッドを使う
 		GfxManager.getPlatform().setFont(element, OptionsManager.getSmallFont());
-		GfxManager.getPlatform().setStroke(element, GfxColor.RED, 1); //ThemeManager.getTheme().getClassBackgroundColor()
+		GfxManager.getPlatform().setStroke(element, GfxColor.BLACK, 1); //ThemeManager.getTheme().getClassBackgroundColor()
 		GfxManager.getPlatform().setFillColor(element, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
 	}
 
-	protected void setStroke_Black_forcomputeBounds(GfxObject element)
-	{
-//		String currentColor = GfxManager.getPlatform().getCurrentStrokeColor(element);
-//		ArrayList<Integer> rgbList = getRGB(currentColor);
-//		int r = rgbList.get(0);
-//		int g = rgbList.get(1);
-//		int b = rgbList.get(2);
-//
-//		GfxManager.getPlatform().setStroke(element, new GfxColor(r,g,b), 1);
-		GfxManager.getPlatform().setFont(element, OptionsManager.getSmallFont());
-		GfxManager.getPlatform().setFillColor(element, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
-	}
+//	ここのsetStroke_REDは多分使わない
+//	protected void setStroke_RED(GfxObject element)
+//	{
+//		// 違反個所を赤で塗る用
+//		GfxManager.getPlatform().setFont(element, OptionsManager.getSmallFont());
+//		GfxManager.getPlatform().setStroke(element, GfxColor.RED, 1); //ThemeManager.getTheme().getClassBackgroundColor()
+//		GfxManager.getPlatform().setFillColor(element, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
+//	}
 
 	private ArrayList<Integer> getRGB(String currentColor)
 	{

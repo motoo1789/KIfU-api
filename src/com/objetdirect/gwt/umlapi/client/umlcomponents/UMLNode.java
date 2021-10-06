@@ -14,13 +14,15 @@
  */
 package com.objetdirect.gwt.umlapi.client.umlcomponents;
 
+import com.objetdirect.gwt.umlapi.client.artifacts.ISetStrokeRED;
+
 /**
  * This class represents a class uml component
  *
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
  *
  */
-public abstract class UMLNode extends UMLComponent {
+public abstract class UMLNode extends UMLComponent implements ISetStrokeRED,IGetDiffString{
 	// Nothing here
 	abstract public void setType(final String type);
 	abstract public void setName(final String name);

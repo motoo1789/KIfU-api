@@ -124,11 +124,4 @@ public class MisPrincipalPartGfxArtifact extends NodePartArtifact {
 		super.select();
 		GfxManager.getPlatform().setStroke(this.gfxRect, ThemeManager.getTheme().getClassHighlightedForegroundColor(), 2);
 	}
-
-	@Override
-	protected void buildGfxObjectAddYamazaki() {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
-
 }

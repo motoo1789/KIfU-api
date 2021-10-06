@@ -2,6 +2,7 @@ package com.objetdirect.gwt.umlapi.client.yamazaki.replace;
 
 import com.google.gwt.user.client.ui.CheckBox;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.ClassPartNameArtifact;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLNode;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLVisibility;
 
@@ -37,10 +38,14 @@ public class ReplaceClassStereoType implements IDrawReplaceAddDelete {
 
 	public void drawReplaceAddDelete()
 	{
-
 		if(surplusKey.contains(";")) // 本当はやりたくないがわからない
 		{
 			replaceTarget.getClassPartNameArtifact().setStereotype(nothasValue);
+			// 置換したら黒に戻す
+			ClassPartNameArtifact tmpColorREDtoBLACKObject = replaceTarget.getClassPartNameArtifact();
+			tmpColorREDtoBLACKObject.getUMLClass().setStrokeBLACK(nothasKey);
+			replaceTarget.rebuildGfxObject();
+
 		}
 	}
 

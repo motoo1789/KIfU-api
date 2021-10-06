@@ -74,9 +74,4 @@ public class MisActorArtifact extends NodeArtifact {
 		return "MisActor$" + this.getLocation() + "!" + this.misactorName.toURL()+"!"+this.type;
 	}
 
-	@Override
-	protected void buildGfxObjectAddYamazaki() {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
 }

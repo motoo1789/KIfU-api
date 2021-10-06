@@ -44,6 +44,8 @@ public class NotHasAttributeElements implements IDrawReplaceAddDelete {
 		if(nothasKey.contains("!"))
 		{
 			addTarget.addAttribute(UMLClassAttribute.parseAttribute(nothasValue));
+			addTarget.rebuildGfxObject();
+			//addTarget.getClassPartAttributesArtifact().rebuildGfxObject();
 		}
 	}
 

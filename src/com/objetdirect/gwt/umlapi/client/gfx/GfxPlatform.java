@@ -400,4 +400,6 @@ public interface GfxPlatform {
 
 	// Add Yamazaki
 	String getCurrentStrokeColor(final GfxObject gfxO);
+
+
 }

@@ -14,6 +14,7 @@
  */
 package com.objetdirect.gwt.umlapi.client.umlcomponents;
 
+import com.google.gwt.user.client.Window;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxColor;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxManager;
 import com.objetdirect.gwt.umlapi.client.gfx.GfxObject;
@@ -28,13 +29,10 @@ import com.objetdirect.gwt.umlapi.client.helpers.ThemeManager;
  */
 public abstract class UMLComponent {
 	// Nothing here yet
-
-
-	// add Yamazaki
 	protected void setStroke_BLACK(GfxObject element)
 	{
 		GfxManager.getPlatform().setFont(element, OptionsManager.getSmallFont());
-		GfxManager.getPlatform().setStroke(element, ThemeManager.getTheme().getClassForegroundColor(), 0); //ThemeManager.getTheme().getClassBackgroundColor()
+		GfxManager.getPlatform().setStroke(element, GfxColor.BLACK, 1); //ThemeManager.getTheme().getClassBackgroundColor()
 		GfxManager.getPlatform().setFillColor(element, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
 	}
 
@@ -42,9 +40,6 @@ public abstract class UMLComponent {
 	{
 		GfxManager.getPlatform().setFont(element, OptionsManager.getSmallFont());
 		GfxManager.getPlatform().setStroke(element, GfxColor.RED, 1); //ThemeManager.getTheme().getClassBackgroundColor()
-
 		GfxManager.getPlatform().setFillColor(element, ThemeManager.getTheme().getClassForegroundColor());//attributeText, ThemeManager.getTheme().getClassForegroundColor()
 	}
-
-
 }

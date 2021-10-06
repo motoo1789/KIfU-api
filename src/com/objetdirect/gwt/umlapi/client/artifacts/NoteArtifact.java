@@ -230,9 +230,4 @@ public class NoteArtifact extends BoxArtifact {
 		return OptionsManager.get("NoteCornerWidth");
 	}
 
-	@Override
-	protected void buildGfxObjectAddYamazaki() {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
 }

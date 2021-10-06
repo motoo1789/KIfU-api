@@ -45,10 +45,4 @@ public class SecurityUseCaseArtifact extends NodeArtifact{
 		return rightMenu;
 	}
 
-	@Override
-	protected void buildGfxObjectAddYamazaki() {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
-
 }

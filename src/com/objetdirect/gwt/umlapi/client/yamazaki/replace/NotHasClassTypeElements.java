@@ -38,6 +38,8 @@ public class NotHasClassTypeElements implements IDrawReplaceAddDelete {
 	public void drawReplaceAddDelete() {
 		// TODO 自動生成されたメソッド・スタブ
 		addTarget.getClassPartNameArtifact().setStereotype(nothasValue);
+		addTarget.rebuildGfxObject();
+		//addTarget.getClassPartNameArtifact().rebuildGfxObject();
 	}
 
 	@Override

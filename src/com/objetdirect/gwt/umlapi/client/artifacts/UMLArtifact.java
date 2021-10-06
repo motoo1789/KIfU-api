@@ -322,32 +322,6 @@ public abstract class UMLArtifact {
 
 	}
 
-	// add Yamazaki 初期化以降のやつ
-	public void rebuildGfxObjectAddYamazaki() {
-		final long t = System.currentTimeMillis();
-		GfxManager.getPlatform().clearVirtualGroup(this.gfxObject);
-		//this.buildGfxObjectWithAnimationAddYamazaki();
-		Window.alert("rebuildGfxObjectAddYamazaki");
-		this.buildGfxObjectWithAnimationAddYamazaki();
-		if (this.isSelected) {
-			this.select();
-		}
-
-		Log.debug("([" + (System.currentTimeMillis() - t) + "ms]) to build " + this);
-		for (final Entry<LinkArtifact, UMLArtifact> dependentUMLArtifact : this.getDependentUMLArtifacts().entrySet()) {
-			Log.trace("Rebuilding : " + dependentUMLArtifact);
-			new Scheduler.Task("RebuildingDependencyFor" + this) {
-				@Override
-				public void process() {
-					final long t2 = System.currentTimeMillis();
-					dependentUMLArtifact.getKey().rebuildGfxObject();
-					Log.debug("([" + (System.currentTimeMillis() - t2) + "ms]) to arrow " + this);
-				}
-			};
-		}
-		Log.debug("([" + (System.currentTimeMillis() - t) + "ms]) to rebuild " + this + " with dependency");
-
-	}
 
 	/**
 	 * Remove a dependency for this artifact
@@ -478,27 +452,6 @@ public abstract class UMLArtifact {
 		}
 	}
 
-	// add Yamazaki rebuildGfxobjectの続き
-	void buildGfxObjectWithAnimationAddYamazaki() {
-		if (QualityLevel.IsAlmost(QualityLevel.VERY_HIGH)) {
-			// ThemeManager.setForegroundOpacityTo(0);
-		}
-		Window.alert("buildGfxObjectWithAnimationAddYamazaki");
-		this.buildGfxObject();
-		if (QualityLevel.IsAlmost(QualityLevel.VERY_HIGH)) {
-			for (int i = 25; i < 256; i += 25) {
-				final int j = i;
-				new Scheduler.Task("OpacityArtifactAnimation") {
-					@Override
-					public void process() {
-						GfxManager.getPlatform().setOpacity(UMLArtifact.this.gfxObject, j, false);
-					}
-				};
-			}
-			// ThemeManager.setForegroundOpacityTo(255);
-		}
-	}
-
 	boolean hasThisAllDirectionsDependecy(final LinkArtifact linkArtifact) {
 		return this.allDependencies.contains(linkArtifact);
 	}
@@ -521,8 +474,6 @@ public abstract class UMLArtifact {
 
 	protected abstract void buildGfxObject();
 
-	// add Yamazaki
-	protected abstract void buildGfxObjectAddYamazaki();
 
 	protected int getAllDirectionsDependenciesCount() {
 		return this.allDependencies.size();

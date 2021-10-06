@@ -32,7 +32,7 @@ import com.objetdirect.gwt.umlapi.client.gfx.GfxObject;
  * @author Henri Darmet
  * @author Florian Mounier (mounier-dot-florian.at.gmail'dot'com)
  */
-public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetStrokeRED{
+public class UMLClassAttribute extends UMLNode {
 
 	protected String		name;
 	protected String		type;
@@ -244,6 +244,15 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 		return key.replaceAll(" ","");
 	}
 
+	@Override
+	public void setStrokeBLACK(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+		if(this.attributesGfxObject.containsKey(key))
+		{
+			super.setStroke_BLACK(this.attributesGfxObject.get(key));
+		}
+
+	}
 
 	@Override
 	public void setStrokeRED(String key) {
@@ -280,4 +289,7 @@ public class UMLClassAttribute extends UMLNode implements IGetDiffString, ISetSt
 		// TODO 自動生成されたメソッド・スタブ
 		return attributesGfxObject.get(key);
 	}
+
+
+
 }

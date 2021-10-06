@@ -22,6 +22,7 @@ import com.allen_sauer.gwt.log.client.Log;
 import com.objetdirect.gwt.umlapi.client.GWTUMLAPIException;
 import com.objetdirect.gwt.umlapi.client.analyser.LexicalAnalyzer;
 import com.objetdirect.gwt.umlapi.client.analyser.LexicalAnalyzer.LexicalFlag;
+import com.objetdirect.gwt.umlapi.client.gfx.GfxObject;
 
 /**
  * This class represents an object uml component
@@ -225,5 +226,53 @@ public class UMLObject extends UMLNode {
 	public boolean hasGfxObjectKey(String haskey) {
 		// TODO 自動生成されたメソッド・スタブ
 		return false;
+	}
+
+	@Override
+	public void setStrokeBLACK(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void setStrokeRED(String key) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void setVisibilityGfxObject(GfxObject visigility) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void setNameGfxObject(GfxObject name) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public void setTypeGfxObject(GfxObject type) {
+		// TODO 自動生成されたメソッド・スタブ
+
+	}
+
+	@Override
+	public String getDiffVisibilityKey() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+	@Override
+	public String getDiffNameKey() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+	@Override
+	public String getDiffTypeKey() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
 	}
 }

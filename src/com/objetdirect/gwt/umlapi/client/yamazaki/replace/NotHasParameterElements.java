@@ -2,6 +2,7 @@ package com.objetdirect.gwt.umlapi.client.yamazaki.replace;
 
 import com.google.gwt.user.client.ui.CheckBox;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.UMLArtifact;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLClassMethod;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLParameter;
 
@@ -9,6 +10,7 @@ public class NotHasParameterElements implements IDrawReplaceAddDelete {
 
 	private StringSplitSubstring splitsubstringObject;
 	private UMLClassMethod addTarget;
+	private UMLArtifact roleRebuild;
 
 	private String nothasKey;
 	private String nothasValue;
@@ -17,13 +19,13 @@ public class NotHasParameterElements implements IDrawReplaceAddDelete {
 
 	private CheckBox checkbox;
 
-	public NotHasParameterElements(String nothasKey,String nothasValue,UMLClassMethod method)
+	public NotHasParameterElements(String nothasKey,String nothasValue,UMLClassMethod method,UMLArtifact roleRebuild)
 	{
 		splitsubstringObject = StringSplitSubstring.getInstance();
 		this.nothasKey = nothasKey;
 		this.nothasValue = nothasValue;
 		this.addTarget = method;
-
+		this.roleRebuild = roleRebuild;
 		setMessage();
 
 		this.checkbox = new CheckBox(this.message);
@@ -47,6 +49,7 @@ public class NotHasParameterElements implements IDrawReplaceAddDelete {
 		{
 			String[] splitPara = nothasValue.split(":");
 			addTarget.addParametar(new UMLParameter(splitPara[1], splitPara[0]));
+			roleRebuild.rebuildGfxObject();
 		}
 	}
 
