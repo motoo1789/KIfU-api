@@ -1737,7 +1737,6 @@ public class UMLCanvas extends AbsolutePanel {
 							selectedArtifact.moveTo(new Point(selectedArtifact.getLocation().getX() + direction.getXShift(),
 									selectedArtifact.getLocation().getY() + direction.getYShift()));
 
-							Window.alert("moveSelected");
 							selectedArtifact.rebuildGfxObject(); // ← これを何とかすれば赤のままになる ならなかった
 						}
 					};
@@ -2240,7 +2239,7 @@ public class UMLCanvas extends AbsolutePanel {
 						String attributename = splitDiffClassKey[splitDiffClassKey.length - 1];
 						if(splitDiffClassKey.length > 1)
 						{
-							IDrawReplaceAddDelete addElements = new SurplusClassTypeElement(classDiffKey,classDiff.get(classDiffKey),artifact.getClassPartNameArtifact());
+							IDrawReplaceAddDelete addElements = new SurplusClassTypeElement(classDiffKey,classDiff.get(classDiffKey),artifact.getClassPartNameArtifact(),artifact);
 							surplusList.add(addElements);
 
 						}
@@ -2325,7 +2324,7 @@ public class UMLCanvas extends AbsolutePanel {
 								String paradname = splitDiffParaKey[splitDiffParaKey.length - 1];
 								if(!paradname.contains("}") && para.getDiffNameKey().equals(paradname))
 								{
-									IDrawReplaceAddDelete addElements = new SurplusParameterElement(paraDiffKey,paraDiff.get(paraDiffKey),method,para);
+									IDrawReplaceAddDelete addElements = new SurplusParameterElement(paraDiffKey,paraDiff.get(paraDiffKey),method,para,artifact);
 									surplusList.add(addElements);
 								}
 							}

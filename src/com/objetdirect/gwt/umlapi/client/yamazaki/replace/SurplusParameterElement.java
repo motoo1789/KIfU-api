@@ -2,6 +2,7 @@ package com.objetdirect.gwt.umlapi.client.yamazaki.replace;
 
 import com.google.gwt.user.client.ui.CheckBox;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.UMLArtifact;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLClassMethod;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLParameter;
 
@@ -9,6 +10,7 @@ public class SurplusParameterElement implements IDrawReplaceAddDelete {
 	private StringSplitSubstring splitsubstringObject;
 	private UMLParameter targetpara;
 	private UMLClassMethod targetMethod;
+	private UMLArtifact roleRebuild;
 
 	private String surplusKey;
 	private String surplusValue;
@@ -17,13 +19,14 @@ public class SurplusParameterElement implements IDrawReplaceAddDelete {
 
 	private CheckBox checkbox;
 
-	public SurplusParameterElement(String surplusKey,String surplusValue,UMLClassMethod targetMethod,UMLParameter targetpara)
+	public SurplusParameterElement(String surplusKey,String surplusValue,UMLClassMethod targetMethod,UMLParameter targetpara,UMLArtifact roleRebuild)
 	{
 		splitsubstringObject = StringSplitSubstring.getInstance();
 		this.surplusKey = surplusKey;
 		this.surplusValue = surplusValue;
 		this.targetpara = targetpara;
 		this.targetMethod = targetMethod;
+		this.roleRebuild = roleRebuild;
 
 		setMessage();
 
@@ -48,6 +51,7 @@ public class SurplusParameterElement implements IDrawReplaceAddDelete {
 		if(surplusKey.contains("&"))
 		{
 			targetMethod.removeParameter(targetpara);
+			roleRebuild.rebuildGfxObject();
 		}
 	}
 

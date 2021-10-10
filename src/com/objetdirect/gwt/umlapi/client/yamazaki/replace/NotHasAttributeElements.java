@@ -5,6 +5,7 @@ import com.objetdirect.gwt.umlapi.client.artifacts.ClassArtifact;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLClassAttribute;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLClassMethod;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLNode;
+import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLVisibility;
 
 public class NotHasAttributeElements implements IDrawReplaceAddDelete {
 
@@ -43,7 +44,14 @@ public class NotHasAttributeElements implements IDrawReplaceAddDelete {
 		// TODO 自動生成されたメソッド・スタブ
 		if(nothasKey.contains("!"))
 		{
-			addTarget.addAttribute(UMLClassAttribute.parseAttribute(nothasValue));
+			char visibility = nothasValue.charAt(0);
+
+			int indexname = nothasValue.indexOf(":");
+			String name = nothasValue.substring(1, indexname);
+			String type = nothasValue.substring(indexname + 1, nothasValue.length());
+
+			addTarget.addAttribute(new UMLClassAttribute(UMLVisibility.getVisibilityFromToken(visibility), type, name));
+			//addTarget.addAttribute(UMLClassAttribute.parseAttribute(nothasValue));
 			addTarget.rebuildGfxObject();
 			//addTarget.getClassPartAttributesArtifact().rebuildGfxObject();
 		}

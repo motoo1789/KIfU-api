@@ -124,7 +124,6 @@ public class ClassPartNameArtifact extends NodePartArtifact {
 				super.setStroke_BLACK(stereotypeText);
 			else
 			{
-				//Window.alert("ClassPartNameArtifact computeBounds Type");
 				super.setStroke_BLACK(stereotypeText,beforeGfxObject);
 			}
 

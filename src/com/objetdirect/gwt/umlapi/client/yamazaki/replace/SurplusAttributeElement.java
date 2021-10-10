@@ -44,6 +44,7 @@ public class SurplusAttributeElement implements IDrawReplaceAddDelete {
 		if(surplusKey.contains("!"))
 		{
 			targetClassArtifact.removeAttribute(targetAttribute);
+			targetClassArtifact.rebuildGfxObject();
 		}
 	}
 

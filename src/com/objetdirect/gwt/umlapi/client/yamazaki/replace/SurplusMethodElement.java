@@ -44,6 +44,7 @@ public class SurplusMethodElement implements IDrawReplaceAddDelete {
 		if(surplusKey.contains("&"))
 		{
 			targetClassArtifact.removeMethod(targetMethod);
+			targetClassArtifact.rebuildGfxObject();
 		}
 	}
 

@@ -2,11 +2,13 @@ package com.objetdirect.gwt.umlapi.client.yamazaki.replace;
 
 import com.google.gwt.user.client.ui.CheckBox;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassPartNameArtifact;
+import com.objetdirect.gwt.umlapi.client.artifacts.UMLArtifact;
 import com.objetdirect.gwt.umlapi.client.helpers.UMLCanvas;
 
 public class SurplusClassTypeElement implements IDrawReplaceAddDelete {
 	private StringSplitSubstring splitsubstringObject;
 	private ClassPartNameArtifact targetClass;
+	private UMLArtifact roleRebuild;
 
 	private String surplusKey;
 	private String surplusValue;
@@ -15,12 +17,13 @@ public class SurplusClassTypeElement implements IDrawReplaceAddDelete {
 
 	private CheckBox checkbox;
 
-	public SurplusClassTypeElement(String surplusKey,String surplusValue,ClassPartNameArtifact targetClass)
+	public SurplusClassTypeElement(String surplusKey,String surplusValue,ClassPartNameArtifact targetClass,UMLArtifact roleRebuild)
 	{
 		splitsubstringObject = StringSplitSubstring.getInstance();
 		this.surplusKey = surplusKey;
 		this.surplusValue = surplusValue;
 		this.targetClass = targetClass;
+		this.roleRebuild = roleRebuild;
 
 		setMessage();
 
@@ -42,6 +45,7 @@ public class SurplusClassTypeElement implements IDrawReplaceAddDelete {
 		if(targetClass != null)
 		{
 			targetClass.setStereotype("");
+			roleRebuild.rebuildGfxObject();
 		}
 	}
 
