@@ -1,15 +1,15 @@
 /*
  * This file is part of the GWTUML project and was written by Mounier Florian <mounier-dot-florian.at.gmail'dot'com> for Objet Direct
  * <http://wwww.objetdirect.com>
- * 
+ *
  * Copyright © 2009 Objet Direct Contact: gwtuml@googlegroups.com
- * 
+ *
  * GWTUML is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software
  * Foundation, either version 3 of the License, or (at your option) any later version.
- * 
+ *
  * GWTUML is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License along with GWTUML. If not, see <http://www.gnu.org/licenses/>.
  */
 package com.objetdirect.gwt.umlapi.client.analyser;
@@ -17,6 +17,7 @@ package com.objetdirect.gwt.umlapi.client.analyser;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gwt.user.client.Window;
 import com.objetdirect.gwt.umlapi.client.GWTUMLAPIException;
 import com.objetdirect.gwt.umlapi.client.analyser.LexicalAnalyzer.LexicalFlag;
 import com.objetdirect.gwt.umlapi.client.analyser.LexicalAnalyzer.Token;
@@ -24,18 +25,19 @@ import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLClassMethod;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLParameter;
 import com.objetdirect.gwt.umlapi.client.umlcomponents.UMLVisibility;
 
+
 /**
  * A method syntax analyzer
- * 
+ *
  * @author Henri Darmet
  */
 public class MethodSyntaxAnalyzer extends SyntaxAnalyzer {
-	UMLClassMethod		method		= new UMLClassMethod(UMLVisibility.PUBLIC, null, null, null);
+	UMLClassMethod		method		= new UMLClassMethod(UMLVisibility.PUBLIC, "", "", null);
 	List<UMLParameter>	parameters	= new ArrayList<UMLParameter>();
 
 	/**
 	 * Getter for the {@link UMLClassMethod}
-	 * 
+	 *
 	 * @return The method
 	 */
 	public UMLClassMethod getMethod() {
@@ -48,7 +50,7 @@ public class MethodSyntaxAnalyzer extends SyntaxAnalyzer {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.objetdirect.gwt.umlapi.client.analyser.SyntaxAnalyzer#processToken(com.objetdirect.gwt.umlapi.client.analyser.LexicalAnalyzer,
 	 * com.objetdirect.gwt.umlapi.client.analyser.LexicalAnalyzer.Token)
 	 */
@@ -141,6 +143,7 @@ public class MethodSyntaxAnalyzer extends SyntaxAnalyzer {
 				if ((token != null) && (token.getType() == LexicalFlag.SIGN) && token.getContent().equals(":")) {
 					final TypeAnalyzer ta = new TypeAnalyzer();
 					token = ta.process(lex, null);
+					Window.alert("|processToken| BEGIN_RETURN_TYPE:" + ta.getType());
 					this.method.setReturnType(ta.getType());
 					this.setStatus(State.FINISHED);
 					return token;
