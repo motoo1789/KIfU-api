@@ -15,6 +15,7 @@
 package com.objetdirect.gwt.umlapi.client.editors;
 
 
+import com.google.gwt.user.client.Window;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassPartMethodsArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.NodePartArtifact;
@@ -75,6 +76,7 @@ public class ClassPartMethodsFieldEditor extends FieldEditor {
 			return false;
 		}
 		final UMLClassMethod newMethod = UMLClassMethod.parseMethod(newContent);
+
 		if ((newMethod == null) || (newMethod.getName() + newMethod.getReturnType() + newMethod.getParameters()).equals("")) {
 			((ClassPartMethodsArtifact) this.artifact).remove(this.methodToChange);
 			((ClassPartMethodsArtifact) this.artifact).getNodeArtifact().rebuildGfxObject();

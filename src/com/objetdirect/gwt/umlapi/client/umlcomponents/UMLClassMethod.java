@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.allen_sauer.gwt.log.client.Log;
+import com.google.gwt.user.client.Window;
 import com.objetdirect.gwt.umlapi.client.GWTUMLAPIException;
 import com.objetdirect.gwt.umlapi.client.analyser.LexicalAnalyzer;
 import com.objetdirect.gwt.umlapi.client.analyser.MethodSyntaxAnalyzer;
@@ -46,6 +47,7 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 
 		try {
 			final MethodSyntaxAnalyzer methodSyntaxAnalyser = new MethodSyntaxAnalyzer();
+
 			methodSyntaxAnalyser.process(lex, null);
 			return methodSyntaxAnalyser.getMethod();
 
