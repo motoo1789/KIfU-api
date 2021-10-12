@@ -216,11 +216,22 @@ public class ClassPartMethodsArtifact extends NodePartArtifact {
 //			}
 
 			// return type
-			GfxObject returntype = GfxManager.getPlatform().buildText("):" + method.getReturnType(),
-					new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
-			chengeObjectColorKey = method.getDiffTypeKey();
-			beforeGfxObject = method.getGfxObject(chengeObjectColorKey);
-
+			String artifactReturnTypeString =  method.getReturnType();
+			GfxObject returntype;
+			if(!artifactReturnTypeString.equals(""))
+			{
+				returntype = GfxManager.getPlatform().buildText("):" + method.getReturnType(),
+						new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
+				chengeObjectColorKey = method.getDiffTypeKey();
+				beforeGfxObject = method.getGfxObject(chengeObjectColorKey);
+			}
+			else
+			{
+				returntype = GfxManager.getPlatform().buildText(")",
+						new Point(OptionsManager.get("AddYamazakiGfxObjectPadding") + methodElementWidth, OptionsManager.get("TextTopPadding") + this.height));
+				chengeObjectColorKey = method.getDiffTypeKey();
+				beforeGfxObject = method.getGfxObject(chengeObjectColorKey);
+			}
 			if(beforeGfxObject == null)
 				super.setStroke_BLACK(returntype);
 			else
