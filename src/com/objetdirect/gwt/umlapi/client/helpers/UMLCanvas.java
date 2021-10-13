@@ -98,6 +98,7 @@ import com.objetdirect.gwt.umlapi.client.yamazaki.replace.NotHasMethodElements;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.NotHasParameterElements;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.ReplaceClassStereoType;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.ReplaceElements;
+import com.objetdirect.gwt.umlapi.client.yamazaki.replace.ReplaceMethodConstractor;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.SurplusAttributeElement;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.SurplusClassElement;
 import com.objetdirect.gwt.umlapi.client.yamazaki.replace.SurplusClassTypeElement;
@@ -2405,7 +2406,6 @@ public class UMLCanvas extends AbsolutePanel {
 
 					if(umlclass.getName().equals(classname) && !methodname.contains("{") && !methodname.contains("}"))
 					{
-						//Window.alert("value:" + methodDiff.get(methodDiffKey));
 						IDrawReplaceAddDelete addElements = new NotHasMethodElements(methodDiffKey,methodDiff.get(methodDiffKey),artifact);
 						nothasList.add(addElements);
 						//artifact.addMethod(new UMLClassMethod(UMLVisibility.getVisibilityFromToken('+'), "void", methodname, new ArrayList<UMLParameter>()));
@@ -2572,7 +2572,7 @@ public class UMLCanvas extends AbsolutePanel {
 
 							if(umlclass.hasGfxObjectKey(nothasKey) && splitDiffAttributeClassname.length > 1)
 							{
-								ReplaceClassStereoType tmpReplaceObject = new ReplaceClassStereoType(surplusKey,surplusMap.get(surplusKey),nothasKey,nothasMap.get(nothasKey),artifact);
+								ReplaceClassStereoType tmpReplaceObject = new ReplaceClassStereoType(surplusKey,nothasMap.get(nothasKey),artifact);
 								replaceList.add(tmpReplaceObject);
 								replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
 							}
@@ -2636,7 +2636,7 @@ public class UMLCanvas extends AbsolutePanel {
 								if(method.hasGfxObjectKey(element))
 								{
 									//UMLArtifact roleRebuild = artifact.getClassPartMethodArtifact();
-									ReplaceElements tmpReplaceObject = new ReplaceElements(surplusKey,nothasMap.get(nothasKey),method,artifact);
+									IDrawReplaceAddDelete tmpReplaceObject = new ReplaceElements(surplusKey,nothasMap.get(nothasKey),method,artifact);
 									replaceList.add(tmpReplaceObject);
 									replacetoNothas.put(nothasKey,nothasMap.get(nothasKey));
 
