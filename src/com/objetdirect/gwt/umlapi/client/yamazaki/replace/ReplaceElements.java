@@ -78,8 +78,10 @@ public class ReplaceElements implements IDrawReplaceAddDelete {
 		//  何が入っているか　？？？の？？？をまで
 		String classnamefmname = splitsubstringObject.splitClassname(this.surplusKey);
 
-		String  appendReplaceString = classnamefmname + nothasValue + "に変換";
-		message = appendReplaceString;
+		if(nothasValue.equals("") && surplusKey.contains("&") && surplusKey.contains("}"))
+			message =  classnamefmname + "型なしのコンストラクタに変換";
+		else
+			message = classnamefmname + nothasValue + "に変換";
 	}
 
 	public CheckBox getCheckBox()

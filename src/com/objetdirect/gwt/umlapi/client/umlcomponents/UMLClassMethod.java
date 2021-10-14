@@ -235,7 +235,7 @@ public class UMLClassMethod extends UMLNode implements IGetDiffString, ISetStrok
 			}
 		}
 		f.append(")");
-		if (this.returnType != null) {
+		if (this.returnType != null && !this.getReturnType().equals("")) {
 			f.append(" : ");
 			f.append(this.returnType);
 		}

@@ -143,7 +143,7 @@ public class MethodSyntaxAnalyzer extends SyntaxAnalyzer {
 				if ((token != null) && (token.getType() == LexicalFlag.SIGN) && token.getContent().equals(":")) {
 					final TypeAnalyzer ta = new TypeAnalyzer();
 					token = ta.process(lex, null);
-					Window.alert("|processToken| BEGIN_RETURN_TYPE:" + ta.getType());
+					//Window.alert("|processToken| BEGIN_RETURN_TYPE:" + ta.getType());
 					this.method.setReturnType(ta.getType());
 					this.setStatus(State.FINISHED);
 					return token;

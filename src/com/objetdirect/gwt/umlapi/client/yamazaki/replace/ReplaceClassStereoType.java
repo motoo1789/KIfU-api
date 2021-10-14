@@ -1,5 +1,6 @@
 package com.objetdirect.gwt.umlapi.client.yamazaki.replace;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassArtifact;
 import com.objetdirect.gwt.umlapi.client.artifacts.ClassPartNameArtifact;
@@ -12,8 +13,6 @@ public class ReplaceClassStereoType implements IDrawReplaceAddDelete {
 	private ClassArtifact replaceTarget;
 
 	private String surplusKey;
-	private String surplusValue;
-	private String nothasKey;
 	private String nothasValue;
 
 	private String message;
@@ -21,12 +20,11 @@ public class ReplaceClassStereoType implements IDrawReplaceAddDelete {
 	private CheckBox checkbox;
 
 
-	public ReplaceClassStereoType(String surplusKey,String surplusValue,String nothasKey,String nothasValue,ClassArtifact component)
+	public ReplaceClassStereoType(String surplusKey,String nothasValue,ClassArtifact component)
 	{
+
 		splitsubstringObject = StringSplitSubstring.getInstance();
 		this.surplusKey = surplusKey;
-		this.surplusValue = surplusValue;
-		this.nothasKey = nothasKey;
 		this.nothasValue = nothasValue;
 		this.replaceTarget = component;
 
@@ -43,7 +41,7 @@ public class ReplaceClassStereoType implements IDrawReplaceAddDelete {
 			replaceTarget.getClassPartNameArtifact().setStereotype(nothasValue);
 			// 置換したら黒に戻す
 			ClassPartNameArtifact tmpColorREDtoBLACKObject = replaceTarget.getClassPartNameArtifact();
-			tmpColorREDtoBLACKObject.getUMLClass().setStrokeBLACK(nothasKey);
+			tmpColorREDtoBLACKObject.getUMLClass().setStrokeBLACK(surplusKey);
 			replaceTarget.rebuildGfxObject();
 
 		}
@@ -54,7 +52,7 @@ public class ReplaceClassStereoType implements IDrawReplaceAddDelete {
 		//  何が入っているか　？？？の？？？をまで
 		String classnamefmname = splitsubstringObject.splitClassname(this.surplusKey);
 
-		String  appendReplaceString = classnamefmname + nothasValue + "に変換";
+		String appendReplaceString = classnamefmname + nothasValue + "に変換";
 		message = appendReplaceString;
 	}
 
@@ -70,12 +68,14 @@ public class ReplaceClassStereoType implements IDrawReplaceAddDelete {
 
 	public String getSurplusValue()
 	{
-		return this.surplusValue;
+		//return this.surplusValue;
+		return null;
 	}
 
 	public String getNothasKey()
 	{
-		return this.nothasKey;
+		return null;
+		//return this.nothasKey;
 	}
 
 	public String getNothasValue()
