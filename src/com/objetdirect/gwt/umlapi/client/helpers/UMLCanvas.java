@@ -1981,6 +1981,7 @@ public class UMLCanvas extends AbsolutePanel {
 
 				selectedArtifact.rebuildGfxObject();
 
+
 				//TODO dropEvent
 				//writeLog(selectedArtifact);
 				//MyLogger.operationLog("DropArtifact"+":"+selectedArtifact.toURL());
@@ -2600,7 +2601,7 @@ public class UMLCanvas extends AbsolutePanel {
 								String element = splitDiffAttributeClassname[1];
 
 								GWT.log(splitDiffAttributeClassname[0] + "!" + splitDiffAttributeClassname[1] + " diffクラス名：" + classname + " umlclass" + umlclass.getName());
-								if(attribute.hasGfxObjectKey(element))
+								if(attribute.hasGfxObjectKey(element) && classname.equals(umlclass.getName()))
 								{
 									//UMLArtifact roleRebuild = artifact.getClassPartAttributesArtifact();
 
@@ -2633,7 +2634,7 @@ public class UMLCanvas extends AbsolutePanel {
 								String classname = splitDiffMethodKey[0];
 								String element = splitDiffMethodKey[1];
 
-								if(method.hasGfxObjectKey(element))
+								if(method.hasGfxObjectKey(element) && classname.equals(umlclass.getName()))
 								{
 									//UMLArtifact roleRebuild = artifact.getClassPartMethodArtifact();
 									IDrawReplaceAddDelete tmpReplaceObject = new ReplaceElements(surplusKey,nothasMap.get(nothasKey),method,artifact);
@@ -2662,9 +2663,10 @@ public class UMLCanvas extends AbsolutePanel {
 								{
 									//Window.alert("paranothasKey:" + paranothasKey + " kifu:paranametype:" + para.getType());
 									String[] splitDiffParaKey = paranothasKey.split("%");
+									String classname = paranothasKey.split("&")[0];
 									String paraelement = splitDiffParaKey[1];
 
-									if(para.hasGfxObjectKey(paraelement))
+									if(para.hasGfxObjectKey(paraelement) && classname.equals(umlclass.getName()))
 									{
 										//UMLArtifact roleRebuild = artifact.getClassPartMethodArtifact();
 										ReplaceElements tmpparaReplaceObject = new ReplaceElements(parasurplusKey,nothasMap.get(paranothasKey),para,artifact);
