@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
 
 public class DriverAccessor {
 
@@ -25,19 +28,40 @@ public class DriverAccessor {
 	private final static String MAKE_YAMAZAKI_PASSWORD_="root";
 
 
+	private HikariDataSource hikari;
+	private Connection con;
+
+
 
 	public Connection createConnection(){
-	try{
-		Class.forName(DRIVER_NAME);
-		Connection con=DriverManager.getConnection(DRIVER_URL,MAKE_YAMAZAKI_USER_NAME,MAKE_YAMAZAKI_PASSWORD_);
-		return con;
+//		HikariConfig config = new HikariConfig();
+//		System.out.println("HikariCP");
+//		config.setDriverClassName("com.mysql.jdbc.Driver");
+//		config.setJdbcUrl(DRIVER_URL);
+//		config.setUsername(MAKE_YAMAZAKI_USER_NAME);
+//		config.setPassword(MAKE_YAMAZAKI_PASSWORD_);
+//		hikari = new HikariDataSource(config);
+//		try {
+//			con = hikari.getConnection();
+//		} catch (SQLException e) {
+//			// TODO 自動生成された catch ブロック
+//			e.printStackTrace();
+//		}
+//
+//		return con;
+
+		try{
+			Class.forName(DRIVER_NAME);
+			Connection con=DriverManager.getConnection(DRIVER_URL,MAKE_YAMAZAKI_USER_NAME,MAKE_YAMAZAKI_PASSWORD_);
+			return con;
 		}catch(ClassNotFoundException e){
 			System.out.println("Can't Find JDBC Driver.\n");
-			}catch(SQLException e){
-				 System.out.println("Connection Error.\n");
-				}
-				return null;
+		}catch(SQLException e){
+			System.out.println("Connection Error.\n");
 		}
+		return null;
+	}
+
 
 	public void closeConnection(Connection con){
 		try{

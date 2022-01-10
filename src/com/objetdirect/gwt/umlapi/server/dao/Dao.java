@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import com.objetdirect.gwt.umlapi.server.yamazaki.thread.ThreadAcceptfromUMLDS;
+
+
+
 
 /**
  * @author J10-8011
@@ -14,6 +18,7 @@ public class Dao extends DriverAccessor{
 	private Connection connection;
 
 	public Dao(){
+		final ThreadAcceptfromUMLDS threadUMLDS_ = ThreadAcceptfromUMLDS.getInstance();
 	}
 
 //	student_id varchar(32),
