@@ -34,7 +34,7 @@ public class ThreadAcceptfromUMLDS extends Thread {
 				String response = "world";
 				socket.send(response.getBytes(ZMQ.CHARSET), 0);
 
-				inThisClassChangeBoolean();
+				changedCodeState_True();
 
 				try {
 					Thread.sleep(1000);
@@ -46,9 +46,14 @@ public class ThreadAcceptfromUMLDS extends Thread {
 		}
 	}
 
-	private void inThisClassChangeBoolean()
+	private synchronized void changedCodeState_True()
 	{
 		this.changedCodeState_ = true;
+	}
+
+	public synchronized void changedCodeState_False()
+	{
+		this.changedCodeState_ = false;
 	}
 
 	public boolean isState()
